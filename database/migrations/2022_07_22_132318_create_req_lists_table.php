@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('req_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('company');
+            $table->integer('parent_id');
+            $table->text('req_no');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('req_lists');
     }
 };

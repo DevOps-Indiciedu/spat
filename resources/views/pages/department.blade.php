@@ -9,10 +9,10 @@
                 <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">{{ __('Companies Managment') }}</h4>
+                        <h4 class="card-title">{{ __('Department Managment') }}</h4>
                     </div>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
-                    {{ __('Add Company') }}
+                    {{ __('Add Depart') }}
                     </button>
                 </div>
                 <div class="iq-card-body">
@@ -20,21 +20,21 @@
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
-                               <th class="text-dark">{{ __('Company') }}</th>
+                               <th class="text-dark">{{ __('Depart') }}</th>
                                <th class="text-dark">{{ __('Reg Date') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>
                        <tbody>
                         @php $i = 1 @endphp
-                        @foreach ($company as $data)
+                        @foreach ($department as $data)
                            <tr id="row-{{ $data->id }}" class="text-center">
                                <td>{{ $i++ }}</td>
-                               <td>{{ $data->company }}</td>
+                               <td>{{ $data->department }}</td>
                                <td>{{ DMY($data->created_at) }}</td>
                                <td>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_company" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_company">
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_department" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_department">
                                         <i class="ri-delete-bin-2-fill pr-0"></i>
                                     </button>
                                </td>
@@ -54,18 +54,18 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Company') }}</h5>
+            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Department') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
-        <form id="companyForm" method="POST">
+        <form id="departmentForm" method="POST">
             @csrf
             <div class="modal-body">
             <div class="form-group">
-                <label for="company">{{ __('Company') }}</label>
-                <input type="text" class="form-control" id="company" name="company">
-                <span class="text-danger" id="companyErr"></span>
+                <label for="department">{{ __('Depart Name') }}</label>
+                <input type="text" class="form-control" id="department" name="department">
+                <span class="text-danger" id="departmentErr"></span>
             </div>
             </div>
             <div class="modal-footer">
@@ -81,7 +81,7 @@
 <!-- AJAX -->
 <script type="text/javascript">
         
-    jQuery(".delete_company").on('click',function(){
+    jQuery(".delete_department").on('click',function(){
         // if (confirm("Are you sure")) {
         Swal.fire({
             title: 'Are you sure?',
@@ -95,7 +95,7 @@
             if (result.isConfirmed) {
                 var id = $(this).attr('data-id');
                 $.ajax({
-                    url:"{{ route('delete_company') }}",
+                    url:"{{ route('delete_department') }}",
                     type : 'POST',
                     data:{
                         "_token": "{{ csrf_token() }}",
@@ -122,26 +122,26 @@
         // }
     });
 
-    jQuery(".edit_company").on('click',function(){
+    jQuery(".edit_department").on('click',function(){
         var id = $(this).attr('data-id');
         $.ajax({
-            url:"edit_company/"+id,
+            url:"edit_department/"+id,
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#company").val(data.company);
+                $("#department").val(data.department);
                 $("#hiddenId").val(data.id);
 
-                $(".formBtn").text("Update Company");
-                $(".modal-title").text("Update Company");
+                $(".formBtn").text("Update Department");
+                $(".modal-title").text("Update Department");
             }
         });
     });
 
-    $(".modal").on('submit','#companyForm',function(e){
+    $(".modal").on('submit','#departmentForm',function(e){
         e.preventDefault();
         $.ajax({
-            url:"{{ route('add_company') }}",
+            url:"{{ route('add_department') }}",
             type : 'POST',
             data:new FormData(this),
             dataType: 'json',
@@ -149,8 +149,7 @@
             cache: false,  
             processData:false,
             success:function(data) {
-                $("#category_name").val('');
-                $('#companyForm')[0].reset();
+                $('#departmentForm')[0].reset();
                 Swal.fire({
                     position: 'top-mid',
                     icon: 'success',
@@ -163,7 +162,7 @@
                 }, 2000);
             },error:function(err)
             {
-                $("#companyErr").text(err.responseJSON.errors.company);
+                $("#departmentErr").text(err.responseJSON.errors.department);
             }
         });
     });

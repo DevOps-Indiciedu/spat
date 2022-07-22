@@ -9,10 +9,10 @@
                 <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">{{ __('Companies Managment') }}</h4>
+                        <h4 class="card-title">{{ __('User Role Managment') }}</h4>
                     </div>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
-                    {{ __('Add Company') }}
+                    {{ __('Add User Role') }}
                     </button>
                 </div>
                 <div class="iq-card-body">
@@ -20,21 +20,21 @@
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
-                               <th class="text-dark">{{ __('Company') }}</th>
+                               <th class="text-dark">{{ __('Role') }}</th>
                                <th class="text-dark">{{ __('Reg Date') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>
                        <tbody>
                         @php $i = 1 @endphp
-                        @foreach ($company as $data)
+                        @foreach ($role as $data)
                            <tr id="row-{{ $data->id }}" class="text-center">
                                <td>{{ $i++ }}</td>
-                               <td>{{ $data->company }}</td>
+                               <td>{{ $data->role }}</td>
                                <td>{{ DMY($data->created_at) }}</td>
                                <td>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_company" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_company">
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_role" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_role">
                                         <i class="ri-delete-bin-2-fill pr-0"></i>
                                     </button>
                                </td>
@@ -59,13 +59,13 @@
             <span aria-hidden="true">×</span>
             </button>
         </div>
-        <form id="companyForm" method="POST">
+        <form id="roleForm" method="POST">
             @csrf
             <div class="modal-body">
             <div class="form-group">
-                <label for="company">{{ __('Company') }}</label>
-                <input type="text" class="form-control" id="company" name="company">
-                <span class="text-danger" id="companyErr"></span>
+                <label for="role">{{ __('Role') }}</label>
+                <input type="text" class="form-control" id="role" name="role">
+                <span class="text-danger" id="roleErr"></span>
             </div>
             </div>
             <div class="modal-footer">
@@ -81,7 +81,7 @@
 <!-- AJAX -->
 <script type="text/javascript">
         
-    jQuery(".delete_company").on('click',function(){
+    jQuery(".delete_role").on('click',function(){
         // if (confirm("Are you sure")) {
         Swal.fire({
             title: 'Are you sure?',
@@ -95,7 +95,7 @@
             if (result.isConfirmed) {
                 var id = $(this).attr('data-id');
                 $.ajax({
-                    url:"{{ route('delete_company') }}",
+                    url:"{{ route('delete_userrole') }}",
                     type : 'POST',
                     data:{
                         "_token": "{{ csrf_token() }}",
@@ -111,7 +111,8 @@
                                     'Your record has been deleted.',
                                     'success'
                                 );
-                            }, 2000);
+                            }, 1000);
+                            
                         }
                     }
                 });
@@ -122,26 +123,26 @@
         // }
     });
 
-    jQuery(".edit_company").on('click',function(){
+    jQuery(".edit_role").on('click',function(){
         var id = $(this).attr('data-id');
         $.ajax({
-            url:"edit_company/"+id,
+            url:"edit_userrole/"+id,
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#company").val(data.company);
+                $("#role").val(data.role);
                 $("#hiddenId").val(data.id);
 
-                $(".formBtn").text("Update Company");
-                $(".modal-title").text("Update Company");
+                $(".formBtn").text("Update Role");
+                $(".modal-title").text("Update Role");
             }
         });
     });
 
-    $(".modal").on('submit','#companyForm',function(e){
+    $(".modal").on('submit','#roleForm',function(e){
         e.preventDefault();
         $.ajax({
-            url:"{{ route('add_company') }}",
+            url:"{{ route('add_userrole') }}",
             type : 'POST',
             data:new FormData(this),
             dataType: 'json',
@@ -149,8 +150,7 @@
             cache: false,  
             processData:false,
             success:function(data) {
-                $("#category_name").val('');
-                $('#companyForm')[0].reset();
+                $('#roleForm')[0].reset();
                 Swal.fire({
                     position: 'top-mid',
                     icon: 'success',
@@ -163,7 +163,7 @@
                 }, 2000);
             },error:function(err)
             {
-                $("#companyErr").text(err.responseJSON.errors.company);
+                $("#roleErr").text(err.responseJSON.errors.role);
             }
         });
     });

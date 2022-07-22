@@ -25,6 +25,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- jQuery  -->
+    <script src="{{ asset(MyApp::ASSET_SCRIPT.'jquery.min.js') }}"></script>
+    <!-- Sweet Alert  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
 </head>
 <body>
     <!-- loader Start -->
@@ -90,23 +96,23 @@
                                 </a>
                            </li>
                            <li>
-                                <a href="{{ route('company') }}">
+                                <a href="{{ route('location') }}">
                                     <span>Location Management</span>
                                 </a>
                            </li>
                            <li>
-                                <a href="{{ route('company') }}">
+                                <a href="{{ route('department') }}">
                                     <span>Department Management</span>
+                                </a>
+                           </li>
+                           <li>
+                                <a href="{{ route('user_role') }}">
+                                    <span>Role Management</span>
                                 </a>
                            </li>
                            <li>
                                 <a href="{{ route('company') }}">
                                     <span>User Management</span>
-                                </a>
-                           </li>
-                           <li>
-                                <a href="{{ route('company') }}">
-                                    <span>Role Management</span>
                                 </a>
                            </li>
                            <li>
@@ -146,6 +152,15 @@
                            <li><a href="finance-dashboard.html">Finance Dashboard</a></li>
                            <li><a href="employee-dashboard.html">Employee Dashboard</a></li>
                         </ul> -->
+                     </li>
+                     <li>
+                        <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <span>Requirements</span></a>
+                        <ul id="dashboard" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           <li><a href="{{ route('req1') }}">Requirement 1</a></li>
+                           <li><a href="{{ route('req2') }}">Requirement 2</a></li>
+                           <li><a href="{{ route('req3') }}">Requirement 3</a></li>
+                        </ul>
                      </li>
                      <!-- <li>
                         <a href="#ui-elements" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-pencil-ruler-line"></i><span>UI Elements</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
@@ -581,7 +596,7 @@
       <!-- Footer END -->
     </div>
 
-    <script src="{{ asset(MyApp::ASSET_SCRIPT.'jquery.min.js') }}"></script>
+    
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'popper.min.js') }}"></script>
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'bootstrap.min.js') }}"></script>
     <!-- Appear JavaScript -->

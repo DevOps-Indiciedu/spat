@@ -4,30 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\Company;
+use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 
-class CompanyController extends Controller
+class DepartmentController extends Controller
 {
     public function index()
     {
-    	$company['company'] = DB::select('call GetAllCompanies()');
-        return view('pages.company',$company);
+    	$department['department'] = Department::all();
+        return view('pages.department',$department);
     }
 
     public function insertOrupdate(Request $request)
     {
     	$request->validate([
-    		'company'	=>	'required',
+    		'department'	=>	'required',
     	]);
 
-    	$data = Company::updateOrCreate(
+    	$data = Department::updateOrCreate(
             [
                 'id'	=>	$request->hiddenId,
             ],
             [
-        		'company'	=>	$request->company,
+        		'department'	=>	$request->department,
     	    ]
         );
 
@@ -36,16 +35,16 @@ class CompanyController extends Controller
 
     public function destroy(Request $request)
     {
-    	$rec = Company::find($request->id)->delete();
+    	$rec = Department::find($request->id)->delete();
         if($rec):
             $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
         endif;    
         return $response;
     }
 
-    public function edit($company_id)
+    public function edit($department_id)
     {
-        $data = Company::findOrFail($company_id);
+        $data = Department::findOrFail($department_id);
         return response()->json($data);
     }
 }

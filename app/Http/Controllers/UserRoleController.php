@@ -4,30 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\Company;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\DB;
 
-class CompanyController extends Controller
+class UserRoleController extends Controller
 {
     public function index()
     {
-    	$company['company'] = DB::select('call GetAllCompanies()');
-        return view('pages.company',$company);
+    	$role['role'] = UserRole::all();
+        return view('pages.user_role',$role);
     }
 
     public function insertOrupdate(Request $request)
     {
     	$request->validate([
-    		'company'	=>	'required',
+    		'role'	=>	'required',
     	]);
 
-    	$data = Company::updateOrCreate(
+    	$data = UserRole::updateOrCreate(
             [
                 'id'	=>	$request->hiddenId,
             ],
             [
-        		'company'	=>	$request->company,
+        		'role'	=>	$request->role,
     	    ]
         );
 
@@ -36,16 +35,31 @@ class CompanyController extends Controller
 
     public function destroy(Request $request)
     {
-    	$rec = Company::find($request->id)->delete();
+    	$rec = UserRole::find($request->id)->delete();
         if($rec):
             $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
         endif;    
         return $response;
     }
 
-    public function edit($company_id)
+    public function edit($role_id)
     {
-        $data = Company::findOrFail($company_id);
+        $data = UserRole::findOrFail($role_id);
         return response()->json($data);
+    }
+
+    public function req1()
+    {
+        return view('pages.req1');
+    }
+
+    public function req2()
+    {
+        return view('pages.req2');
+    }
+
+    public function req3()
+    {
+        return view('pages.req3');
     }
 }
