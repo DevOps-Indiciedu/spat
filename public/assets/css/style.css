@@ -293,7 +293,7 @@ a:hover { text-decoration: none; }
 .navbar-list li img { width: 40px; height: 40px; }
 .navbar-list li.iq-nav-user { display: flex; align-items: flex-start; }
 .navbar-list li.iq-nav-user span { flex: 1; font-size: 14px; }
-.iq-top-navbar .iq-sidebar-logo .top-logo { display: none; }
+/* .iq-top-navbar .iq-sidebar-logo .top-logo { display: none; } */
 .iq-breadcrumb { display: none; }
 .nav-item span.dots { height: 5px; width: 5px; font-size: 0; text-align: center; padding: 0; position: absolute; top: 25px; right: 10px; animation: shadow-pulse-dots 1s infinite; border-radius: 50%; -webkit-border-radius: 50%; }
 .nav-item .badge.count-mail { height: 15px; width: 15px; font-size: 10px; text-align: center; line-height: 15px; padding: 0; position: absolute; top: 20px; right: 10px; animation: shadow-pulse 1s infinite; }
@@ -355,7 +355,7 @@ a:hover { text-decoration: none; }
 /*---------------------------------------------------------------------
                               Content Page
 -----------------------------------------------------------------------*/
-.content-page { margin-left: 260px; overflow: hidden; padding: 100px 15px 0; min-height: 100vh; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
+.content-page { margin-left: 0px; overflow: hidden; padding: 100px 15px 0; min-height: 100vh; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
 .iq-user-dropdown { width: 350px; }
 body.sidebar-main .content-page, body.sidebar-main .iq-footer { margin-left: 80px; }
 body.sidebar-main .iq-sidebar-logo { width: 80px; }
@@ -630,7 +630,7 @@ Animation Card
 /*---------------------------------------------------------------------
 Footer
 -----------------------------------------------------------------------*/
-.iq-footer { padding: 15px; margin-left: 260px; -webkit-box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); -moz-box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
+.iq-footer { padding: 15px; margin-left: 0px; -webkit-box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); -moz-box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
 .iq-footer ul li a { color: #777D74; }
 .iq-footer ul li a:hover { color: #be1e2d; text-decoration: none; }
 .bg-banner-image.style-three { height: 150px; background: url('../images/bg-03.jpg'); }
