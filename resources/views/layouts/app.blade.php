@@ -137,7 +137,7 @@
                         </ul>
                      </li>
                      <li>
-                        <a href="Findings-and-observations.html" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <a href="{{ route('view_requirements') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
                         <span>PCI DSS Standard</span></a>
                         <!-- <ul id="dashboard" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                            <li><a href="index.html">Dashboard 1</a></li>
@@ -152,6 +152,10 @@
                            <li><a href="finance-dashboard.html">Finance Dashboard</a></li>
                            <li><a href="employee-dashboard.html">Employee Dashboard</a></li>
                         </ul> -->
+                     </li>
+                     <li>
+                        <a href="{{ route('company_onboarding') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <span>Company Onboarding</span></a>
                      </li>
                      <li>
                         <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>

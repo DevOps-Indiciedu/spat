@@ -62,4 +62,9 @@ class UserRoleController extends Controller
     {
         return view('pages.req3');
     }
+
+    public function company_onboarding()
+    {
+        return view('pages.company_onboarding');
+    }
 }

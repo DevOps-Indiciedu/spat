@@ -58,4 +58,11 @@ Route::controller(App\Http\Controllers\UserRoleController::class)->group(functio
     Route::get('/req1', 'req1')->name('req1');
     Route::get('/req2', 'req2')->name('req2');
     Route::get('/req3', 'req3')->name('req3');
+    Route::get('/company_onboarding', 'company_onboarding')->name('company_onboarding');
+});
+
+Route::controller(App\Http\Controllers\ReqListController::class)->group(function () {
+
+    Route::get('/view_requirements', 'index')->name('view_requirements');
+    // Route::get('/edit_company/{id}', 'edit')->name('edit_company');
 });
