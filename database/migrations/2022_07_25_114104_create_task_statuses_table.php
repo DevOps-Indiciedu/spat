@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('task_statuses', function (Blueprint $table) {
             $table->id();
-            $table->integer('company_id');
-            $table->integer('location_id');
-            $table->string('department');
+            $table->string('title');
+            $table->integer('order_by');
+            $table->enum('status', ['0','1']);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('task_statuses');
     }
 };

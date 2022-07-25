@@ -9,10 +9,10 @@
                 <div class="iq-card">
                 <div class="iq-card-header d-flex justify-content-between">
                     <div class="iq-header-title">
-                        <h4 class="card-title">{{ __('Department Managment') }}</h4>
+                        <h4 class="card-title">{{ __('Designation Managment') }}</h4>
                     </div>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
-                    {{ __('Add Depart') }}
+                    {{ __('Add Designation') }}
                     </button>
                 </div>
                 <div class="iq-card-body">
@@ -20,25 +20,21 @@
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
-                               <th class="text-dark">{{ __('Depart') }}</th>
-                               <th class="text-dark">{{ __('Company') }}</th>
-                               <th class="text-dark">{{ __('Location') }}</th>
+                               <th class="text-dark">{{ __('Designation') }}</th>
                                <th class="text-dark">{{ __('Reg Date') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>
                        <tbody>
                         @php $i = 1 @endphp
-                        @foreach ($department as $data)
+                        @foreach ($designation as $data)
                            <tr id="row-{{ $data->id }}" class="text-center">
                                <td>{{ $i++ }}</td>
-                               <td>{{ $data->department }}</td>
-                               <td>{!!  get_company($data->company_id)->company !!}</td>
-                               <td>{!!  get_location($data->location_id)->name !!}</td>
+                               <td>{{ $data->title }}</td>
                                <td>{{ DMY($data->created_at) }}</td>
                                <td>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_department" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_department">
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_designation" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_designation">
                                         <i class="ri-delete-bin-2-fill pr-0"></i>
                                     </button>
                                </td>
@@ -53,6 +49,7 @@
     </div>
 </div>
 
-@include('pages.ajax.departmentAjax')
+
+@include('pages.ajax.designationAjax')
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Location;
+use Illuminate\Support\Facades\DB;
 
 class LocationController extends Controller
 {
@@ -51,4 +52,23 @@ class LocationController extends Controller
         $data = Location::findOrFail($location_id);
         return response()->json($data);
     }
+
+    public function get_locations_by_companyID($company_id)
+    {
+        // $data = DB::select(
+            //     'call get_locations_by_companyID(company_id)'
+            // );
+            // return response()->json($data);
+        $output = '';
+        $data = Location::where('company_id',$company_id)->get();
+        $output .= "<select class='form-control' name='location_id' id='location_id'>";
+        $output .= "<option value=''>Select Location</option>";
+        foreach($data as $location):
+            $output .= "<option value='".$location->id."'>".$location->name."</option>";
+        endforeach;    
+        $output .= "</select>";
+        echo $output;
+    }
+
+    
 }

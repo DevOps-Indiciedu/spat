@@ -1,0 +1,514 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    background-color: #bc202e;
+    /* overflow: hidden; */
+}
+.main {
+    background-color: #bc202e; 
+    background-image: url(https://pms.secureism.com/assetsAdmin/img/bg-newr.jpg);
+}
+.rightSection {
+    height: 100vh;
+    padding-top: 3vh;
+    padding-left: 4vw;
+}
+.login-wrap{
+    /*padding-left: 50px;*/
+}
+.logodiv{
+    padding-bottom: 3vh;
+    padding-top: 5vh;
+}
+.t-logo {
+    width: 340px;
+}
+.loginBtn { 
+}
+.loginBtn .signText {
+    color: #fff;
+    font-size: 15px;
+}
+.loginBtn .button {
+    border-radius: 5px;
+}
+.button {
+    width: 250px;
+    height: 50px;
+    /* border: 1px solid #cccc; */
+    background: #666;
+}
+.btn-img{
+    width: 5%;
+    float: left;
+    padding-top: 1vh;
+}
+.btn_text {
+    font-weight: 500;
+    padding-left: 21px;
+    font-size: 1vw;
+    color: white;
+}
+.cbtn{
+    
+     width: 100%;
+     background-color: whitesmoke;
+}
+.lbtn{ 
+    font-weight: 600; 
+    /*background: linear-gradient(92deg, #f06b77 45%, rgb(255 174 181) 100%);*/
+    background: #373737;
+    width: 100%;
+    border: 0px;
+    color: #fff;
+}
+.lbtn:hover {
+    color: black;
+    /*background: linear-gradient(92deg, #de9fa5 45%, rgb(248 87 101) 100%);*/
+    background: #000;
+    border-color: #000;
+}
+.download{
+    color: #fff;
+    font-size: 1.5vw;
+    padding-top: 8rem;
+    padding-left: 0.8rem;
+    margin-top: -30px;
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
+.app-btn.blu {
+    background-color: #101010;
+    transition: background-color .25s linear;
+}
+.app-btn.blu:hover {
+    background-color: #454545;
+}
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+a:hover {
+    text-decoration: none;
+}
+.app-btn {
+    width: 40%;
+    color: #fff;
+    margin: 0px 10px;
+    text-align: left;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: Lucida Grande,sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.app-btn:hover {
+    color: #fff;
+}
+.app-btn i {
+    text-align: center;
+    font-size: 25px;
+    margin-right: 7px;
+}
+.fab .far {
+    font-weight: 400;
+}
+.fab {
+    font-family: "Font Awesome 5 Brands";
+}
+.fa-apple:before {
+    content: "\f179";
+}
+.app-btn p {
+    margin-left: 5px;
+    margin-bottom: 0px;
+}
+.app-btn .big-txt {
+    font-size: 14px;
+    text-transform: capitalize;
+}
+.app-btn .big-txt {
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-auto, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-auto, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.loginBtn2{
+    padding-top: 3vh;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    left: 54%;
+    width: 80%;
+}
+.loginBtn{
+    padding-top: 0rem;
+}
+.rightContText {
+    padding-left: 3rem;
+    margin-left: 1rem;
+}
+.rightContText .redText{
+    color: #bc202e;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 2vw;
+}
+.mt-1 .my-1 {
+    margin-top: 0.25rem!important;
+}
+.rightContText .blueText {
+    color: #000;
+    font-size: 1.5vw;
+}
+.videoPadding  {
+    padding: 1rem 2.5rem 2rem 3.3rem!important;
+}
+.login-wrap {
+    width:395px;
+    margin:auto; 
+    padding-bottom: 68px !important;
+}
+
+button
+{
+    cursor:pointer !important;
+}
+
+.col-md-4.rightSection {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.footr-powerdby{
+    text-align:center;
+    color:#373737;
+    padding:20px 0px;
+}
+.form-control{
+    height:50px;
+}
+.account-title {
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-align: center;
+    color: #373737;
+}
+.account-subtitle {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 22px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+.account-subtitle hr.set-hrleft {
+    border-top: 5px solid #bc202e;
+    width: 50px;
+    margin-right: 0px;
+}
+.account-subtitle span {
+    margin-right: 9px !important;
+    margin-left: 9px;
+    color:#373737;
+}
+.account-subtitle hr.set-hrright {
+    border-top: 5px solid #bc202e;
+    width: 50px;
+    margin-left: 0px;
+}
+.frgt-row{
+    margin-top:5px;
+    text-align:center;
+    color:#373737;
+}
+.frgt-row a{
+    color: #bc202e;
+}
+.text-right {
+    text-align: right!important;
+}
+.pt-1 .py-1 {
+    padding-top: 0.25rem!important;
+}
+.card-v {
+    padding: 0!important;
+    z-index: 5;
+    overflow: hidden;
+}
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    margin: 10px;
+    padding: 25px 20px;
+    box-shadow: 7px 9px 17px 5px rgb(0 0 0 / 20%);
+}
+.card {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 0 20px 8px rgb(0 0 0 / 14%);
+    border: none;
+    background: #3f3a81;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+
+
+/*Red Heading Down*/
+
+.rightContText{
+    padding-left: 3rem;
+    margin-left: 1rem;
+}
+.h2Text {
+    color: #bc202e;
+    font-weight: 600;
+    font-size: 1.5vw;
+}
+.footer-img{
+    width: 50%;
+    max-width: 50%!important;
+    padding-bottom: 10px;
+}
+.footer-img-text {
+    color: #000;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400 !important;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: auto;
+}
+
+
+
+/*Media Queries*/
+
+@media screen and (max-width: 1024px)
+{
+    .t-logo {
+        width: 290px;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .loginBtn {
+        margin-top: 0!important;
+        padding-left: 10px!important;
+        padding-right: 10px!important;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .loginBtn h2 {
+        font-size: 1.5rem;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .loginBtn button {
+        width: 100%!important;
+        border-radius: 15px;
+    }
+    .lbtn {
+        margin-left: 0%;
+    }
+    .cbtn {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .btn_text {
+        padding-left: 5vh;
+        letter-spacing: 1px;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .loginBtn h2 {
+        font-size: 1.5rem;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .app-btn{
+        width: 65%!important;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .backImg{
+        padding: 4rem 0 4rem 4rem!important;
+    }
+}
+
+@media (min-width: 768px)
+{
+    .col-md-8 {
+    flex: 0 0 66.66666667%;
+    max-width: 66.66666667%;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .loginBtn {
+        margin-top: 0!important;
+        padding-left: 10px!important;
+        padding-right: 10px!important;
+    }
+}
+
+/*Red Headin Down*/
+
+@media screen and (max-width: 1024px)
+{
+    .loginBtn h2 {
+        font-size: 1.5rem;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .footer-img {
+        width: 70%;
+        max-width: 70%!important;
+    }
+}
+@media screen and (max-width: 1024px)
+{
+    .footer-img-text{
+        font-size: 2vh;
+    }
+}
+@media screen and (max-width: 768px)
+{
+    .login-wrap {
+        width: auto;
+        margin: auto;
+    }.loginBtn { 
+    padding-left: 0px!important; 
+}.loginBtn.loginBtn2 .rightContText {
+    padding: 0px 21px;
+}.loginBtn.loginBtn2 .videoPadding {
+    padding-left: 25px !important;
+}
+}
+
+@media screen and (max-width: 480px) {
+    .cbtn{
+         width: 100%; 
+    }
+    .rightSection {
+        height: 80vh;  
+    }
+    .logodiv{
+        text-align: center;
+    }
+    .t-logo {
+        width: 240px;
+    }
+    .login-wrap{
+        padding-left: 10px;
+    }
+    .loginBtn .signText {
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+    }
+    .btn_text {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+    .backImg{
+        margin-top: 210px;
+        background: whitesmoke;
+    }
+    .loginBtn h2 {
+        text-align: center;
+    }
+    .downloadh{
+        margin-top: -100px;
+    }
+    /* .loginBtn, .loginBtn2 {
+        padding-top: 510px;
+    } */
+    .loginBtn2 {
+        width: 115%;
+        top:40%;
+    }
+    .rightContText .redText {
+        font-size: 6vw;
+        padding-top: 20px;
+    }
+    .rightContText .blueText {
+        font-size: 6vw;
+     /* margin-left: 12%; */
+        padding-top: 10px;
+    }
+    .rightContText {
+        margin-top: 80px;
+        width: 90%;
+        background: whitesmoke;
+    }
+    .h2Text{
+        width: 80%;
+    }
+    .text-right {
+        
+        background: whitesmoke;
+    }
+    .main{
+        overflow-x: hidden;
+    }
+    .loginBtn h2 {
+        font-size: 1rem;
+    }
+    .loginBtn {
+        padding-top: 8vh;
+    }
+    .lbtn{
+        margin-left: 0%;
+    }
+    
+}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .card, .card-v {
+        height: 100px;
+        width: 300px;
+    }
+}
+@media screen and (min-width: 481px) {
+    .main{
+        background-color: #bc202e;
+        overflow: hidden;
+    }
+}
+@media screen and (max-width: 720px)
+{
+    .footer-img{
+        width: 50%;
+        max-width: 40%!important;
+    }
+}

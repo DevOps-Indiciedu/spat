@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class TaskStatus extends Model
 {
     use HasFactory;
-    protected $fillable = ['company_id','location_id','department'];
 }
