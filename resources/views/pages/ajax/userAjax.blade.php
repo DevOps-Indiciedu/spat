@@ -132,7 +132,11 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
+                $("#email").val(data.email);
+                $("#email").val(data.email);
                 $("#company_id").val(data.company_id);
+                $("#designation_id").val(data.designation_id);
+                $("#role_id").val(data.role_id);
                 $("#name").val(data.name);
                 $("#address").val(data.address);
                 $("#phone").val(data.phone);
@@ -155,7 +159,7 @@
             cache: false,  
             processData:false,
             success:function(data) {
-                $('#locationForm')[0].reset();
+                $('#userForm')[0].reset();
                 Swal.fire({
                     position: 'top-mid',
                     icon: 'success',

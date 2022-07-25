@@ -35,11 +35,13 @@
                             @foreach ($task as $data)
                             <tr id="row-{{ $data->id }}" class="text-center">
                                 <td>{{ $i++ }}</td>
-                                <td>{!!  get_company($data->company_id)->company !!}</td>
-                                <td>{{ $data->name }}</td>
-                                <td>{{ $data->address }}</td>
-                                <td>{{ $data->phone }}</td>
-                                <td>{{ DMY($data->created_at) }}</td>
+                                <td>Examine documented procedures to verify there is a formal process for testing</td>
+                                <td>{{ $data->task_title }}</td>
+                                <td>{!! get_user($data->assign_to)->username !!}</td>
+                                <td>{{ $data->start_datetime }}</td>
+                                <td>{{ $data->end_datetime }}</td>
+                                <td>{!! get_taskStatus($data->status)->title !!}</td>
+                                <td>{{ $data->task_progress }}</td>
                                 <td>
                                     <button type="button" data-id="{{ $data->id }}" class="btn btn-warning edit_task" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
                                     <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_task" >

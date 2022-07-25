@@ -18,7 +18,13 @@ class TaskController extends Controller
     public function insertOrupdate(Request $request)
     {
     	$request->validate([
-    		'company'	=>	'required',
+    		'project_id'	=>	'required',
+    		'title'	        =>	'required',
+    		'start_datetime'=>	'required',
+    		'end_datetime'  =>	'required',
+    		'user_id'       =>	'required',
+    		'priority'       =>	'required',
+    		'taskstatus_id'  =>	'required',
     	]);
 
     	$data = Task::updateOrCreate(
@@ -26,7 +32,14 @@ class TaskController extends Controller
                 'id'	=>	$request->hiddenId,
             ],
             [
-        		'company'	=>	$request->company,
+        		'project_id'	=>	$request->project_id,
+        		'task_title'	=>	$request->title,
+        		'start_datetime'=>	$request->start_datetime,
+        		'end_datetime'  =>	$request->end_datetime, 
+        		'assign_to'     =>	$request->user_id, 
+        		'priority'      =>	$request->priority, 
+        		'status'        =>	$request->taskstatus_id, 
+        		'task_des'      =>	$request->description, 
     	    ]
         );
 

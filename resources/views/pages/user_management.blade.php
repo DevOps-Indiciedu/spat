@@ -30,6 +30,7 @@
                                <th class="text-dark">{{ __('Department') }}</th>
                                <th class="text-dark">{{ __('Role') }}</th>
                                <th class="text-dark">{{ __('Status') }}</th>
+                               <th class="text-dark">{{ __('Reg Date') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>

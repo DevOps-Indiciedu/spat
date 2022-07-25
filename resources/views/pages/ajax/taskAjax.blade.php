@@ -13,7 +13,14 @@
             <div class="modal-body row">
                 <div class="form-group col-sm-6">
                     <label for="project">{{ __('Project') }}</label>
-                    {!! company_dropdown() !!}
+                    <select name="project" id="project" class="form-control">
+                        <option value="">Select Project</option>
+                        <option value="1">A formal process for approving and testing all network connections</option>
+                        <option value="2">Examine documented procedures to verify there is a formal process for testing</option>
+                        <option value="3">Testing and approval of all changes to firewall and router configurations.</option>
+                        <option value="4">Identify the sample of records for network connections that were selected for this testing procedure.</option>
+                    </select>
+                    <!-- {!! company_dropdown() !!} -->
                     <span class="text-danger" id="projectErr"></span>
                 </div>
                 <div class="form-group col-sm-6">
@@ -33,17 +40,17 @@
                 </div>
                 <div class="form-group col-sm-4">
                     <label for="phone">{{ __('Assign To') }}</label>
-                    {!! company_dropdown() !!}
+                    {!! users_dropdown() !!}
                     <span class="text-danger" id="assignErr"></span>
                 </div>
                 <div class="form-group col-sm-4">
                     <label for="phone">{{ __('Priority') }}</label>
-                    {!! company_dropdown() !!}
+                    {!! priority_dropdown() !!}
                     <span class="text-danger" id="priorityErr"></span>
                 </div>
                 <div class="form-group col-sm-4">
                     <label for="phone">{{ __('Status') }}</label>
-                    {!! company_dropdown() !!}
+                    {!! taskStatus_dropdown() !!}
                     <span class="text-danger" id="statusErr"></span>
                 </div>
                 <div class="form-group col-sm-12">
@@ -111,11 +118,14 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#company_id").val(data.company_id);
-                $("#name").val(data.name);
-                $("#address").val(data.address);
-                $("#phone").val(data.phone);
-                $("#hiddenId").val(data.id);
+                $("#project").val(data.project_id);
+                $("#title").val(data.task_title);
+                $("#start_datetime").val(data.start_datetime);
+                $("#end_datetime").val(data.end_datetime);
+                $("#user_id").val(data.assign_to);
+                $("#priority").val(data.priority);
+                $("#taskstatus_id").val(data.status);
+                $("#description").val(data.task_des);
 
                 $(".formBtn").text("Update Task");
                 $(".modal-title").text("Update Task");
@@ -147,10 +157,13 @@
                 }, 2000);
             },error:function(err)
             {
-                $("#companyErr").text(err.responseJSON.errors.company_id);
-                $("#nameErr").text(err.responseJSON.errors.name);
-                $("#addressErr").text(err.responseJSON.errors.address);
-                $("#phoneErr").text(err.responseJSON.errors.phone);
+                $("#projectErr").text(err.responseJSON.errors.project_id);
+                $("#titleErr").text(err.responseJSON.errors.title);
+                $("#start_datetimeErr").text(err.responseJSON.errors.start_datetime);
+                $("#end_datetimeErr").text(err.responseJSON.errors.end_datetime);
+                $("#assignErr").text(err.responseJSON.errors.user_id);
+                $("#priorityErr").text(err.responseJSON.errors.priority);
+                $("#statusErr").text(err.responseJSON.errors.taskstatus_id);
             }
         });
     });

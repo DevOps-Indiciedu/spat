@@ -19,9 +19,14 @@ class UserManagementController extends Controller
 
     public function insertOrupdate(Request $request)
     {
-    	$validator = $request->validate([
+        if($request->hiddenId == ""):
+            $email = "required|email|unique:users";
+        else:    
+            $email = "required";
+        endif;    
+    	$request->validate([
     		'name'	            =>	'required',
-    		'email'	            =>	'required|email|unique:users',
+    		'email'             =>   $email,
     		'phone'	            =>	'required',
     		'designation_id'	=>	'required',
     		'company_id'	    =>	'required',

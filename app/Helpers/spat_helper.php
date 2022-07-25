@@ -218,19 +218,28 @@
 	function users_dropdown($select = 0,$where = "")
     {
         $output = '';
-		$output .= "<select class='form-control' name='taskstatus_id' id='taskstatus_id'>";
-		$output .= "<option value=''>Select Status</option>";	
+		$output .= "<select class='form-control' name='user_id' id='user_id'>";
+		$output .= "<option value=''>Select User</option>";	
 			if($where != ""):
-				$company = DB::table('task_statuses')->where($where)->get();	
+				$user = DB::table('users')
+                    ->join('user_management', 'user_management.user_id', '=', 'users.id')
+                    ->select('users.name','users.id')
+                    ->where('user_management.status', '1')
+                    ->where($where)
+                    ->get();
 			else:			
-				$company = DB::table('task_statuses')->get();	
+				$user = DB::table('users')
+                    ->join('user_management', 'user_management.user_id', '=', 'users.id')
+                    ->select('users.name','users.id')
+                    ->where('user_management.status', '1')
+                    ->get();
 			endif;
-				foreach ($company as $row) :
+				foreach ($user as $row) :
 				$selected = '';
 				if ($select == $row->id) :
 					$selected = "selected";
 				endif;	
-				$output .= "<option value='".$row->id."' ".$selected.">".$row->title."</option>";
+				$output .= "<option value='".$row->id."' ".$selected.">".$row->name."</option>";
 			endforeach;	
 
 		$output .= "</select>";
@@ -241,7 +250,45 @@
 	function get_user($id = 0)
     {
 
-		$designation = DB::table('task_statuses')->where('id', $id)->first();	
-		return $designation;
+		$user = DB::table('users')
+                    ->join('user_management', 'user_management.user_id', '=', 'users.id')
+                    ->select('users.*','user_management.*','user_management.name as username')
+					->where('user_management.status', '1')
+                    ->first();
+		return $user;
     }
+
+	function priority_dropdown($select = 0)
+    {
+		$priority = array(
+			'1'	=>	'High',
+			'2'	=>	'Medium',
+			'3'	=>	'Low',
+		);
+        $output = '';
+		$output .= "<select class='form-control' name='priority' id='priority'>";
+		$output .= "<option value=''>Select Priority</option>";	
+			for($i = 1; $i <= count($priority); $i++) :
+				$selected = '';
+				if ($select == $i) :
+					$selected = "selected";
+				endif;	
+				$output .= "<option value='".$i."' ".$selected.">".$priority[$i]."</option>";
+			endfor;	
+
+		$output .= "</select>";
+
+		return $output;
+    }
+
+	function priority($id = 0)
+	{
+		$status = array(
+			'1'	=>	'High',
+			'2'	=>	'Medium',
+			'3'	=>	'Low',
+		);
+	}
+
+	
 ?>
