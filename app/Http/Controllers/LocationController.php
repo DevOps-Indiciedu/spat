@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Location;
 use Illuminate\Support\Facades\DB;
+// use App\Rules\PhoneNumber;
+use Validator;
 
 class LocationController extends Controller
 {
@@ -21,7 +23,7 @@ class LocationController extends Controller
     		'company_id'	=>	'required',
     		'name'	        =>	'required',
     		'address'	    =>	'required',
-    		'phone'	        =>	'required',
+    		'phone'	        =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
     	]);
 
     	$data = Location::updateOrCreate(

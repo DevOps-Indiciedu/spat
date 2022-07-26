@@ -22,24 +22,44 @@ class CompanyController extends Controller
     		'company'	=>	'required',
     	]);
 
-    	$data = Company::updateOrCreate(
+        if($request->hiddenId == ""):
+            $data = DB::select('call InsertCompany(?, ?, ?)',
             [
-                'id'	=>	$request->hiddenId,
-            ],
-            [
-        		'company'	=>	$request->company,
-    	    ]
-        );
+                $request->company,
+                date('Y-m-d H:i:s'),
+                date('Y-m-d H:i:s'),
+            ]);
+        else: 
+            // $data = DB::select('call UpdateCompany(?, ?, ?)',
+            // [
+            //     $request->company,
+            //     date('Y-m-d H:i:s'),
+            //     date('Y-m-d H:i:s'),
+            // ]);
+            $data = Company::updateOrCreate(
+                [
+                    'id'	=>	$request->hiddenId,
+                ],
+                [
+                    'company'	=>	$request->company,
+                ]
+            );
+        endif;    
 
     	return response()->json($data);
     }
 
     public function destroy(Request $request)
     {
-    	$rec = Company::find($request->id)->delete();
-        if($rec):
+        try {
+            $rec = DB::select('call DeleteCompany('.$request->id.')');
             $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
-        endif;    
+    	} catch(Exception $e) {
+            $response = response()->json(['code'=>404, 'message'=>'Data Not Deleted'], 404);
+        }
+            // $rec = Company::find($request->id)->delete();
+        // if($rec):
+        // endif;    
         return $response;
     }
 

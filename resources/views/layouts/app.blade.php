@@ -70,7 +70,7 @@
                <div class="iq-sidebar-logo">
                   <div class="top-logo">
                      <a href="{{ url('home') }}" class="logo">
-                     <img src="{{ asset(MyApp::ASSET_IMG.'Secureism-logo.png') }}" class="img-fluid" alt="">
+                     <img src="{{ asset(MyApp::SITE_LOGO) }}" class="img-fluid" alt="">
                      <!-- <span>Sofbox</span> -->
                      </a>
                   </div>
@@ -218,7 +218,7 @@
                                     <h5 class="mb-0 text-white line-height">{{ Auth::user()->name }}</h5>
                                     <span class="text-white font-size-12">Available</span>
                                  </div>
-                                 <a href="profil.html" class="iq-sub-card iq-bg-primary-hover">
+                                 <a href="{{ route('profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                     <div class="media align-items-center">
                                        <div class="rounded iq-card-icon iq-bg-primary">
                                           <i class="ri-file-user-line"></i>
@@ -354,7 +354,7 @@
                   </ul>
                </div>
                <div class="col-lg-6 text-right">
-                  Copyright 2022 <a href="#">Secureism</a> All Rights Reserved.
+                  Copyright {{ date('Y') }} <a href="#">Secureism</a> All Rights Reserved.
                </div>
             </div>
          </div>
@@ -391,6 +391,12 @@
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'chart-custom.js') }}"></script>
     <!-- Custom JavaScript -->
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'custom.js') }}"></script>
-
+    <script>
+      $('.modal').modal({
+         backdrop: 'static',
+         keyboard: false,  // to prevent closing with Esc button (if you want this too)
+         show: false
+      })
+    </script>
 </body>
 </html>

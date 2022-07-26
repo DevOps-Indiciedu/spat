@@ -21,7 +21,9 @@ Route::get('/', function () {
 // Check Auth Middleware 
 
 // if (Auth::guard('web')->check()) {
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => 'prevent-back-history'],function(){
+
+    Route::group(['middleware' => ['auth']], function () {
         Route::get('/home', function () {
             return view('dashboard');
         });
@@ -76,6 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/add_user', 'insertOrupdate')->name('add_user');
         Route::post('/delete_user', 'destroy')->name('delete_user');
         Route::get('/edit_user/{id}', 'edit')->name('edit_user');
+        Route::get('/profile', 'profile')->name('profile');
     });
 
     // Designation Management
@@ -94,9 +97,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit_task/{id}', 'edit')->name('edit_task');
     });
 
+    // Requuirment List 
     Route::controller(App\Http\Controllers\ReqListController::class)->group(function () {
         Route::get('/view_requirements', 'index')->name('view_requirements');
     });
 
+    });
 });
 // End Middleware 

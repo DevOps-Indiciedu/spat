@@ -30,7 +30,6 @@
                                <th class="text-dark">{{ __('Department') }}</th>
                                <th class="text-dark">{{ __('Role') }}</th>
                                <th class="text-dark">{{ __('Status') }}</th>
-                               <th class="text-dark">{{ __('Reg Date') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>
@@ -39,7 +38,12 @@
                             @foreach ($user as $data)
                             <tr id="row-{{ $data->id }}" class="text-center">
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $data->name }}</td>
+                                <td>
+                                    @if($data->profile_image)
+                                        <img src="{{ asset(MyApp::PROFILE.$data->profile_image) }}" alt="{{ $data->profile_image }}" width="50">
+                                    @endif
+                                    {{ $data->name }}
+                                </td>
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->phone }}</td>
                                 <td>{{ $data->address }}</td>
@@ -49,7 +53,6 @@
                                 <td>{!!  get_department($data->department_id)->department !!}</td>
                                 <td>{!!  get_role($data->role_id)->role !!}</td>
                                 <td>{{ status($data->status) }}</td>
-                                <td>{{ DMY($data->created_at) }}</td>
                                 <td>
                                     <button type="button" data-id="{{ $data->id }}" class="btn btn-warning edit_user" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
                                     <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_user" >

@@ -38,8 +38,8 @@
                                 <td>Examine documented procedures to verify there is a formal process for testing</td>
                                 <td>{{ $data->task_title }}</td>
                                 <td>{!! get_user($data->assign_to)->username !!}</td>
-                                <td>{{ $data->start_datetime }}</td>
-                                <td>{{ $data->end_datetime }}</td>
+                                <td>{{ DMY($data->start_datetime) }}</td>
+                                <td>{{ DMY($data->end_datetime) }}</td>
                                 <td>{!! get_taskStatus($data->status)->title !!}</td>
                                 <td>{{ $data->task_progress }}</td>
                                 <td>

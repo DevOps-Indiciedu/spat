@@ -87,7 +87,7 @@
         <div _ngcontent-att-c159="" class="col-md-4 rightSection">
         <div _ngcontent-att-c159="" class="login-wrap">
             <div _ngcontent-att-c159="" class="logodiv text-center">
-            <img _ngcontent-att-c159="" src="{{ asset(MyApp::ASSET_IMG.'Secureism-logo.png') }}" alt="" class="t-logo">
+            <img _ngcontent-att-c159="" src="{{ asset(MyApp::SITE_LOGO) }}" alt="" class="t-logo">
             </div>
             <div _ngcontent-att-c159="" class="loginBtn" >
             <div class="p-3">

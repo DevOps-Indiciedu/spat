@@ -68,13 +68,14 @@
                 <div class="form-group col-sm-6">
                     <label for="image">{{ __('Image') }}</label>
                     <br>
-                    <input type="file" id="image" name="image">
+                    <input type="file" id="image" name="image" accept=".jpg,.png,.gif">
                     <span class="text-danger" id="imgErr"></span>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
+                <input type="hidden" id="hiddenProfile" name="hiddenProfile">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
@@ -140,10 +141,22 @@
                 $("#name").val(data.name);
                 $("#address").val(data.address);
                 $("#phone").val(data.phone);
-                $("#hiddenId").val(data.id);
+                $("#hiddenId").val(data.user_id);
+                $("#hiddenProfile").val(data.profile_image);
 
                 $(".formBtn").text("Update User");
                 $(".modal-title").text("Update User");
+
+                // Triggers 
+                jQuery("#company_id").trigger('change');
+                setTimeout(function() { 
+                    $("#location_id").val(data.location_id);
+                    jQuery("#location_id").trigger('change');
+                    $("#department_id").val(data.department_id).delay("slow");
+                }, 500);
+                setTimeout(function() { 
+                    $("#department_id").val(data.department_id).delay("slow");
+                }, 800);
             }
         });
     });

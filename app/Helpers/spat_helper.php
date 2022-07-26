@@ -1,6 +1,7 @@
 <?php
 
     use Illuminate\Support\Facades\DB;
+	use Illuminate\Support\Facades\File;
 
     function company_dropdown($select = 0)
     {
@@ -290,5 +291,13 @@
 		);
 	}
 
-	
+	function deleteFile($folder = "",$image = "")
+	{
+		if ($image != "" && $folder != ""):
+			$destination = 'public/'.$folder.'/'.$image;
+			if (File::exists($destination)) :
+				File::delete($destination);
+			endif;
+		endif;
+	}
 ?>

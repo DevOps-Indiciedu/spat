@@ -12,8 +12,8 @@
             @csrf
             <div class="modal-body row">
                 <div class="form-group col-sm-6">
-                    <label for="project">{{ __('Project') }}</label>
-                    <select name="project" id="project" class="form-control">
+                    <label for="project_id">{{ __('Project') }}</label>
+                    <select name="project_id" id="project_id" class="form-control">
                         <option value="">Select Project</option>
                         <option value="1">A formal process for approving and testing all network connections</option>
                         <option value="2">Examine documented procedures to verify there is a formal process for testing</option>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="form-group col-sm-12">
                     <label for="phone">{{ __('Description') }}</label>
-                    <textarea name="description" class="form-control"></textarea>
+                    <textarea name="description" id="description" class="form-control"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -111,6 +111,10 @@
         // }
     });
 
+    function pad2(n) {
+        return (n < 10 ? '0' : '') + n;
+    }
+
     jQuery(".edit_task").on('click',function(){
         var id = $(this).attr('data-id');
         $.ajax({
@@ -118,10 +122,18 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#project").val(data.project_id);
+                $("#hiddenId").val(data.id);
+                $("#project_id").val(data.project_id);
                 $("#title").val(data.task_title);
-                $("#start_datetime").val(data.start_datetime);
-                $("#end_datetime").val(data.end_datetime);
+
+                sdate = new Date(data.start_datetime);
+                sdate_format = sdate.getFullYear()+"-"+pad2((sdate.getMonth()+1))+"-"+pad2(sdate.getDate());
+
+                edate = new Date(data.end_datetime);
+                edate_format = edate.getFullYear()+"-"+pad2((edate.getMonth()+1))+"-"+pad2(edate.getDate());
+
+                $("#start_datetime").val(sdate_format);
+                $("#end_datetime").val(edate_format);
                 $("#user_id").val(data.assign_to);
                 $("#priority").val(data.priority);
                 $("#taskstatus_id").val(data.status);

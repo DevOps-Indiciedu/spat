@@ -20,9 +20,9 @@
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
-                               <th class="text-dark">{{ __('Company') }}</th>
                                <th class="text-dark">{{ __('Name') }}</th>
                                <th class="text-dark">{{ __('Location') }}</th>
+                               <th class="text-dark">{{ __('Company') }}</th>
                                <th class="text-dark">{{ __('Phone') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
@@ -32,9 +32,9 @@
                             @foreach ($location as $data)
                             <tr id="row-{{ $data->id }}" class="text-center">
                                 <td>{{ $i++ }}</td>
-                                <td>{!!  get_company($data->company_id)->company !!}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->address }}</td>
+                                <td>{!!  get_company($data->company_id)->company !!}</td>
                                 <td>{{ $data->phone }}</td>
                                 <td>{{ DMY($data->created_at) }}</td>
                                 <td>
@@ -54,6 +54,6 @@
     </div>
 </div>
 
-@include('pages.ajax.departmentAjax')
+@include('pages.ajax.locationAjax')
 
 @endsection
