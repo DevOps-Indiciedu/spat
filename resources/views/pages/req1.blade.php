@@ -1,13 +1,25 @@
+
 <!-- Page Content  -->
 @extends('layouts.app')
+
+<head>
+    <style>
+        #accordion-1 table, th,td {
+          width:0px;
+        }
+        .navbar-list li img{
+            margin-top: 40% !important;
+         }
+    </style>
+</head>
 
 @section('content')
 <!-- Page Content  -->
 <div id="content-page" class="content-page">
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-lg-2">
-                     <div class="iq-right-fixed rounded iq-card iq-card iq-card-block iq-card-stretch iq-card-height">
+                  <div class="col-lg-12">
+                     <div class="iq-right-fixed rounded iq-card iq-card iq-card-block iq-card-stretch iq-card-height" style="height:250px;">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
                               <h4 class="card-title">Activity timeline</h4>
@@ -27,94 +39,36 @@
                               </div>
                            </div> -->
                         </div>
-                        <div class="iq-card-body">
-                           <ul class="iq-timeline">
-                           <li>
-                                 <div class="timeline-dots activereq" id="timeline-dots0"></div>
-                                 <a href="{{ route('req1') }}"><h6 class="float-left mb-1">Requirement 1</h6></a>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots " id="timeline-dots1"></div>
-                                 <a href="{{ route('req2') }}"><h6 class="float-left mb-1">Requirement 2</h6></a>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots " id="timeline-dots2"></div>
-                                 <a href="{{ route('req3') }}"><h6 class="float-left mb-1">Requirement 3</h6></a>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots3"></div>
-                                 <h6 class="float-left mb-1">Requirement 4</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots4"></div>
-                                 <h6 class="float-left mb-1">Requirement 5</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots5"></div>
-                                 <h6 class="float-left mb-1">Requirement 6</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots6"></div>
-                                 <h6 class="float-left mb-1">Requirement 7</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots7"></div>
-                                 <h6 class="float-left mb-1">Requirement 8</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots8"></div>
-                                 <h6 class="float-left mb-1">Requirement 9</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots9"></div>
-                                 <h6 class="float-left mb-1">Requirement 10</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots10"></div>
-                                 <h6 class="float-left mb-1">Requirement 11</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots11"></div>
-                                 <h6 class="float-left mb-1">Requirement 12</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <!-- <li>
-                                 <div class="timeline-dots" id="timeline-dots1"></div>
-                                 <h6 class="float-left mb-1">Mega event</h6>
-                                 <small class="float-right mt-1">15 November 2019</small>
-                                 <div class="d-inline-block w-100">
-                                    <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
-                                 </div>
-                              </li> -->
-                           </ul>
+                        <div class="iq-card-body" style="box-sizing:border-box;">
+                          
+                           <div class="container">
+                              <div class="row">
+                                 <ul class="breadcrumb">
+                                    <li class="active"><a href="{{ url('req1') }}" data-toggle="popover-hover" title="Requirement 1" data-content="Install and maintain a firewall configuration to protect cardholder data">Req # 1</a></li>
+                                    <li><a href="{{ url('req2') }}" data-toggle="popover-hover" title="Requirement 2" data-content="Do not use vendor-supplied defaults for system passwords and other security parameters">Req # 2</a></li>
+                                    <li><a href="{{ url('req3') }}" data-toggle="popover-hover" title="Requirement 3" data-content="Protect stored cardholder data">Req # 3</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 4" data-content="Encrypt transmission of cardholder data across open, public networks">Req # 4</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 5" data-content="Protect all systems against malware and regularly update anti-virus software or programs">Req # 5</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 6" data-content="Develop and maintain secure systems and applications">Req # 6</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 7" data-content="Restrict access to cardholder data by business need to know">Req # 7</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 8" data-content="Identify and authenticate access to system components">Req # 8</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 9" data-content="Restrict physical access to cardholder data">Req # 9</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 10" data-content="Track and monitor all access to network resources and cardholder data">Req # 10</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 11" data-content="Regularly test security systems and processes">Req # 11</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 12" data-content="Maintain a policy that addresses information security for all personnel">Req # 12</a></li>
+                                 </ul>
+                              </div>
+                           </div>
+                           <div class="container">
+                              <div class="row" style="background-color: #f3f3f3; margin-top: 20px;">
+                                 <h6 style="padding: 10px;">Requirement 1 : <span>Install and maintain a firewall configuration to protect cardholder data </span></h6>
+                              </div>
+                           </div>
                         </div>
                      
                      </div>
                   </div>
-                  <div class="col-sm-12 col-lg-10">
+                  <div class="col-sm-12 col-lg-12">
                      <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
@@ -160,20 +114,12 @@
                                                        
                                                       <table style="width:100%">
                                                          <tr>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                           <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th
                                                          </tr>
                                                          <tr>
                                                           </tr>
-                                                         <tr>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                           <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                         </tr>
                                                          <!-- <tr>
                                                             <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                          </tr>
@@ -184,46 +130,7 @@
                                                             <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                             <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                             <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.1</b> A formal process for approving and testing all network connections and changes to the firewall and router configurations.</td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                           <label class="custom-control-label" for="customCheck1"></label>
-                                                                        </div>
-                                                                  </div>   
-                                                               </td>
-                                                               <td>
-                                                                <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                        <label class="custom-control-label" for="customCheck2"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                        <label class="custom-control-label" for="customCheck3"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                     <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                           <label class="custom-control-label" for="customCheck4"></label>
-                                                                        </div>
-                                                                     </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                        <label class="custom-control-label" for="customCheck5"></label>
-                                                                     </div>
-                                                                  </div>
-                                                            </td>
+                                                               
                                                             </tr>
                                                             <tr>
                                                                <td rowspan="3" colspan="1">
@@ -461,20 +368,12 @@
                                                     <div class="card-body">
                                                       <table style="width:100%">
                                                          <tr>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                           <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                          </tr>
                                                          <tr>
                                                           </tr>
-                                                         <tr>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                           <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                         </tr>
                                                          <!-- <tr>
                                                             <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                          </tr>
@@ -485,46 +384,7 @@
                                                             <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                             <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                             <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.2</b> Current diagram that identifies all connections between the cardholder data environment and other networks, including any wireless networks.</td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                           <label class="custom-control-label" for="customCheck1"></label>
-                                                                        </div>
-                                                                  </div>   
-                                                               </td>
-                                                               <td>
-                                                                <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                        <label class="custom-control-label" for="customCheck2"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                        <label class="custom-control-label" for="customCheck3"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                     <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                           <label class="custom-control-label" for="customCheck4"></label>
-                                                                        </div>
-                                                                     </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                        <label class="custom-control-label" for="customCheck5"></label>
-                                                                     </div>
-                                                                  </div>
-                                                            </td>
+                                                              
                                                             </tr>
                                                             <tr>
                                                                <td rowspan="5" colspan="1">
@@ -652,20 +512,12 @@
                                                     <div class="card-body">
                                                       <table style="width:100%">
                                                          <tr>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                           <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                          </tr>
                                                          <tr>
                                                           </tr>
-                                                         <tr>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                           <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                         </tr>
                                                          <!-- <tr>
                                                             <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                          </tr>
@@ -676,46 +528,7 @@
                                                             <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                             <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                             <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.3</b> Current diagram that shows all cardholder data flows across systems and networks.</td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                           <label class="custom-control-label" for="customCheck1"></label>
-                                                                        </div>
-                                                                  </div>   
-                                                               </td>
-                                                               <td>
-                                                                <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                        <label class="custom-control-label" for="customCheck2"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                        <label class="custom-control-label" for="customCheck3"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                     <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                           <label class="custom-control-label" for="customCheck4"></label>
-                                                                        </div>
-                                                                     </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                        <label class="custom-control-label" for="customCheck5"></label>
-                                                                     </div>
-                                                                  </div>
-                                                            </td>
+                                                              
                                                             </tr>
                                                             <tr>
                                                                <td rowspan="3" colspan="1">
@@ -784,20 +597,12 @@
                                                         
                                                        <table style="width:100%">
                                                           <tr>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                            <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                           </tr>
                                                           <tr>
                                                            </tr>
-                                                          <tr>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                            <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                          </tr>
                                                           <!-- <tr>
                                                              <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                           </tr>
@@ -808,46 +613,7 @@
                                                              <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                              <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                              <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.4</b> Requirements for a firewall at each Internet connection and between any demilitarized zone (DMZ) and the internal network zone.</td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                            <label class="custom-control-label" for="customCheck1"></label>
-                                                                         </div>
-                                                                   </div>   
-                                                                </td>
-                                                                <td>
-                                                                 <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                         <label class="custom-control-label" for="customCheck2"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                         <label class="custom-control-label" for="customCheck3"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                      <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                            <label class="custom-control-label" for="customCheck4"></label>
-                                                                         </div>
-                                                                      </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                         <label class="custom-control-label" for="customCheck5"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
+                                                              
                                                              </tr>
                                                              <tr>
                                                                 <td rowspan="2" colspan="1">
@@ -969,20 +735,12 @@
                                                         
                                                        <table style="width:100%">
                                                           <tr>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                            <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                           </tr>
                                                           <tr>
                                                            </tr>
-                                                          <tr>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                            <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                          </tr>
                                                           <!-- <tr>
                                                              <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                           </tr>
@@ -993,46 +751,7 @@
                                                              <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                              <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                              <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.5</b> Description of groups, roles, and responsibilities for management of network components.</td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                            <label class="custom-control-label" for="customCheck1"></label>
-                                                                         </div>
-                                                                   </div>   
-                                                                </td>
-                                                                <td>
-                                                                 <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                         <label class="custom-control-label" for="customCheck2"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                         <label class="custom-control-label" for="customCheck3"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                      <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                            <label class="custom-control-label" for="customCheck4"></label>
-                                                                         </div>
-                                                                      </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                         <label class="custom-control-label" for="customCheck5"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
+                                                                
                                                              </tr>
                                                              <tr>
                                                                 <td rowspan="2" colspan="1">
@@ -1103,20 +822,12 @@
                                                         
                                                        <table style="width:100%">
                                                           <tr>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                            <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                           </tr>
                                                           <tr>
                                                            </tr>
-                                                          <tr>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                            <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                          </tr>
                                                           <!-- <tr>
                                                              <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                           </tr>
@@ -1127,46 +838,7 @@
                                                              <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                              <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                              <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.6</b> Documentation of business justification and approval for use of all services, protocols, and ports allowed, including documentation of security features implemented for those protocols considered to be insecure.</td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                            <label class="custom-control-label" for="customCheck1"></label>
-                                                                         </div>
-                                                                   </div>   
-                                                                </td>
-                                                                <td>
-                                                                 <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                         <label class="custom-control-label" for="customCheck2"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                         <label class="custom-control-label" for="customCheck3"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                      <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                            <label class="custom-control-label" for="customCheck4"></label>
-                                                                         </div>
-                                                                      </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                         <label class="custom-control-label" for="customCheck5"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
+                                                               
                                                              </tr>
                                                              <tr>
                                                                 <td rowspan="2" colspan="1">
@@ -1307,20 +979,12 @@
                                                         
                                                        <table style="width:100%">
                                                           <tr>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                            <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                            <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                            <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                           </tr>
                                                           <tr>
                                                            </tr>
-                                                          <tr>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                            <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                            <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                          </tr>
                                                           <!-- <tr>
                                                              <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                           </tr>
@@ -1331,46 +995,7 @@
                                                              <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                              <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                              <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.1.7</b> Requirement to review firewall and router rule sets at least every six months.</td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                            <label class="custom-control-label" for="customCheck1"></label>
-                                                                         </div>
-                                                                   </div>   
-                                                                </td>
-                                                                <td>
-                                                                 <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                                         <label class="custom-control-label" for="customCheck2"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                                         <label class="custom-control-label" for="customCheck3"></label>
-                                                                      </div>
-                                                                   </div>
-                                                                </td>
-                                                                <td>
-                                                                      <div class="form-group text-center">
-                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                                            <label class="custom-control-label" for="customCheck4"></label>
-                                                                         </div>
-                                                                      </div>
-                                                                </td>
-                                                                <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                                                         <label class="custom-control-label" for="customCheck5"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
+                                                                
                                                              </tr>
                                                              <tr>
                                                                 <td rowspan="2" colspan="1">
@@ -1480,20 +1105,12 @@
                                                        
                                                       <table style="width:100%">
                                                          <tr>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                           <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                          </tr>
                                                          <tr>
                                                           </tr>
-                                                         <tr>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                           <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                         </tr>
                                                          <!-- <tr>
                                                             <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                          </tr>
@@ -1504,46 +1121,7 @@
                                                             <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                             <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                             <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.2.1</b> Restrict inbound and outbound traffic to that which is necessary for the cardholder data environment, and specifically deny all other traffic.</td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck111">
-                                                                           <label class="custom-control-label" for="customCheck111"></label>
-                                                                        </div>
-                                                                  </div>   
-                                                               </td>
-                                                               <td>
-                                                                <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck112">
-                                                                        <label class="custom-control-label" for="customCheck112"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck113">
-                                                                        <label class="custom-control-label" for="customCheck113"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                     <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck114">
-                                                                           <label class="custom-control-label" for="customCheck114"></label>
-                                                                        </div>
-                                                                     </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck115">
-                                                                        <label class="custom-control-label" for="customCheck115"></label>
-                                                                     </div>
-                                                                  </div>
-                                                            </td>
+                                                               
                                                             </tr>
                                                             <tr>
                                                                <td rowspan="2" colspan="1">
@@ -1681,20 +1259,12 @@
                                                     <div class="card-body">
                                                       <table style="width:100%">
                                                          <tr>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                           <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                          </tr>
                                                          <tr>
                                                           </tr>
-                                                         <tr>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                           <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                         </tr>
                                                          <!-- <tr>
                                                             <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                          </tr>
@@ -1705,46 +1275,7 @@
                                                             <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                             <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                             <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.2.2</b> Secure and synchronize router configuration files.</td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck121">
-                                                                           <label class="custom-control-label" for="customCheck121"></label>
-                                                                        </div>
-                                                                  </div>   
-                                                               </td>
-                                                               <td>
-                                                                <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck122">
-                                                                        <label class="custom-control-label" for="customCheck122"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck123">
-                                                                        <label class="custom-control-label" for="customCheck123"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                     <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck124">
-                                                                           <label class="custom-control-label" for="customCheck124"></label>
-                                                                        </div>
-                                                                     </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck125">
-                                                                        <label class="custom-control-label" for="customCheck125"></label>
-                                                                     </div>
-                                                                  </div>
-                                                            </td>
+                                                               
                                                             </tr>
                                                             <tr>
                                                                <td rowspan="1" colspan="1">
@@ -1811,20 +1342,12 @@
                                                     <div class="card-body">
                                                       <table style="width:100%">
                                                          <tr>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                           <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                           <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                           <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                          </tr>
                                                          <tr>
                                                           </tr>
-                                                         <tr>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                           <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                           <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                         </tr>
                                                          <!-- <tr>
                                                             <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                          </tr>
@@ -1835,46 +1358,7 @@
                                                             <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                             <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                             <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.2.3</b> Install perimeter firewalls between all wireless networks and the cardholder data environment, and configure these firewalls to deny or, if traffic is necessary for business purposes, permit only authorized traffic between the wireless environment and the cardholder data environment.</td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck311">
-                                                                           <label class="custom-control-label" for="customCheck311"></label>
-                                                                        </div>
-                                                                  </div>   
-                                                               </td>
-                                                               <td>
-                                                                <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck322">
-                                                                        <label class="custom-control-label" for="customCheck322"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck333">
-                                                                        <label class="custom-control-label" for="customCheck333"></label>
-                                                                     </div>
-                                                                  </div>
-                                                               </td>
-                                                               <td>
-                                                                     <div class="form-group text-center">
-                                                                        <div class="custom-control custom-checkbox">
-                                                                           <input type="checkbox" class="custom-control-input" id="customCheck334">
-                                                                           <label class="custom-control-label" for="customCheck334"></label>
-                                                                        </div>
-                                                                     </div>
-                                                               </td>
-                                                               <td>
-                                                                  <div class="form-group text-center">
-                                                                     <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="customCheck335">
-                                                                        <label class="custom-control-label" for="customCheck335"></label>
-                                                                     </div>
-                                                                  </div>
-                                                            </td>
+                                                              
                                                             </tr>
                                                             <tr>
                                                                <td rowspan="2" colspan="1">
@@ -2010,20 +1494,12 @@
                                                       
                                                      <table style="width:100%">
                                                         <tr>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                          <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                         </tr>
                                                         <tr>
                                                          </tr>
-                                                        <tr>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                          <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                        </tr>
                                                         <!-- <tr>
                                                            <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                         </tr>
@@ -2034,46 +1510,7 @@
                                                            <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                            <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                            <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.3.1</b> Implement a DMZ to limit inbound traffic to only system components that provide authorized publicly accessible services, protocols, and ports.</td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck611">
-                                                                          <label class="custom-control-label" for="customCheck611"></label>
-                                                                       </div>
-                                                                 </div>   
-                                                              </td>
-                                                              <td>
-                                                               <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck612">
-                                                                       <label class="custom-control-label" for="customCheck612"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck613">
-                                                                       <label class="custom-control-label" for="customCheck613"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                    <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck614">
-                                                                          <label class="custom-control-label" for="customCheck614"></label>
-                                                                       </div>
-                                                                    </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck615">
-                                                                       <label class="custom-control-label" for="customCheck615"></label>
-                                                                    </div>
-                                                                 </div>
-                                                           </td>
+                                                              
                                                            </tr>
                                                            <tr>
                                                               <td rowspan="2" colspan="1">
@@ -2115,20 +1552,12 @@
                                                    <div class="card-body">
                                                      <table style="width:100%">
                                                         <tr>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                          <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                         </tr>
                                                         <tr>
                                                          </tr>
-                                                        <tr>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                          <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                        </tr>
                                                         <!-- <tr>
                                                            <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                         </tr>
@@ -2139,46 +1568,7 @@
                                                            <!-- <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td>
                                                            <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                            <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.3.2</b>Examine firewall and router configurations to verify that inbound Internet traffic is limited to IP addresses within the DMZ.</td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck721">
-                                                                          <label class="custom-control-label" for="customCheck721"></label>
-                                                                       </div>
-                                                                 </div>   
-                                                              </td>
-                                                              <td>
-                                                               <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck722">
-                                                                       <label class="custom-control-label" for="customCheck722"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck723">
-                                                                       <label class="custom-control-label" for="customCheck723"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                    <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck724">
-                                                                          <label class="custom-control-label" for="customCheck724"></label>
-                                                                       </div>
-                                                                    </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck725">
-                                                                       <label class="custom-control-label" for="customCheck725"></label>
-                                                                    </div>
-                                                                 </div>
-                                                           </td>
+                                                              
                                                            </tr>
                                                            <tr>
                                                               <td rowspan="1" colspan="1">
@@ -2221,20 +1611,12 @@
                                                    <div class="card-body">
                                                      <table style="width:100%">
                                                         <tr>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                          <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                         </tr>
                                                         <tr>
                                                          </tr>
-                                                        <tr>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                          <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                        </tr>
                                                         <!-- <tr>
                                                            <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                         </tr>
@@ -2247,46 +1629,6 @@
                                                            <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.3.3</b> Implement anti-spoofing measures to detect and block forged source IP addresses from entering the network.
                                                                <br>(For example, block traffic originating from the Internet with an internal source address)
                                                             </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck811">
-                                                                          <label class="custom-control-label" for="customCheck811"></label>
-                                                                       </div>
-                                                                 </div>   
-                                                              </td>
-                                                              <td>
-                                                               <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck822">
-                                                                       <label class="custom-control-label" for="customCheck822"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck833">
-                                                                       <label class="custom-control-label" for="customCheck833"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                    <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck834">
-                                                                          <label class="custom-control-label" for="customCheck834"></label>
-                                                                       </div>
-                                                                    </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck835">
-                                                                       <label class="custom-control-label" for="customCheck835"></label>
-                                                                    </div>
-                                                                 </div>
-                                                           </td>
                                                            </tr>
                                                            <tr>
                                                               <td rowspan="2" colspan="1">
@@ -2331,20 +1673,12 @@
                                                   <div class="card-body">
                                                     <table style="width:100%">
                                                        <tr>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                         <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                        </tr>
                                                        <tr>
                                                         </tr>
-                                                       <tr>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                         <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                       </tr>
                                                        <!-- <tr>
                                                           <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                        </tr>
@@ -2356,46 +1690,7 @@
                                                           <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                           <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.3.4</b> Do not allow unauthorized outbound traffic from the cardholder data environment to the Internet.
                                                            </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck911">
-                                                                         <label class="custom-control-label" for="customCheck911"></label>
-                                                                      </div>
-                                                                </div>   
-                                                             </td>
-                                                             <td>
-                                                              <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck922">
-                                                                      <label class="custom-control-label" for="customCheck922"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck933">
-                                                                      <label class="custom-control-label" for="customCheck933"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck934">
-                                                                         <label class="custom-control-label" for="customCheck934"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck935">
-                                                                      <label class="custom-control-label" for="customCheck935"></label>
-                                                                   </div>
-                                                                </div>
-                                                          </td>
+                                                            
                                                           </tr>
                                                           <tr>
                                                              <td rowspan="2" colspan="1">
@@ -2439,20 +1734,12 @@
                                                   <div class="card-body">
                                                     <table style="width:100%">
                                                        <tr>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                         <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                        </tr>
                                                        <tr>
                                                         </tr>
-                                                       <tr>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                         <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                       </tr>
                                                        <!-- <tr>
                                                           <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                        </tr>
@@ -2464,46 +1751,7 @@
                                                           <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                           <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.3.5</b> Permit only “established” connections into the network.
                                                            </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1011">
-                                                                         <label class="custom-control-label" for="customCheck1011"></label>
-                                                                      </div>
-                                                                </div>   
-                                                             </td>
-                                                             <td>
-                                                              <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck922">
-                                                                      <label class="custom-control-label" for="customCheck1022"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1033">
-                                                                      <label class="custom-control-label" for="customCheck1033"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1034">
-                                                                         <label class="custom-control-label" for="customCheck1034"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1035">
-                                                                      <label class="custom-control-label" for="customCheck1035"></label>
-                                                                   </div>
-                                                                </div>
-                                                          </td>
+                                                              
                                                           </tr>
                                                           <tr>
                                                              <td rowspan="2" colspan="1">
@@ -2547,20 +1795,12 @@
                                                   <div class="card-body">
                                                     <table style="width:100%">
                                                        <tr>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                         <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                        </tr>
                                                        <tr>
                                                         </tr>
-                                                       <tr>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                         <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                       </tr>
                                                        <!-- <tr>
                                                           <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                        </tr>
@@ -2572,46 +1812,6 @@
                                                           <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                           <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.3.6</b> Place system components that store cardholder data (such as a database) in an internal network zone, segregated from the DMZ and other untrusted networks. 
                                                            </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1111">
-                                                                         <label class="custom-control-label" for="customCheck1111"></label>
-                                                                      </div>
-                                                                </div>   
-                                                             </td>
-                                                             <td>
-                                                              <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1122">
-                                                                      <label class="custom-control-label" for="customCheck1122"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1133">
-                                                                      <label class="custom-control-label" for="customCheck1133"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1134">
-                                                                         <label class="custom-control-label" for="customCheck1134"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1135">
-                                                                      <label class="custom-control-label" for="customCheck1135"></label>
-                                                                   </div>
-                                                                </div>
-                                                          </td>
                                                           </tr>
                                                           <tr>
                                                              <td rowspan="4" colspan="1">
@@ -2678,20 +1878,12 @@
                                                   <div class="card-body">
                                                     <table style="width:100%">
                                                        <tr>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                         <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                         <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                         <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                        </tr>
                                                        <tr>
                                                         </tr>
-                                                       <tr>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                         <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                         <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                       </tr>
                                                        <!-- <tr>
                                                           <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                        </tr>
@@ -2709,46 +1901,7 @@
                                                             <br><span style="font-size: 15px;font-weight: bolder;">&#x2192;</span>	Internal use of RFC1918 address space instead of registered addresses.
                                                             
                                                            </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1311">
-                                                                         <label class="custom-control-label" for="customCheck1311"></label>
-                                                                      </div>
-                                                                </div>   
-                                                             </td>
-                                                             <td>
-                                                              <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1322">
-                                                                      <label class="custom-control-label" for="customCheck1322"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1333">
-                                                                      <label class="custom-control-label" for="customCheck1333"></label>
-                                                                   </div>
-                                                                </div>
-                                                             </td>
-                                                             <td>
-                                                                   <div class="form-group text-center">
-                                                                      <div class="custom-control custom-checkbox">
-                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1334">
-                                                                         <label class="custom-control-label" for="customCheck1334"></label>
-                                                                      </div>
-                                                                   </div>
-                                                             </td>
-                                                             <td>
-                                                                <div class="form-group text-center">
-                                                                   <div class="custom-control custom-checkbox">
-                                                                      <input type="checkbox" class="custom-control-input" id="customCheck1335">
-                                                                      <label class="custom-control-label" for="customCheck1335"></label>
-                                                                   </div>
-                                                                </div>
-                                                          </td>
+                                                             
                                                           </tr>
                                                           <tr>
                                                              <td rowspan="2" colspan="1">
@@ -2855,20 +2008,12 @@
                                                       
                                                      <table style="width:100%">
                                                         <tr>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                          <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                         </tr>
                                                         <tr>
                                                          </tr>
-                                                        <tr>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                          <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                        </tr>
                                                         <!-- <tr>
                                                            <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                         </tr>
@@ -2883,46 +2028,7 @@
                                                                <br><span style="font-size: 15px;font-weight: bolder;">&#x2192;</span> Personal firewall (or equivalent functionality) is actively running.
                                                                <br><span style="font-size: 15px;font-weight: bolder;">&#x2192;</span> Personal firewall (or equivalent functionality) is not alterable by users of the portable computing devices. 
                                                             </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck1711">
-                                                                          <label class="custom-control-label" for="customCheck1711"></label>
-                                                                       </div>
-                                                                 </div>   
-                                                              </td>
-                                                              <td>
-                                                               <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck1712">
-                                                                       <label class="custom-control-label" for="customCheck1712"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck1713">
-                                                                       <label class="custom-control-label" for="customCheck1713"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                    <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck1714">
-                                                                          <label class="custom-control-label" for="customCheck1714"></label>
-                                                                       </div>
-                                                                    </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck1715">
-                                                                       <label class="custom-control-label" for="customCheck1715"></label>
-                                                                    </div>
-                                                                 </div>
-                                                           </td>
+                                                             
                                                            </tr>
                                                            <tr>
                                                               <td rowspan="4" colspan="1">
@@ -3112,20 +2218,12 @@
                                                       
                                                      <table style="width:100%">
                                                         <tr>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Instruction</th>
-                                                          <th colspan="1" rowspan="3" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
-                                                          <th colspan="5" rowspan="2" bgcolor="#bd1e2d">Summary of Assessment Findings <p>(check one)</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">PCI DSS Requirements <p>and Testing Procedures</p></th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Instruction</th>
+                                                          <th colspan="1" rowspan="2" bgcolor="#bd1e2d">Reporting Details:<p>Assessor’s Response</p></th>
                                                         </tr>
                                                         <tr>
                                                          </tr>
-                                                        <tr>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In <p>Place</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white; width: 7%;">In Place <p>w/CCW</p></th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">NA</th>
-                                                          <th bgcolor="#000" style="border-right: 1px solid white;width: 7%;">Not <p>Tested</p></th>
-                                                          <th bgcolor="#000" style="border-left: 1px solid white;width: 7%;">Not <p>In Place</p></th>
-                                                        </tr>
                                                         <!-- <tr>
                                                            <td colspan="8" style="text-align: left;" class="pl-md-2">1.1 Establish and implement firewall and router configuration standards that include the following:</td>
                                                         </tr>
@@ -3137,46 +2235,6 @@
                                                            <td colspan="1" style="text-align: left;" class="pl-md-2">1. Install and maintain a firewall configuration to protect cardholder data</td> -->
                                                            <td colspan="3" style="text-align: left;" class="pl-md-2"><b>1.5</b> Ensure that security policies and operational procedures for managing firewalls are documented, in use, and known to all affected parties.
                                                             </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck1911">
-                                                                          <label class="custom-control-label" for="customCheck1911"></label>
-                                                                       </div>
-                                                                 </div>   
-                                                              </td>
-                                                              <td>
-                                                               <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck1912">
-                                                                       <label class="custom-control-label" for="customCheck1912"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck1913">
-                                                                       <label class="custom-control-label" for="customCheck1913"></label>
-                                                                    </div>
-                                                                 </div>
-                                                              </td>
-                                                              <td>
-                                                                    <div class="form-group text-center">
-                                                                       <div class="custom-control custom-checkbox">
-                                                                          <input type="checkbox" class="custom-control-input" id="customCheck1914">
-                                                                          <label class="custom-control-label" for="customCheck1914"></label>
-                                                                       </div>
-                                                                    </div>
-                                                              </td>
-                                                              <td>
-                                                                 <div class="form-group text-center">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                       <input type="checkbox" class="custom-control-input" id="customCheck1915">
-                                                                       <label class="custom-control-label" for="customCheck1915"></label>
-                                                                    </div>
-                                                                 </div>
-                                                           </td>
                                                            </tr>
                                                            <tr>
                                                               <td rowspan="3" colspan="1">

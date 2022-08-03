@@ -634,6 +634,13 @@ Index Of Script
 
 })(jQuery);
 
+// wasif js
+$(function () {
+  $('[data-toggle="popover-hover"]').popover({
+    trigger: 'hover',
+  })
+})
+
 
 
 

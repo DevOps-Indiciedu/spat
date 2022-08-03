@@ -4,7 +4,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Department') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" onclick="FormClear('departmentForm')" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -32,7 +32,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" class="btn btn-secondary" onclick="FormClear('departmentForm')" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
         </div>
@@ -90,10 +90,16 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#department").val(data.department);
-                $("#companyErr").text(data.company_id);
-                $("#locationErr").text(data.location_id);
-                $("#hiddenId").val(data.id);
+                $("#department").val(data[0].department);
+                $("#company_id").val(data[0].company_id);
+                $("#location_id").val(data[0].location_id);
+                $("#hiddenId").val(data[0].id);
+
+                // Triggers 
+                jQuery("#company_id").trigger('change');
+                setTimeout(function() { 
+                    $("#location_id").val(data[0].location_id);
+                }, 500);
 
                 $(".formBtn").text("Update Department");
                 $(".modal-title").text("Update Department");

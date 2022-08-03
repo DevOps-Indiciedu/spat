@@ -4,7 +4,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add User') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" onclick="FormClear('userForm')" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -76,7 +76,7 @@
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
                 <input type="hidden" id="hiddenProfile" name="hiddenProfile">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" onclick="FormClear('userForm')" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
         </div>
@@ -133,16 +133,16 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#email").val(data.email);
-                $("#email").val(data.email);
-                $("#company_id").val(data.company_id);
-                $("#designation_id").val(data.designation_id);
-                $("#role_id").val(data.role_id);
-                $("#name").val(data.name);
-                $("#address").val(data.address);
-                $("#phone").val(data.phone);
-                $("#hiddenId").val(data.user_id);
-                $("#hiddenProfile").val(data.profile_image);
+                $("#email").val(data[0].email);
+                $("#email").val(data[0].email);
+                $("#company_id").val(data[0].company_id);
+                $("#designation_id").val(data[0].designation_id);
+                $("#role_id").val(data[0].role_id);
+                $("#name").val(data[0].name);
+                $("#address").val(data[0].address);
+                $("#phone").val(data[0].phone);
+                $("#hiddenId").val(data[0].user_id);
+                $("#hiddenProfile").val(data[0].profile_image);
 
                 $(".formBtn").text("Update User");
                 $(".modal-title").text("Update User");
@@ -150,12 +150,12 @@
                 // Triggers 
                 jQuery("#company_id").trigger('change');
                 setTimeout(function() { 
-                    $("#location_id").val(data.location_id);
+                    $("#location_id").val(data[0].location_id);
                     jQuery("#location_id").trigger('change');
-                    $("#department_id").val(data.department_id).delay("slow");
+                    $("#department_id").val(data[0].department_id).delay("slow");
                 }, 500);
                 setTimeout(function() { 
-                    $("#department_id").val(data.department_id).delay("slow");
+                    $("#department_id").val(data[0].department_id).delay("slow");
                 }, 800);
             }
         });
@@ -217,11 +217,11 @@
 
     // Get Company Locations => Department 
     $(".modal").on('change','#location_id',function(){
-        var id = $(this).val();
-        var loc_id = $('#location_id').val();
-        if(id != "" && loc_id != ""){
+        var com_id = $('#company_id').val();
+        var loc_id = $(this).val();
+        if(com_id != "" && loc_id != ""){
             $.ajax({
-                url:"get_department_by_companyID/"+id+"/"+loc_id,
+                url:"get_department_by_companyID/"+com_id+"/"+loc_id,
                 type : 'GET',
                 dataType: 'html',
                 success:function(data) {

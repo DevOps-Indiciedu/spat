@@ -13,14 +13,16 @@
                         </div>
                     </div>
                     <div class="iq-card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('user-profile-information.update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf 
+                            @method('PUT')
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" class="form-control">
+                                <input type="email" id="email" class="form-control" value="{{ auth()->user()->email }}">
                             </div>
                             <div class="form-group">
-                                <label for="email">Name</label>
-                                <input type="email" id="email" class="form-control">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" class="form-control" value="{{ auth()->user()->name }}">
                             </div>
                             <div class="form-group">
                                 <label for="old_password">Old Password</label>
@@ -29,6 +31,10 @@
                             <div class="form-group">
                                 <label for="new_password">New Password</label>
                                 <input type="password" id="new_password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile">Profile Image</label><br>
+                                <input type="file" name="" id="profile">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Update Profile</button>

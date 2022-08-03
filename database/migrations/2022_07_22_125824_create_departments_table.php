@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('company_id');
             $table->integer('location_id');
             $table->string('department');
+            $table->integer('added_by');
             $table->timestamps();
         });
     }

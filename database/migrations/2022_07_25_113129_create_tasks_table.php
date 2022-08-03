@@ -25,6 +25,7 @@ return new class extends Migration
             $table->dateTime('dl_datetime')->nullable();
             $table->integer('status');
             $table->integer('task_progress')->nullable();
+            $table->integer('added_by');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->enum('status', ['0','1']);
+            $table->integer('added_by');
             $table->timestamps();
         });
     }

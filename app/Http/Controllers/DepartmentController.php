@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
-
+use Auth;
 class DepartmentController extends Controller
 {
     public function index()
     {
-    	$department['department'] = Department::all();
+        if(Auth::user()->system_admin == 1):
+            $userID = 0;
+        else:
+            $userID = Auth::user()->id;    
+        endif;
+    	$department['department'] = DB::select('call GetAllDepartments('.$userID.')');
         return view('pages.department',$department);
     }
 
@@ -23,33 +28,41 @@ class DepartmentController extends Controller
     		'department'	=>	'required',
     	]);
 
-    	$data = Department::updateOrCreate(
+        if($request->hiddenId == ""):
+            $data = DB::select('call InsertDepartment(?,?,?,?)',
             [
-                'id'	=>	$request->hiddenId,
-            ],
+                $request->company_id,
+                $request->location_id,
+                $request->department,
+                Auth::user()->id,
+            ]);
+        else: 
+            $data = DB::select('call UpdateDepartment('.$request->hiddenId.', ?,?,?)',
             [
-        		'company_id'	=>	$request->company_id,
-        		'location_id'	=>	$request->location_id,
-        		'department'	=>	$request->department,
-    	    ]
-        );
+                $request->company_id,
+                $request->location_id,
+                $request->department,
+            ]);
+        endif;
 
     	return response()->json($data);
     }
 
     public function destroy(Request $request)
     {
-    	$rec = Department::find($request->id)->delete();
-        if($rec):
+    	try {
+            $rec = DB::select('call DeleteDepartment('.$request->id.')');
             $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
-        endif;    
+    	} catch(Exception $e) {
+            $response = response()->json(['code'=>404, 'message'=>'Data Not Deleted'], 404);
+        }    
         return $response;
     }
 
     public function edit($department_id)
     {
-        $data = Department::findOrFail($department_id);
-        return response()->json($data);
+        $data = DB::SELECT('call EditDepartment('.$department_id.')');
+        return $data;
     }
 
     public function get_department_by_companyID($company_id,$location_id)
@@ -59,7 +72,7 @@ class DepartmentController extends Controller
             // );
             // return response()->json($data);
         $output = '';
-        $data = Department::where('company_id',$company_id)->where('location_id',$location_id)->get();
+        $data = DB::select('call get_departments_by_companyID('.$company_id.','.$location_id.')');
         $output .= "<select class='form-control' name='department_id' id='department_id'>";
         $output .= "<option value=''>Select Department</option>";
         foreach($data as $department):

@@ -4,7 +4,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Task') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" onclick="FormClear('taskForm')" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -13,13 +13,14 @@
             <div class="modal-body row">
                 <div class="form-group col-sm-6">
                     <label for="project_id">{{ __('Project') }}</label>
-                    <select name="project_id" id="project_id" class="form-control">
+                    {!! projects_dropdown() !!}
+                    <!-- <select name="project_id" id="project_id" class="form-control">
                         <option value="">Select Project</option>
                         <option value="1">A formal process for approving and testing all network connections</option>
                         <option value="2">Examine documented procedures to verify there is a formal process for testing</option>
                         <option value="3">Testing and approval of all changes to firewall and router configurations.</option>
                         <option value="4">Identify the sample of records for network connections that were selected for this testing procedure.</option>
-                    </select>
+                    </select> -->
                     <!-- {!! company_dropdown() !!} -->
                     <span class="text-danger" id="projectErr"></span>
                 </div>
@@ -61,7 +62,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" class="btn btn-secondary" onclick="FormClear('taskForm')" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
         </div>
@@ -122,22 +123,22 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#hiddenId").val(data.id);
-                $("#project_id").val(data.project_id);
-                $("#title").val(data.task_title);
+                $("#hiddenId").val(data[0].id);
+                $("#project_id").val(data[0].project_id);
+                $("#title").val(data[0].task_title);
 
-                sdate = new Date(data.start_datetime);
+                sdate = new Date(data[0].start_datetime);
                 sdate_format = sdate.getFullYear()+"-"+pad2((sdate.getMonth()+1))+"-"+pad2(sdate.getDate());
 
-                edate = new Date(data.end_datetime);
+                edate = new Date(data[0].end_datetime);
                 edate_format = edate.getFullYear()+"-"+pad2((edate.getMonth()+1))+"-"+pad2(edate.getDate());
 
                 $("#start_datetime").val(sdate_format);
                 $("#end_datetime").val(edate_format);
-                $("#user_id").val(data.assign_to);
-                $("#priority").val(data.priority);
-                $("#taskstatus_id").val(data.status);
-                $("#description").val(data.task_des);
+                $("#user_id").val(data[0].assign_to);
+                $("#priority").val(data[0].priority);
+                $("#taskstatus_id").val(data[0].status);
+                $("#description").val(data[0].task_des);
 
                 $(".formBtn").text("Update Task");
                 $(".modal-title").text("Update Task");

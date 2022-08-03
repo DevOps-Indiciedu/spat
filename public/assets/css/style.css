@@ -290,7 +290,7 @@ a:hover { text-decoration: none; }
 .navbar-list li>a { font-size: 18px; padding: 0 15px; line-height: 73px; color: #be1e2d; display: block; min-height: 75px; }
 .menu-tag { position: absolute; background: #374948; color: #ffffff; display: inline-block; top: 18px; left: 18px; font-size: 12px; border-radius: 90px; line-height: normal; height: 18px; width: 18px; line-height: 18px; text-align: center; display: inline-block; }
 .navbar-list li a:hover { text-decoration: none; }
-.navbar-list li img { width: 40px; height: 40px; }
+.navbar-list li img { width: 40px; height: 40px; margin-top:40%; }
 .navbar-list li.iq-nav-user { display: flex; align-items: flex-start; }
 .navbar-list li.iq-nav-user span { flex: 1; font-size: 14px; }
 .iq-top-navbar .iq-sidebar-logo .top-logo { display: block; }
@@ -307,7 +307,7 @@ a:hover { text-decoration: none; }
 }
 
 /*---------- Sidebar Logo --------------*/
-.iq-sidebar-logo { display: inline-block; width: 260px; padding-top: 15px; padding-left: 20px; float: left; position: relative; background: #ffffff; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
+.iq-sidebar-logo { display: inline-block; width: 260px; padding-left: 20px; float: left; position: relative; background: #ffffff; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
 .iq-sidebar-logo a { display: flex; align-items: flex-start; }
 .iq-sidebar-logo a span { margin-left: 10px; font-size: 28px; line-height: 45px; color: #374948; font-family: 'Questrial', sans-serif; flex: 1; -webkit-transition: all 0.3s ease-out 0s; -moz-transition: all 0.3s ease-out 0s; -ms-transition: all 0.3s ease-out 0s; -o-transition: all 0.3s ease-out 0s; transition: all 0.3s ease-out 0s; }
 .iq-sidebar-logo a:hover, .iq-sidebar-logo a:focus { text-decoration: none; }
@@ -751,7 +751,7 @@ Simple From Wizard
 .steps { font-size: 20px; color: #777D74; font-weight: normal; text-align: right }
 #top-tab-list { margin: 0 -10px 60px; overflow: hidden; color: #777D74; }
 #top-tab-list .active { color: #be1e2d; }
-#top-tab-list li { list-style-type: none; font-size: 18px; width: 20%; float: left; text-align: left; position: relative; font-weight: 400 }
+#top-tab-list li { list-style-type: none; font-size: 18px; width: 25%; float: left; text-align: left; position: relative; font-weight: 400 }
 #top-tab-list li i { display: inline-block; text-align: center; height: 50px; width: 50px; line-height: 50px; font-size: 20px; border-radius: 50%; margin: 0 15px 0 0; color: #ffffff; background: #be1e2d; }
 #top-tab-list li.active a { color: #fff; background: #be1e2d; }
 #top-tab-list li.active.done a { background: #00ca00; }
@@ -1053,6 +1053,7 @@ table, th, td {
   border-collapse: collapse;
   color: black;
   padding: 5px 10px 5px 10px;
+  font-size:14px;
 }
 th{
   color: white;
@@ -1064,7 +1065,7 @@ th{
 .iq-card-body h3{
   font-size: 1.300em;
   color: white;
-  text-align: center;
+  /*text-align: center;*/
 }
 .form-group {
   margin-bottom: 1rem;
@@ -1098,7 +1099,7 @@ th{
   border-color: #000;
 }
 footer{
-  background: linear-gradient(1deg, black, #be1e2d);
+  background-color: #be1e2d;
 }
 .iq-footer ul li a {
   color: white;
@@ -1107,7 +1108,7 @@ footer{
   color: white;
 }
 .iq-footer .text-right a{
-  color: black;
+  color: white;
   font-weight: 700;
 }
 .iq-card-header{
@@ -1151,3 +1152,101 @@ a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-prima
 .activereq{
   border: 3px solid green !important;
 }
+/*26-7-22*/
+body,p,span,h1,h2,h3,h4,h5,h6{
+    font-family:'Poppins',sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    font-size:16px;
+}
+.card-header a{
+    font-size:14px;
+    font-weight:450;
+}
+.card-header a:hover{
+    color:#be1e2d;
+}
+
+/*breadcrumb*/
+
+.breadcrumb {
+  padding: 0px;
+  background: #D4D4D4;
+  list-style: none; 
+  overflow: hidden;
+  margin-top: 20px;
+  width: 100vw;
+  justify-content: space-between;
+}
+.breadcrumb>li+li:before {
+  padding: 0;
+}
+.breadcrumb li { 
+  float: left; 
+}
+.breadcrumb li.active a {                
+  background: #000 ; 
+  color: white;
+}
+.breadcrumb li.completed a {
+  background: brown;                  
+  background: hsl(354deg 73% 43%);
+  color: white;
+}
+.breadcrumb li.active a:after {
+ border-left: 30px solid #000 ;
+}
+.breadcrumb li.completed a:after {
+ border-left: 30px solid hsl(354deg 73% 43%);
+} 
+
+.breadcrumb li a {
+  color: #000;
+  text-decoration: none; 
+  padding: 10px 0 10px 45px;
+  position: relative; 
+  display: block;
+  float: left;
+}
+.breadcrumb li a:after { 
+  content: " "; 
+  display: block; 
+  width: 0; 
+  height: 0;
+  border-top: 50px solid transparent;       
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid hsla(0, 0%, 83%, 1);
+  position: absolute;
+  top: 50%;
+  margin-top: -50px; 
+  left: 100%;
+  z-index: 2; 
+}	
+.breadcrumb li a:before { 
+  content: " "; 
+  display: block; 
+  width: 0; 
+  height: 0;
+  border-top: 50px solid transparent;        
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px; 
+  margin-left: 1px;
+  left: 100%;
+  z-index: 1; 
+}	
+.breadcrumb li:first-child a {
+padding-left: 15px;
+}
+.breadcrumb li:last-child a {
+  padding-right: 15px;
+}
+.breadcrumb li a:hover { background: #888888;  ; }
+.breadcrumb li a:hover:after { border-left-color: #888888  !important; }
+
+
+
+
+

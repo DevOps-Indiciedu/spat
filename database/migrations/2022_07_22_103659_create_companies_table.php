@@ -15,7 +15,15 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('company');
+            $table->string('company_name');
+            $table->string('company_contact_name');
+            $table->string('company_phone');
+            $table->string('company_email');
+            $table->string('company_website')->nullable();;
+            $table->string('company_address')->nullable();;
+            $table->string('company_standard')->nullable();;
+            $table->string('company_max_users')->default('0');;
+            $table->string('company_folder_name')->nullable();;
             $table->timestamps();
         });
     }

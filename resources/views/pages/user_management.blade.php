@@ -23,7 +23,6 @@
                                <th class="text-dark">{{ __('Name') }}</th>
                                <th class="text-dark">{{ __('Email') }}</th>
                                <th class="text-dark">{{ __('Phone') }}</th>
-                               <th class="text-dark">{{ __('Address') }}</th>
                                <th class="text-dark">{{ __('Designation') }}</th>
                                <th class="text-dark">{{ __('Company') }}</th>
                                <th class="text-dark">{{ __('Location') }}</th>
@@ -46,18 +45,17 @@
                                 </td>
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->phone }}</td>
-                                <td>{{ $data->address }}</td>
                                 <td>{{ get_designation($data->designation_id)->title }}</td>
-                                <td>{!!  get_company($data->company_id)->company !!}</td>
-                                <td>{!!  get_location($data->location_id)->name !!}</td>
-                                <td>{!!  get_department($data->department_id)->department !!}</td>
+                                <td>{!!  get_company($data->company_id)->company_name !!}</td>
+                                <td>{!!  @get_location($data->location_id)->name !!}</td>
+                                <td>{!!  @get_department($data->department_id)->department !!}</td>
                                 <td>{!!  get_role($data->role_id)->role !!}</td>
                                 <td>{{ status($data->status) }}</td>
                                 <td>
                                     <button type="button" data-id="{{ $data->id }}" class="btn btn-warning edit_user" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                    <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_user" >
+                                    <!-- <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_user" >
                                             <i class="ri-delete-bin-2-fill pr-0"></i>
-                                        </button>
+                                        </button> -->
                                 </td>
                             </tr>
                             @endforeach 

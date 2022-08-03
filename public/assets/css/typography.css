@@ -64,7 +64,7 @@ body { font-family: 'Poppins', sans-serif; font-weight: 400; font-style: normal;
 a, .btn { -webkit-transition: all 0.5s ease-out 0s; -moz-transition: all 0.5s ease-out 0s; -ms-transition: all 0.5s ease-out 0s; -o-transition: all 0.5s ease-out 0s; transition: all 0.5s ease-out 0s; }
 a, button, input, btn { outline: medium none !important; }
 .uppercase { text-transform: uppercase; }
-h1, h2, h3, h4, h5, h6 { font-family: 'Questrial', sans-serif; font-weight: 600; margin: 0px; line-height: 1.5; color: #374948; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Questrial', sans-serif; font-weight: 500; margin: 0px; line-height: 1.5; color: #374948; }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: inherit; }
 label { font-weight: normal; }
 h1 { font-size: 3.052em; }
@@ -92,7 +92,7 @@ loading
 ------------------------------------------------*/
 #loading { background-color: #ffffff; height: 100%; width: 100%; position: fixed; margin-top: 0px; top: 0px; left: 0px; bottom: 0px; overflow: hidden !important; right: 0px; z-index: 999999; }
 #loading-center { width: 100%; height: 100%; position: relative; }
-.loader { width: 3em; height: 3em; margin: auto; left: 0; right: 0; top: 0; bottom: 0; position: absolute; }
+.loader { width: 27em; height: 3em; margin: auto; left: 0; right: 0; top: 0; bottom: 0; position: absolute; }
 @-webkit-keyframes rotate {
   0% { -webkit-transform: rotateX(-37.5deg) rotateY(45deg); transform: rotateX(-37.5deg) rotateY(45deg); }
   50% { -webkit-transform: rotateX(-37.5deg) rotateY(405deg); transform: rotateX(-37.5deg) rotateY(405deg); }
@@ -313,7 +313,7 @@ Card
 ------------------------------------------------*/
 .iq-card { background: #ffffff; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; margin-bottom: 30px; border: none; -webkit-box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); -moz-box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); }
 .iq-card-body { padding: 20px; }
-.iq-card .iq-card-header { padding: 0 20px; min-height: 60px; border-bottom: 1px solid #f2edff; -ms-flex-align: center !important; align-items: center !important; }
+.iq-card .iq-card-header { padding: 0 20px; min-height: 45px; border-bottom: 1px solid #f2edff; -ms-flex-align: center !important; align-items: center !important; }
 .iq-card .iq-card-header .iq-header-title { display: inline-block; align-self: center !important; }
 .iq-card .iq-card-header .iq-header-title .card-title { margin-bottom: 0; }
 .iq-card-header-toolbar .nav-item a { color: #393c52; padding: 4px 12px; font-size: 14px; font-weight: 600; font-family: 'Nunito', sans-serif; }

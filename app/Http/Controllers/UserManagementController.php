@@ -8,12 +8,23 @@ use App\Models\User;
 use App\Models\UserManagement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserManagementController extends Controller
 {
     public function index()
     {
-    	$user['user'] = UserManagement::all();
+        
+        if(Auth::user()->system_admin == 1):
+            $userID = 0;
+        else:
+            $userID = Auth::user()->id;    
+        endif;
+    	$user['user'] = DB::select('call GetAllUsers('.$userID.')');
         return view('pages.user_management',$user);
     }
 
@@ -25,66 +36,77 @@ class UserManagementController extends Controller
             $email = "required";
         endif;    
         
-        $request->validate([
-            'name'	            =>	'required',
-            'email'             =>   $email,
-            'phone'	            =>	'required',
-            'designation_id'	=>	'required',
-            'company_id'	    =>	'required',
-            'location_id'	    =>	'required',
-            'department_id'	    =>	'required',
-            'role_id'	        =>	'required',
-            'status'	        =>	'required',
-        ]);
+        // $request->validate([
+        //     'name'	            =>	'required',
+        //     'email'             =>   $email,
+        //     'phone'	            =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+        //     'designation_id'	=>	'required',
+        //     'company_id'	    =>	'required',
+        //     'location_id'	    =>	'required',
+        //     'department_id'	    =>	'required',
+        //     'role_id'	        =>	'required',
+        //     'status'	        =>	'required',
+        // ]);
             if ($request->hiddenId == "") {
                 DB::beginTransaction();
-                try {    
-                    $user = User::create([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'password' => Hash::make('secureism123'),
-                    ]);
-                
+                try {  
+                $user = DB::select('call InsertUsers(?,?,?,?)',
+                [
+                    $request->name,
+                    $request->email,
+                    Hash::make('secureism123'),
+                    Str::random(10)
+                ]);
+    
+                // Mail Send User Passwordd Setup 
+                if($user):
+                    $userEmail = User::findOrFail($user[0]->LAST_ID); 
+                    $body = [
+                        'name'      => $userEmail->name,
+                        'btn_url'   => url('verify-email').'/'.Crypt::encrypt($userEmail->remember_token).'/'.$userEmail->id,
+                    ];
+                    Mail::to($userEmail->email)->send(new WelcomeMail($body));
+                endif;                 
                 
                     $files = [];
                     $x = 50;
-                    if($request->hasfile('image')):
-                        $file = $request->file('image');
-                        $name = time().rand(1,100).'.'.$file->extension();
-                        $img = \Image::make($file);
-                        $img->save(public_path('profile_images/'.$name),$x);
-                        $profile_image = $name;
-                    else:
-                        $profile_image = $request->hiddenProfile;
-                    endif;
-
-                    $data = UserManagement::updateOrCreate(
+                    // if($request->hasfile('image')):
+                    //     $file = $request->file('image');
+                    //     $name = time().rand(1,100).'.'.$file->extension();
+                    //     $img = \Image::make($file);
+                    //     $img->save(public_path('profile_images/'.$name),$x);
+                    //     $profile_image = $name;
+                    // else:
+                    //     $profile_image = $request->hiddenProfile;
+                    // endif;
+                    $data = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?)',
                         [
-                            'id'	=>	$request->hiddenId,
-                        ],
-                        [
-                            'user_id'	    =>	$user->id,
-                            'name'	        =>	$request->name,
-                            'email'	        =>	$request->email,
-                            'phone'	        =>	$request->phone,
-                            'address'	    =>	$request->address,
-                            'designation_id'=>	$request->designation_id,
-                            'company_id'	=>	$request->company_id,
-                            'location_id'	=>	$request->location_id,
-                            'department_id'	=>	$request->department_id,
-                            'role_id'	    =>	$request->role_id,
-                            'status'	    =>	$request->status,
-                            'profile_image'	=>	$profile_image,
-                        ]
-                    );
+                            $user[0]->LAST_ID,
+                            $request->name,
+                            $request->email,
+                            $request->phone,
+                            $request->address,
+                            $request->designation_id,
+                            $request->company_id,
+                            $request->location_id,
+                            $request->department_id,
+                            $request->role_id,
+                            $request->status,
+                            "",
+                            Auth::user()->id,
+                        ]);
                     DB::commit();
                 
                 } catch (\Exception $e) {
-                    DB::rollback();
+                    $data = $e->getMessage();
                 }
             }else{
-                // DB::transaction(function () {    
-                    $user = User::where("id",$request->hiddenId)->update(["name" => $request->name , "email" => $request->email]);
+                // DB::transaction(function () {  
+                    $user = DB::select('call UpdateUsers('.$request->hiddenId.',?,?)',
+                        [
+                            $request->name,
+                            $request->email,
+                        ]);  
                 
                     $files = [];
                     $x = 50;
@@ -99,22 +121,20 @@ class UserManagementController extends Controller
                         $profile_image = $request->hiddenProfile;
                     endif;
 
-                    $data = UserManagement::where("user_id",$request->hiddenId)->update(
+                    $data = DB::select('call UpdateUserManagment('.$request->hiddenId.',?,?,?,?,?,?,?,?,?,?,?)',
                         [
-                            'name'	        =>	$request->name,
-                            'email'	        =>	$request->email,
-                            'phone'	        =>	$request->phone,
-                            'address'	    =>	$request->address,
-                            'designation_id'=>	$request->designation_id,
-                            'company_id'	=>	$request->company_id,
-                            'location_id'	=>	$request->location_id,
-                            'department_id'	=>	$request->department_id,
-                            'role_id'	    =>	$request->role_id,
-                            'status'	    =>	$request->status,
-                            'profile_image'	=>	$profile_image,
-                        ]
-                    );
-                
+                            $request->name,
+                            $request->email,
+                            $request->phone,
+                            $request->address,
+                            $request->designation_id,
+                            $request->company_id,
+                            $request->location_id,
+                            $request->department_id,
+                            $request->role_id,
+                            $request->status,
+                            $profile_image,
+                        ]);
                 // });
             }
         return response()->json($data);
@@ -122,21 +142,52 @@ class UserManagementController extends Controller
 
     public function destroy(Request $request)
     {
-    	$rec = UserManagement::find($request->id)->delete();
-        if($rec):
+    	// $rec = UserManagement::find($request->id)->delete();
+        // if($rec):
+        //     $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
+        // endif;    
+        // return $response;
+        try {
+            $rec = DB::select('call DeleteUserManagment('.$request->id.')');
             $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
-        endif;    
+    	} catch(Exception $e) {
+            $response = response()->json(['code'=>404, 'message'=>'Data Not Deleted'], 404);
+        }
+
         return $response;
     }
 
     public function edit($usermanagement_id)
     {
-        $data = UserManagement::findOrFail($usermanagement_id);
-        return response()->json($data);
+        $data = DB::SELECT('call EditUserManagment('.$usermanagement_id.')');
+        return $data;
     }
 
     public function profile()
     {
         return view('auth.userProfile');
+    }
+
+    public function create_password(Request $request)
+    {
+        $request->validate([
+            'email'     =>  'required|email',
+            'password'  => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+        ]);
+        // Password Format (Zeeshan123@)
+        $token = Crypt::decrypt($request->token);
+        $user = DB::table('users')->where('id',$request->id)->where('email',$request->email)->where('remember_token',$token)->first();
+        // dd($user);
+        if($user->email_verified_at == NULL):
+            DB::enableQueryLog();
+            $data = DB::table('users')->where('id',$request->id)->update([
+	    		'password'			=>	Hash::make($request->password),
+	    		'email_verified_at'	=>	date("Y-m-d h:i:s"),
+	    	]);
+            // dd(DB::getQueryLog());
+            return redirect()->route('login')->with('success','Password created successfully');
+        else:
+            return redirect()->route('login')->with('error','Token has been expired');
+        endif;    
     }
 }

@@ -95,6 +95,16 @@
                 <div class="account-subtitle"><hr class="set-hrleft"><span>{{ __('Login to access your dashboard') }}</span><hr class="set-hrright"></div>
             </div>
             <div _ngcontent-att-c159="">
+                @if (session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <input type="input" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus class="form-control mb-0 @error('email') is-invalid @enderror">
@@ -119,7 +129,7 @@
             </div>
             </div>
         </div>
-        <div class="footr-powerdby"><span>{{ __('Powered By') }}</span><a href="https://indiciedu.com.pk" target="_blank"><img src="https://indiciedu.com.pk/frontend/wp-content/uploads/2021/06/indici-whitelogo.svg" class="w-25 pl-2"></a></div>
+        <div class="footr-powerdby"><span>{{ __('Powered By') }}</span><a href="https://indiciedu.com.pk" target="_blank"><img src="https://indiciedu.com.pk/frontend/wp-content/uploads/2021/06/SVGindici-edu.svg" class="w-25 pl-2"></a></div>
         </div>
         <div _ngcontent-bkv-c159="" class="col-md-8 backImg">
         <div _ngcontent-bkv-c159="" class="loginBtn loginBtn2">

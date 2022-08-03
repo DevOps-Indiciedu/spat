@@ -24,6 +24,7 @@
                                <th class="text-dark">{{ __('Location') }}</th>
                                <th class="text-dark">{{ __('Company') }}</th>
                                <th class="text-dark">{{ __('Phone') }}</th>
+                               <th class="text-dark">{{ __('Reg Date') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>
@@ -34,7 +35,7 @@
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->address }}</td>
-                                <td>{!!  get_company($data->company_id)->company !!}</td>
+                                <td>{!!  get_company($data->company_id)->company_name !!}</td>
                                 <td>{{ $data->phone }}</td>
                                 <td>{{ DMY($data->created_at) }}</td>
                                 <td>

@@ -114,7 +114,7 @@
                 </div>
             </div>
         </div>
-        <div class="footr-powerdby"><span>{{ __('Powered By') }}</span><a href="https://indiciedu.com.pk" target="_blank"><img src="https://indiciedu.com.pk/frontend/wp-content/uploads/2021/06/indici-whitelogo.svg" class="w-25 pl-2"></a></div>
+        <div class="footr-powerdby"><span>{{ __('Powered By') }}</span><a href="https://indiciedu.com.pk" target="_blank"><img src="https://indiciedu.com.pk/frontend/wp-content/uploads/2021/06/SVGindici-edu.svg" class="w-25 pl-2"></a></div>
         </div>
         <div _ngcontent-bkv-c159="" class="col-md-8 backImg">
         <div _ngcontent-bkv-c159="" class="loginBtn loginBtn2">

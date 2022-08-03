@@ -8,12 +8,19 @@ use App\Models\Location;
 use Illuminate\Support\Facades\DB;
 // use App\Rules\PhoneNumber;
 use Validator;
+use Auth;
+use File;
 
 class LocationController extends Controller
 {
     public function index()
     {
-    	$location['location'] = Location::all();
+        if(Auth::user()->system_admin == 1):
+            $userID = 0;
+        else:
+            $userID = Auth::user()->id;    
+        endif;    
+    	$location['location'] = DB::select('call GetAllLocations('.$userID.')');
         return view('pages.location',$location);
     }
 
@@ -26,33 +33,49 @@ class LocationController extends Controller
     		'phone'	        =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
     	]);
 
-    	$data = Location::updateOrCreate(
+        if($request->hiddenId == ""):
+            $companyFolder = getFolderName($request->company_id);
+            $location_name =  str_replace(' ', '_', $request->name);
+            $location_folder_name =  strtolower($location_name);
+            $path = public_path().'/companies/'.$companyFolder.'/'.$location_folder_name;
+            File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+
+            $data = DB::select('call InsertLocation(?,?,?,?,?)',
             [
-                'id'	=>	$request->hiddenId,
-            ],
+                $request->company_id,
+                $request->name,
+                $request->address,
+                $request->phone,
+                Auth::user()->id,
+            ]);
+        else: 
+            $data = DB::select('call UpdateLocation('.$request->hiddenId.', ?,?,?,?)',
             [
-        		'company_id'	=>	$request->company_id,
-        		'name'	        =>	$request->name,
-        		'address'	    =>	$request->address,
-        		'phone'	        =>	$request->phone,
-    	    ]
-        );
+                $request->company_id,
+                $request->name,
+                $request->address,
+                $request->phone,
+            ]);
+        endif;
     	return response()->json($data);
     }
 
     public function destroy(Request $request)
     {
-    	$rec = Location::find($request->id)->delete();
-        if($rec):
+        try {
+            $rec = DB::select('call DeleteLocation('.$request->id.')');
             $response = response()->json(['code'=>200, 'message'=>'Data Deleted successfully'], 200);
-        endif;    
+    	} catch(Exception $e) {
+            $response = response()->json(['code'=>404, 'message'=>'Data Not Deleted'], 404);
+        }
+
         return $response;
     }
 
     public function edit($location_id)
     {
-        $data = Location::findOrFail($location_id);
-        return response()->json($data);
+        $data = DB::SELECT('call EditLocation('.$location_id.')');
+        return $data;
     }
 
     public function get_locations_by_companyID($company_id)
@@ -62,7 +85,7 @@ class LocationController extends Controller
             // );
             // return response()->json($data);
         $output = '';
-        $data = Location::where('company_id',$company_id)->get();
+        $data = DB::select('call get_locations_by_companyID('.$company_id.')');
         $output .= "<select class='form-control' name='location_id' id='location_id'>";
         $output .= "<option value=''>Select Location</option>";
         foreach($data as $location):

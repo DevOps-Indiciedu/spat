@@ -7217,7 +7217,7 @@ $(document).ready(function() {
        var options = {
         animationEnabled: true,
         series: [70],
-        colors:['#00FF00', '#E91E63', '#9C27B0'],
+        colors:['#be1e2d', '#E91E63', '#9C27B0'],
         chart: {
         height: 350,
         type: 'radialBar',
@@ -7308,7 +7308,7 @@ $(document).ready(function() {
    stroke: {
      dashArray: 4
    },
-   labels: ['ISO 27001'],
+   labels: ['Total Passing'],
    };
 
    var chart = new ApexCharts(document.querySelector("#menu-chart-033"), options);
@@ -7358,7 +7358,7 @@ $(document).ready(function() {
   stroke: {
     dashArray: 4
   },
-  labels: ['ISO 20000'],
+  labels: ['Milestones Achieved'],
   };
 
   var chart = new ApexCharts(document.querySelector("#menu-chart-034"), options);
@@ -7408,7 +7408,7 @@ $(document).ready(function() {
     stroke: {
       dashArray: 4
     },
-    labels: ['ISO 22301'],
+    labels: ['Requirenments Fulfilled'],
     };
 
     var chart = new ApexCharts(document.querySelector("#menu-chart-035"), options);

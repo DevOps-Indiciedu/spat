@@ -21,12 +21,13 @@ return new class extends Migration
             $table->string('phone');
             $table->string('address');
             $table->integer('designation_id');
-            $table->integer('company_id');
-            $table->integer('location_id');
-            $table->integer('department_id');
+            $table->integer('company_id')->nullable();
+            $table->integer('location_id')->nullable();
+            $table->integer('department_id')->nullable();
             $table->integer('role_id');
             $table->enum('status', ['0','1']);
             $table->string('profile_image')->nullable();
+            $table->integer('added_by');
             $table->timestamps();
         });
     }

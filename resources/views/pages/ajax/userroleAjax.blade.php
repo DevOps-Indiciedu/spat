@@ -4,7 +4,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Company') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" onclick="FormClear('roleForm')" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -20,7 +20,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" onclick="FormClear('roleForm')" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
         </div>
@@ -79,8 +79,8 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#role").val(data.role);
-                $("#hiddenId").val(data.id);
+                $("#role").val(data[0].role);
+                $("#hiddenId").val(data[0].id);
 
                 $(".formBtn").text("Update Role");
                 $(".modal-title").text("Update Role");
@@ -113,6 +113,61 @@
             },error:function(err)
             {
                 $("#roleErr").text(err.responseJSON.errors.role);
+            }
+        });
+    });
+
+    $('input[class^="parentCheckBox"]').click(function() {
+        var str = $(this).attr('id');
+        var m_id = $(this).attr('value');
+        $('.act' + m_id).prop('checked', true);
+        if ($('.' + m_id).attr('checked') == true) {
+            $('.act' + m_id).removeAttr('checked', true);
+            $('.' + m_id).removeAttr('checked', false);
+        }
+
+    });
+
+    $(".adminMainCheckBox").click(
+        function() {
+            $(this).parents('.mycbox:eq(0)').find('.adminSubCheckBox').prop('checked', this.checked);
+        
+            if($('#admin_rights:checked').length == 1){
+                $("#admin_rights").removeAttr('checked', this.checked);
+            }
+            else
+            {
+                if ($('.adminSubCheckBox:checked').length == $('.adminSubCheckBox').length) {
+                        $("#admin_rights").prop('checked', true);
+                }  
+            }
+        }
+    );
+
+    $(".iq-card-body").on('submit','#saveRightForm',function(e){
+        e.preventDefault();
+        $.ajax({
+            url:"{{ route('save_rights') }}",
+            type : 'POST',
+            data:new FormData(this),
+            dataType: 'json',
+            contentType: false,  
+            cache: false,  
+            processData:false,
+            success:function(data) {
+                Swal.fire({
+                    position: 'top-mid',
+                    icon: 'success',
+                    title: 'Rights Assigned Successfully',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+                setTimeout(function() { 
+                    location.reload();
+                }, 2000);
+            },error:function(err)
+            {
+                // $("#roleErr").text(err.responseJSON.errors.role);
             }
         });
     });

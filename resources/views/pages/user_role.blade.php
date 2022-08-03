@@ -33,8 +33,9 @@
                                <td>{{ $data->role }}</td>
                                <td>{{ DMY($data->created_at) }}</td>
                                <td>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_role" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_role">
+                                   <a href="{{ url('role_rights/'.Crypt::encrypt($data->id)) }}" class="btn btn-success mb-3" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Assign Rights"><i class="ri-links-fill pr-0"></i></a>
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_role" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit"></i></button>
+                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_role" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Delete">
                                         <i class="ri-delete-bin-2-fill pr-0"></i>
                                     </button>
                                </td>

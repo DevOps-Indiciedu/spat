@@ -1,13 +1,22 @@
 <!-- Page Content  -->
 @extends('layouts.app')
-
+<head>
+    <style>
+        #accordion-1 table, th,td {
+          width:0px;
+        }
+        .navbar-list li img{
+            margin-top: 40% !important;
+         }
+    </style>
+</head>
 @section('content')
 <!-- Page Content  -->
 <div id="content-page" class="content-page">
             <div class="container-fluid">
                <div class="row">
-                  <div class="col-lg-2">
-                     <div class="iq-right-fixed rounded iq-card iq-card iq-card-block iq-card-stretch iq-card-height">
+                  <div class="col-lg-12">
+                     <div class="iq-right-fixed rounded iq-card iq-card iq-card-block iq-card-stretch iq-card-height" style="height:250px;">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
                               <h4 class="card-title">Activity timeline</h4>
@@ -27,94 +36,36 @@
                               </div>
                            </div> -->
                         </div>
-                        <div class="iq-card-body">
-                           <ul class="iq-timeline">
-                            <li>
-                                 <div class="timeline-dots" id="timeline-dots0"></div>
-                                 <a href="{{ route('req1') }}"><h6 class="float-left mb-1">Requirement 1</h6></a>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots " id="timeline-dots1"></div>
-                                 <a href="{{ route('req2') }}"><h6 class="float-left mb-1">Requirement 2</h6></a>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots activereq" id="timeline-dots2"></div>
-                                 <a href="{{ route('req3') }}"><h6 class="float-left mb-1">Requirement 3</h6></a>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots3"></div>
-                                 <h6 class="float-left mb-1">Requirement 4</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots4"></div>
-                                 <h6 class="float-left mb-1">Requirement 5</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots5"></div>
-                                 <h6 class="float-left mb-1">Requirement 6</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots6"></div>
-                                 <h6 class="float-left mb-1">Requirement 7</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots7"></div>
-                                 <h6 class="float-left mb-1">Requirement 8</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots8"></div>
-                                 <h6 class="float-left mb-1">Requirement 9</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots9"></div>
-                                 <h6 class="float-left mb-1">Requirement 10</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots10"></div>
-                                 <h6 class="float-left mb-1">Requirement 11</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <li>
-                                 <div class="timeline-dots" id="timeline-dots11"></div>
-                                 <h6 class="float-left mb-1">Requirement 12</h6>
-                                 <div class="d-inline-block w-100">
-                                 </div>
-                              </li>
-                              <!-- <li>
-                                 <div class="timeline-dots" id="timeline-dots1"></div>
-                                 <h6 class="float-left mb-1">Mega event</h6>
-                                 <small class="float-right mt-1">15 November 2019</small>
-                                 <div class="d-inline-block w-100">
-                                    <p>Bonbon macaroon jelly beans gummi bears jelly lollipop apple</p>
-                                 </div>
-                              </li> -->
-                           </ul>
+                        <div class="iq-card-body" style="box-sizing:border-box;">
+                          
+                           <div class="container">
+                              <div class="row">
+                                 <ul class="breadcrumb">
+                                    <li class="completed"><a href="{{ url('req1') }}" data-toggle="popover-hover" title="Requirement 1" data-content="Install and maintain a firewall configuration to protect cardholder data">Req # 1</a></li>
+                                    <li class="completed"><a href="{{ url('req2') }}" data-toggle="popover-hover" title="Requirement 2" data-content="Do not use vendor-supplied defaults for system passwords and other security parameters">Req # 2</a></li>
+                                    <li class="active"><a href="{{ url('req3') }}" data-toggle="popover-hover" title="Requirement 3" data-content="Protect stored cardholder data">Req # 3</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 4" data-content="Encrypt transmission of cardholder data across open, public networks">Req # 4</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 5" data-content="Protect all systems against malware and regularly update anti-virus software or programs">Req # 5</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 6" data-content="Develop and maintain secure systems and applications">Req # 6</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 7" data-content="Restrict access to cardholder data by business need to know">Req # 7</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 8" data-content="Identify and authenticate access to system components">Req # 8</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 9" data-content="Restrict physical access to cardholder data">Req # 9</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 10" data-content="Track and monitor all access to network resources and cardholder data">Req # 10</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 11" data-content="Regularly test security systems and processes">Req # 11</a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="popover-hover" title="Requirement 12" data-content="Maintain a policy that addresses information security for all personnel">Req # 12</a></li>
+                                 </ul>
+                              </div>
+                           </div>
+                           <div class="container">
+                              <div class="row" style="background-color: #f3f3f3; margin-top: 20px;">
+                                 <h6 style="padding: 10px;">Requirement 3 : <span>Protect stored cardholder data </span></h6>
+                              </div>
+                           </div>
                         </div>
                      
                      </div>
                   </div>
-                  <div class="col-sm-12 col-lg-10">
+                  <div class="col-sm-12 col-lg-12">
                      <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">

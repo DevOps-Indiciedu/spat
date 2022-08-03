@@ -4,7 +4,7 @@
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Location') }}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" onclick="FormClear('locationForm')" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
@@ -35,7 +35,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                <button type="button" class="btn btn-secondary" onclick="FormClear('locationForm')" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
         </div>
@@ -92,11 +92,11 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#company_id").val(data.company_id);
-                $("#name").val(data.name);
-                $("#address").val(data.address);
-                $("#phone").val(data.phone);
-                $("#hiddenId").val(data.id);
+                $("#company_id").val(data[0].company_id);
+                $("#name").val(data[0].name);
+                $("#address").val(data[0].address);
+                $("#phone").val(data[0].phone);
+                $("#hiddenId").val(data[0].id);
 
                 $(".formBtn").text("Update Location");
                 $(".modal-title").text("Update Location");

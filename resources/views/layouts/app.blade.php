@@ -18,47 +18,75 @@
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'responsive.css') }}">
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('resources/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('resources/css/app.css') }}" rel="stylesheet">
+
     @else
-    <!-- Bootsyrap -->
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <!-- Login CSS -->
     <link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'login.css') }}">
     @endauth
     
-
     <!-- jQuery  -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'jquery.min.js') }}"></script>
+    <!-- DataTables CSS  -->
+    <!-- <link rel="stylesheet" href="https://dev.indiciedu.com.pk/assets/datatables/datatables.min.css"> -->
+   <link rel="stylesheet" href="{{ asset(MyApp::ASSET_DATATABLE.'datatables.min.css') }}">
+   <!-- DataTables JS  -->
+   <script src="https://dev.indiciedu.com.pk/assets/optimization/bottom/jquery.dataTables.min.js"></script>
+   <!-- <link rel="stylesheet" href="{{ asset(MyApp::ASSET_DATATABLE.'datatables.min.js') }}"> -->
     <!-- Sweet Alert  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
 </head>
 <body>
+   @auth
+   <style>
+      #form_loader {
+         position: absolute;
+         z-index: 99;
+         height: 100vh;
+         background: #ffffffad;
+         width: 100%;
+         display: flex;
+         flex-wrap: nowrap;
+         align-content: center;
+         justify-content: center;
+         align-items: center;
+         z-index: 99999;
+      }
+   </style>
     <!-- loader Start -->
+    <div id="form_loader">
+      <img src="{{ asset(MyApp::LOADER) }}" alt="">
+    </div>
     <div id="loading">
         <div id="loading-center">
         <div class="loader">
-            <div class="cube">
-                <div class="sides">
-                    <div class="top"></div>
-                    <div class="right"></div>
-                    <div class="bottom"></div>
-                    <div class="left"></div>
-                    <div class="front"></div>
-                    <div class="back"></div>
-                </div>
-            </div>
+            <!--<div class="cube">-->
+            <!--    <div class="sides">-->
+            <!--        <div class="top"></div>-->
+            <!--        <div class="right"></div>-->
+            <!--        <div class="bottom"></div>-->
+            <!--        <div class="left"></div>-->
+            <!--        <div class="front"></div>-->
+            <!--        <div class="back"></div>-->
+            <!--    </div>-->
+            <!--</div>-->
+            <img src="{{ asset(MyApp::SITE_LOGO) }}" class="img-fluid" alt="">
         </div>
         </div>
     </div>
     <!-- loader END -->
+    @endauth
 
     <div id="app">
         <!-- Wrapper Start -->
@@ -78,66 +106,134 @@
                <div class="iq-menu-horizontal">
                   <nav class="iq-sidebar-menu">                     
                   <ul id="iq-sidebar-toggle" class="iq-menu d-flex">
+                     @if(userRightGranted('dashboard'))
                      <li class="active">
                         <a href="{{ url('home') }}" class="iq-waves-effect collapsed"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
                      </li>
+                     @endif
+                     @if(userRightGranted('company_onboarding'))
+                     <li>
+                        <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i><span>Company Onboarding</span></a>
+                        <ul id="menu-level" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           @if(userRightGranted('add_client'))
+                           <li>
+                              <a href="{{ route('company_onboarding') }}">
+                              <span>Add Client</span></a>
+                           </li>
+                           @endif
+                           @if(userRightGranted('view_clients'))
+                           <li>
+                                <a href="{{ route('company') }}">
+                                    <span>View Clients</span>
+                                </a>
+                           </li>
+                           @endif
+                        </ul>
+                     </li>
+                     @endif      
+                     @if(userRightGranted('company_onboarding'))
+                     <li>
+                        <a href="{{ route('projects') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <span>Projects</span></a>
+                     </li>
+                     @endif
+                     @if(userRightGranted('manage'))
                      <li>
                         <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i><span>Manage</span></a>
                         <ul id="menu-level" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                           <li>
-                                <a href="{{ route('company') }}">
+                           <!-- <li>
+                                <a href="{{ route('company_onboarding') }}">
                                     <span>Company Management</span>
                                 </a>
-                           </li>
-                           <li>
-                                <a href="{{ route('designation') }}">
-                                    <span>Designation Management</span>
-                                </a>
-                           </li>
+                           </li> -->
+                           @if(userRightGranted('location_managment'))
                            <li>
                                 <a href="{{ route('location') }}">
                                     <span>Location Management</span>
                                 </a>
                            </li>
+                           @endif
+                           @if(userRightGranted('department_management'))
                            <li>
                                 <a href="{{ route('department') }}">
                                     <span>Department Management</span>
                                 </a>
                            </li>
+                           @endif
+                           @if(userRightGranted('designation_management'))
+                           <li>
+                                <a href="{{ route('designation') }}">
+                                    <span>Designation Management</span>
+                                </a>
+                           </li>
+                           @endif
+                           @if(userRightGranted('role_management'))
                            <li>
                                 <a href="{{ route('user_role') }}">
                                     <span>Role Management</span>
                                 </a>
                            </li>
+                           @endif
+                           @if(userRightGranted('user_management'))
                            <li>
                                 <a href="{{ route('user') }}">
                                     <span>User Management</span>
                                 </a>
                            </li>
+                           @endif
+                           @if(userRightGranted('task_management'))
                            <li>
                                 <a href="{{ route('task') }}">
                                     <span>Task Management</span>
                                 </a>
                            </li>
+                           @endif
                         </ul>
                      </li>
-                     <li>
-                        <a href="{{ route('view_requirements') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
-                        <span>PCI DSS Standard</span></a>
+                     @endif
+                     @if(userRightGranted('project_list'))
+                     <li >
+                           <a href="{{ route('project_list') }}" class="iq-waves-effect collapsed">
+                           <i class="ri-record-circle-line"></i>
+                              <span>Projects</span>
+                           </a>
                      </li>
+                     @endif
+                     @if(userRightGranted('pci_dss_standard'))
                      <li>
-                        <a href="{{ route('company_onboarding') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
-                        <span>Company Onboarding</span></a>
+                        <a href="{{ route('standards') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <span>Available Standards</span></a>
                      </li>
+                     @endif
+                     @if(userRightGranted('requirements'))
                      <li>
                         <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
                         <span>Requirements</span></a>
                         <ul id="dashboard" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                        @if(userRightGranted('requirement_1'))
                            <li><a href="{{ route('req1') }}">Requirement 1</a></li>
+                        @endif
+                        @if(userRightGranted('requirement_2'))   
                            <li><a href="{{ route('req2') }}">Requirement 2</a></li>
+                        @endif
+                        @if(userRightGranted('requirement_3'))
                            <li><a href="{{ route('req3') }}">Requirement 3</a></li>
+                        @endif
                         </ul>
                      </li>
+                     @endif
+                     @if(userRightGranted('soa'))
+                     <li>
+                        <a href="{{ route('select_req_list') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <span>SOA</span></a>
+                     </li>
+                     @endif
+                     @if(userRightGranted('observations'))
+                     <li>
+                        <a href="{{ route('view_selected_req_list') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
+                        <span>Observations </span></a>
+                     </li>
+                     @endif
                   </ul>
                </nav>
                </div>
@@ -206,6 +302,16 @@
                               </div>
                            </div>
                         </li>
+                        <li class="nav-item">
+                           <a href="#" class="search-toggle iq-waves-effect" style="font-size:14px;">
+                              Welcome
+                              @if(Auth::user()->system_admin == 1)
+                              System Admin
+                              @else
+                              {!! get_role(Auth::user()->usermanagement->role_id)->role !!}
+                              @endif  
+                           </a>
+                        </li>
                      </ul>
                   </div>
                   <ul class="navbar-list">
@@ -216,7 +322,13 @@
                               <div class="iq-card-body p-0 ">
                                  <div class="bg-primary p-3">
                                     <h5 class="mb-0 text-white line-height">{{ Auth::user()->name }}</h5>
-                                    <span class="text-white font-size-12">Available</span>
+                                    <span class="text-white font-size-12">
+                                    @if(Auth::user()->system_admin == 1)
+                                    System Admin
+                                    @else
+                                    {!! get_role(Auth::user()->usermanagement->role_id)->role !!}
+                                    @endif
+                                    </span>
                                  </div>
                                  <a href="{{ route('profile') }}" class="iq-sub-card iq-bg-primary-hover">
                                     <div class="media align-items-center">
@@ -344,13 +456,14 @@
       <!-- Wrapper END -->
       @auth
       <!-- Footer -->
-      <footer class="bg-white iq-footer">
+      <footer class="iq-footer">
          <div class="container-fluid">
             <div class="row">
                <div class="col-lg-6">
                   <ul class="list-inline mb-0">
-                     <li class="list-inline-item"><a href="privacy-polic.html">Privacy Policy</a></li>
-                     <li class="list-inline-item"><a href="terms-of-servic.html">Terms of Use</a></li>
+                     <!-- <li class="list-inline-item"><a href="privacy-polic.html">Privacy Policy</a></li>
+                     <li class="list-inline-item"><a href="terms-of-servic.html">Terms of Use</a></li> -->
+                     <img src="{{ asset(MyApp::SITE_LOGO_WHITE) }}" class="img-fluid" alt="" style="width:140px;">
                   </ul>
                </div>
                <div class="col-lg-6 text-right">
@@ -398,5 +511,58 @@
          show: false
       })
     </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+         $("#form_loader").hide();
+         $(document).ajaxStart(function(){
+            $("#form_loader").show();
+         });
+
+         $(document).ajaxComplete(function(){
+            $("#form_loader").hide();
+         });
+         var fieldnumber = 0;
+         var maxField = 10; //Input fields increment limitation
+         var addButton = $('.add_button'); //Add button selector
+         var wrapper = $('.Inputfield'); //Input field wrapper
+         var x = 1; //Initial field counter is 1
+         
+         //Once add button is clicked
+         $(".add_button").click(function() {
+            var fieldHTML = '<div class="form-group col-md-12 d-flex Inputfield" style="align-items: center;"><input type="text" class="form-control mt-3 d-none" name="field'+fieldnumber+'" id="field'+fieldnumber+'" value="" placeholder=""><a href="javascript:void(0);" class="remove_button"><i class="fa fa-minus mt-3" style="color:#be1e2d;font-size:20px;margin:10px;"></i></a><label for="file-input" style="margin-bottom:-0.5rem;"><i class="fa fa-upload" style="font-size:20px;"aria-hidden="true"></i></label><input id="file-input" type="file" style="display:none;"/></div>'; //New input field html 
+            if(x < maxField){ 
+                  x++; //Increment field counter
+                  $(this).parents('td').append(fieldHTML); //Add field html
+                  fieldnumber++;
+            }
+         });
+
+         //Once remove button is clicked
+         $(document).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent().remove(); //Remove field html
+            x--; //Decrement field counter
+            fieldnumber--;
+         });
+
+      });
+
+      // $(".close").on("click",function(){
+      //    if($(this).attr('data-dismiss') == "modal")
+      //    {
+      //       alert($(this).attr('data-dismiss'));
+      //       $(this).find('form').trigger('reset');
+      //    }
+      // });
+
+      function FormClear(formID) {
+         document.getElementById(formID).reset();
+      }
+
+      $(document).ready( function () {
+         $('#datatable').DataTable();
+      } );
+
+      </script>
 </body>
 </html>
