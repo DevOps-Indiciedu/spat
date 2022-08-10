@@ -6,19 +6,21 @@
       <div class="row">
          <div class="col-lg-12">
             <div class="card-title" style="background-color: #000;color:white;text-align:center;font-size:20px;padding:7px;font-weight:400">
-               Welcome To 
-               @if(Auth::user()->system_admin == 1)
-               System Admin
-               @else
-               {!! get_role(Auth::user()->usermanagement->role_id)->role !!}
-               @endif
+               Analytics Dashboard
             </div>
          </div>
       </div>
    </div>
    <div class="container-fluid">
+      
       <div class="row">
          <div class="col-lg-12">
+            @if(session('status'))
+            <div class="alert alert-success">
+               {{ session('status') }}
+            </div>
+            @endif
+            
             <div class="row" style="margin-right: 0px;">
                <div class="col-xl-3" style="padding-right:0px;">
                   <div class="iq-card iq-card-block iq-card-stretch">

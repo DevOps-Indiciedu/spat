@@ -642,6 +642,19 @@ $(function () {
 })
 
 
+$(document).ready(function() {
+    $('#example').DataTable( {
+        rowReorder: true,
+    } );
+} );
+
+$(document).ready(function() {
+    $('#efile').DataTable( {
+        rowReorder: true,
+        "bLengthChange": false,
+    });
+} );
+
 
 
 

@@ -29,6 +29,16 @@ Route::get('verify-email/{token}/{id}', function () {
     return view('auth.verify-email');
 })->name('verify-email');
 
+// 2FA Auth 
+Route::get('2fa', function () {
+    return view('auth.2fa');
+})->name('2fa');
+
+// 2FA Auth 
+Route::get('2fa-challenge', function () {
+    return view('auth.two-factor-challange');
+})->name('2fa-challenge');
+
 Route::post('create-password',[App\Http\Controllers\UserManagementController::class,'create_password'])->name('create-password');
 
 Route::get('/permission-denied', function () {
@@ -50,6 +60,8 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     // MANAGE Module//
     //////////////////
 
+    Route::get('/2FApermission/{id}/{status}', [App\Http\Controllers\UserManagementController::class,'TwoFactorPermission'])->name('2FApermission')->middleware(['middleware'=>'user-permission:2fa']);
+    Route::get('/D2FApermission/{id}/{status}', [App\Http\Controllers\UserManagementController::class,'DisableTwoFactorPermission'])->name('D2FApermission')->middleware(['middleware'=>'user-permission:2fa']);
     // Company Managment 
     Route::group(['middleware'=>'user-permission:company_onboarding'],function(){
         Route::controller(App\Http\Controllers\CompanyController::class)->group(function () {
@@ -114,10 +126,16 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
             Route::post('/add_user', 'insertOrupdate')->name('add_user');
             Route::post('/delete_user', 'destroy')->name('delete_user');
             Route::get('/edit_user/{id}', 'edit')->name('edit_user');
-            Route::get('/profile', 'profile')->name('profile');
         });
     });
-
+    
+    // Profile 
+    Route::group(['middleware'=>'user-permission:profile'],function(){
+        Route::controller(App\Http\Controllers\UserManagementController::class)->group(function () {
+            Route::get('/profile', 'profile')->name('profile');
+            Route::post('/profile_update', 'profile_update')->name('user-profile-update');
+        });
+    });
     // Designation Management
     Route::group(['middleware'=>'user-permission:designation_management'],function(){
         Route::controller(App\Http\Controllers\DesignationController::class)->group(function () {

@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <div class="iq-card-body">
-                    <table id="datatable" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-hover table-bordered" >
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
@@ -43,10 +43,12 @@
                                 <td>{!! get_taskStatus($data->status)->title !!}</td>
                                 <td>{{ $data->task_progress }}</td>
                                 <td>
-                                    <button type="button" data-id="{{ $data->id }}" class="btn btn-warning edit_task" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                    <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_task" >
+                                    <div class="flex align-items-center list-user-action">
+                                        <a href="#" data-id="{{ $data->id }}" class="edit_task" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></a>
+                                        <a href="#" data-id="{{ $data->id }}" class="delete_task" >
                                             <i class="ri-delete-bin-2-fill pr-0"></i>
-                                        </button>
+                                        </a>
+                                    </div>        
                                 </td>
                             </tr>
                             @endforeach 

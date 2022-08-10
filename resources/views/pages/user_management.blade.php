@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <div class="iq-card-body">
-                    <table id="datatable" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-hover table-bordered" >
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
@@ -29,6 +29,9 @@
                                <th class="text-dark">{{ __('Department') }}</th>
                                <th class="text-dark">{{ __('Role') }}</th>
                                <th class="text-dark">{{ __('Status') }}</th>
+                               @if(Auth::user()->usermanagement->two_factor_enabled == 1)
+                               <th class="text-dark">{{ __('2FA') }}</th>
+                               @endif
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
                        </thead>
@@ -39,7 +42,9 @@
                                 <td>{{ $i++ }}</td>
                                 <td>
                                     @if($data->profile_image)
-                                        <img src="{{ asset(MyApp::PROFILE.$data->profile_image) }}" alt="{{ $data->profile_image }}" width="50">
+                                        <a href="{{ asset(MyApp::PROFILE.$data->profile_image) }}" target="_blank">
+                                            <img src="{{ asset(MyApp::PROFILE.$data->profile_image) }}" alt="{{ $data->profile_image }}" class="userImage">
+                                        </a>
                                     @endif
                                     {{ $data->name }}
                                 </td>
@@ -51,11 +56,36 @@
                                 <td>{!!  @get_department($data->department_id)->department !!}</td>
                                 <td>{!!  get_role($data->role_id)->role !!}</td>
                                 <td>{{ status($data->status) }}</td>
+                                @if(Auth::user()->usermanagement->two_factor_enabled == 1)
                                 <td>
-                                    <button type="button" data-id="{{ $data->id }}" class="btn btn-warning edit_user" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                    <!-- <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_user" >
-                                            <i class="ri-delete-bin-2-fill pr-0"></i>
-                                        </button> -->
+                                    @if($data->two_factor_enabled == 1)
+                                    <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                        <div class="custom-switch-inner">
+                                            <!-- <p class="mb-0"> Danger </p> -->
+                                            <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="0" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}" checked="">
+                                            <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @else
+                                    <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                        <div class="custom-switch-inner">
+                                            <!-- <p class="mb-0"> Danger </p> -->
+                                            <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="1" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}">
+                                            <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </td>
+                                @endif
+                                <td>
+                                    <div class="flex align-items-center list-user-action">
+                                        <a href="#" data-id="{{ $data->id }}" class="edit_user" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></a>
+                                        <!-- <button type="button" data-id="{{ $data->id }}" class="btn btn-danger delete_user" >
+                                                <i class="ri-delete-bin-2-fill pr-0"></i>
+                                            </button> -->
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach 

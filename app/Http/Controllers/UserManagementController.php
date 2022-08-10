@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules\Password;
+
 
 class UserManagementController extends Controller
 {
@@ -171,15 +173,25 @@ class UserManagementController extends Controller
     public function create_password(Request $request)
     {
         $request->validate([
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
             'email'     =>  'required|email',
-            'password'  => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+            // 'password'  => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
         ]);
         // Password Format (Zeeshan123@)
         $token = Crypt::decrypt($request->token);
         $user = DB::table('users')->where('id',$request->id)->where('email',$request->email)->where('remember_token',$token)->first();
         // dd($user);
         if($user->email_verified_at == NULL):
-            DB::enableQueryLog();
+            // DB::enableQueryLog();
             $data = DB::table('users')->where('id',$request->id)->update([
 	    		'password'			=>	Hash::make($request->password),
 	    		'email_verified_at'	=>	date("Y-m-d h:i:s"),
@@ -188,6 +200,93 @@ class UserManagementController extends Controller
             return redirect()->route('login')->with('success','Password created successfully');
         else:
             return redirect()->route('login')->with('error','Token has been expired');
+        endif;    
+    }
+
+    public function profile_update(Request $request)
+    {
+        $request->validate([
+            'name'            =>  'required',
+            'email'           =>  'required',
+        ]);
+
+        $x = 50;
+        if($request->hasfile('image')):
+            $file = $request->file('image');
+            deleteFile('profile_images',$request->hiddenProfile);
+            $name = time().rand(1,100).'.'.$file->extension();
+            $img = \Image::make($file);
+            $img->save(public_path('profile_images/'.$name),$x);
+            $profile_image = $name;
+        else:
+            $profile_image = $request->hiddenProfile;
+        endif;
+
+        $user = User::find(Auth::user()->id);
+        if($request->old_password != "" && $request->new_password != ""):
+            $request->validate([
+                'new_password'            =>  'required|string|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+            ]);
+            if($user->password == Hash::make($request->old_password)):
+                $new_password = Hash::make($request->new_password);
+                DB::beginTransaction();
+                try {
+                    User::where("id",Auth::user()->id)->update(['name' => $request->name, 'password' => $new_password]);
+                    $data = UserManagement::where("user_id",Auth::user()->id)->update(['name' => $request->name,'profile_image' => $profile_image]);
+                    DB::commit();
+                    return Redirect::back()->with('success','Profile Updated Successfully');
+                } catch (\Exception $e) {
+                    $data = $e->getMessage();
+                }         
+            endif;
+        else:
+            DB::beginTransaction();
+            try {
+                User::where("id",Auth::user()->id)->update(['name' => $request->name]);
+                $data = UserManagement::where("user_id",Auth::user()->id)->update(['name' => $request->name,'profile_image' => $profile_image]);
+            DB::commit();
+            } catch (\Exception $e) {
+                $data = $e->getMessage();
+            } 
+        endif;
+
+        return response()->json($data);
+    }
+
+    public function TwoFactorPermission($userID,$status)
+    {
+        
+        if($userID != "" && $status != ""):
+            $data = DB::table('user_management')->where('user_id',$userID)->update([
+	    		'two_factor_enabled'=>	intval($status),
+	    		'updated_at'	    =>	date("Y-m-d h:i:s"),
+	    	]);
+            $data_user = DB::table('users')->where('id',$userID)->update([
+	    		'two_factor_secret' =>	'',
+	    		'updated_at'	    =>	date("Y-m-d h:i:s"),
+	    	]);
+            $response = response()->json(['code'=>200, 'message'=>'2FA Enabled successfully'], 200);
+        else:
+            $response = response()->json(['code'=>500, 'message'=>'System Error'], 500);
+        endif;    
+    }
+
+    public function DisableTwoFactorPermission($userID,$status)
+    {
+        
+        if($userID != "" && $status != ""):
+            $data = DB::table('user_management')->where('user_id',$userID)->update([
+	    		'two_factor_disabled_access'    =>	intval($status),
+	    		'updated_at'	                =>	date("Y-m-d h:i:s"),
+	    	]);
+            $data_user = DB::table('users')->where('id',$userID)->update([
+	    		'two_factor_secret'         =>	'',
+	    		'two_factor_recovery_codes' =>	'',
+	    		'updated_at'	            =>	date("Y-m-d h:i:s"),
+	    	]);
+            $response = response()->json(['code'=>200, 'message'=>'2FA Enabled successfully'], 200);
+        else:
+            $response = response()->json(['code'=>500, 'message'=>'System Error'], 500);
         endif;    
     }
 }

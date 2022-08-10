@@ -41,7 +41,7 @@
 		endif;
         $output = '';
 		$output .= "<select class='form-control' name='company_id' id='company_id'>";
-		$output .= "<option value=''>Select Company</option>";	
+		// $output .= "<option value=''>Select Company</option>";	
 			foreach ($company as $row) :
 				$selected = '';
 				if ($select == $row->id) :
@@ -74,7 +74,7 @@
 		endif;
         $output = '';
 		$output .= "<select class='form-control' name='assessor_id' id='assessor_id'>";
-		$output .= "<option value=''>Select Auditor</option>";	
+		$output .= "<option value=''>Select Audit Organisation</option>";	
 			foreach ($company as $row) :
 				$selected = '';
 				if ($select == $row->id) :
@@ -309,6 +309,7 @@
                     ->join('user_management', 'user_management.user_id', '=', 'users.id')
                     ->select('users.name','users.id')
                     ->where('user_management.status', '1')
+                    ->where('users.id','<>',Auth::user()->id)
                     ->where('user_management.company_id',auth()->user()->usermanagement->company_id)
                     ->get();
 		endif;
@@ -490,15 +491,20 @@
 
 	function projects_dropdown($select = 0,$where = "")
     {
+		if(Auth::user()->system_admin == 1):
+			$projects = DB::table('projects')->where('status','1')->get();
+		else:
+			$projects = DB::table('projects')->where('status','1')->where('auditee_id',auth()->user()->usermanagement->company_id)->get();
+		endif;
         $output = '';
 		$output .= "<select class='form-control' name='project_id' id='project_id'>";
 		$output .= "<option value=''>Select Project</option>";	
-			if($where != ""):
-				$company = DB::table('projects')->where($where)->get();	
-			else:			
-				$company = DB::table('projects')->where('status','1')->get();	
-			endif;
-				foreach ($company as $row) :
+			// if($where != ""):
+			// 	$company = DB::table('projects')->where($where)->get();	
+			// else:			
+			// 	$company = DB::table('projects')->where('status','1')->get();	
+			// endif;
+				foreach ($projects as $row) :
 				$selected = '';
 				if ($select == $row->id) :
 					$selected = "selected";

@@ -60,28 +60,28 @@
                                  <div class="row">
                                  <div class="col-md-6">
                                        <div class="form-group">
-                                          <label for="company_name">Company Name</label> 
+                                          <label for="company_name">Company Name <span class="text-danger">*</span></label> 
                                           <input type="text" class="form-control" id="company_name" name="company_name" placeholder="" />
                                           <span class="text-danger" id="companyNameErr"></span>
                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                        <div class="form-group"> 
-                                          <label for="company_contact_name">Company Contact Name</label> 
+                                          <label for="company_contact_name">Company Contact Name <span class="text-danger">*</span></label> 
                                           <input type="text" class="form-control" id="company_contact_name" name="company_contact_name" placeholder="" />
                                           <span class="text-danger" id="companyContactNameErr"></span>
                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                        <div class="form-group"> 
-                                          <label for="company_phone">Company Phone No</label> 
+                                          <label for="company_phone">Company Phone No <span class="text-danger">*</span></label> 
                                           <input type="number" class="form-control" id="company_phone" name="company_phone" placeholder="" />
                                           <span class="text-danger" id="companyPhoneErr"></span>
                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                        <div class="form-group"> 
-                                          <label for="company_email">Company E-mail Address</label> 
+                                          <label for="company_email">Company E-mail Address <span class="text-danger">*</span></label> 
                                           <input type="email" class="form-control" id="company_email" name="email" placeholder="" />
                                           <span class="text-danger" id="companyEmailErr"></span>
                                        </div>
@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-md-6">
                                        <div class="form-group"> 
-                                          <label for="company_standard">Company Standard</label> 
+                                          <label for="company_standard">Company Standard <span class="text-danger">*</span></label> 
                                           {!! company_standards() !!}
                                           <span class="text-danger" id="companyStandardsErr"></span>
                                        </div>
@@ -134,7 +134,7 @@
                            <div class="row">
                               <div class="col-md-6">
                                  <div class="form-group">
-                                    <label for="company_name">Company Name</label> 
+                                    <label for="company_name">Company Name <span class="text-danger">*</span></label> 
                                     <input type="text" class="form-control" id="company_name" name="company_name" placeholder="" />
                                     <span class="text-danger" id="companyNameErr"></span>
                                  </div>
@@ -165,7 +165,7 @@
                               <div class="row">
                               <div class="col-md-6">
                                     <div class="form-group">
-                                       <label for="assessor_name">Lead Assessor Name</label> 
+                                       <label for="assessor_name">Lead Assessor Name <span class="text-danger">*</span></label> 
                                        <input type="text" class="form-control" id="assessor_name" name="assessor_name" placeholder="" />
                                        <span class="text-danger" id="assessorNameErr"></span>
                                     </div>
@@ -179,14 +179,14 @@
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group"> 
-                                       <label for="assessor_phone">Assessor Phone No</label> 
+                                       <label for="assessor_phone">Assessor Phone No <span class="text-danger">*</span></label> 
                                        <input type="number" class="form-control" id="assessor_phone" name="assessor_phone" placeholder="" />
                                        <span class="text-danger" id="assessorPhoneErr"></span>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group"> 
-                                       <label for="assessor_email">Assessor E-mail Address</label> 
+                                       <label for="assessor_email">Assessor E-mail Address <span class="text-danger">*</span></label> 
                                        <input type="email" class="form-control" id="assessor_email" name="email" placeholder="" />
                                        <span class="text-danger" id="assessorEmailErr"></span>
                                     </div>

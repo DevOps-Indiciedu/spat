@@ -16,7 +16,7 @@
                         </button> -->
                     </div>
                     <div class="iq-card-body">
-                        <table id="datatable" class="table table-striped table-bordered" >
+                        <table id="datatable" class="table table-hover table-bordered" >
                         <thead>
                             <tr>
                                 <th class="text-dark">{{ __('#') }}</th>

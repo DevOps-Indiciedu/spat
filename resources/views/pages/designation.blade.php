@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <div class="iq-card-body">
-                    <table id="datatable" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-hover table-bordered" >
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
@@ -33,10 +33,12 @@
                                <td>{{ $data->title }}</td>
                                <td>{{ DMY($data->created_at) }}</td>
                                <td>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-warning mb-3 edit_designation" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></button>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_designation">
-                                        <i class="ri-delete-bin-2-fill pr-0"></i>
-                                    </button>
+                                <div class="flex align-items-center list-user-action">
+                                    <a href="#" data-id="{{ $data->id }}" class="edit_designation" data-toggle="modal" data-target="#exampleModalCenteredScrollable"><i class="ri-edit-box-fill pr-0"></i></a>
+                                    <a href="#" data-id="{{ $data->id }}" class="delete_designation">
+                                            <i class="ri-delete-bin-2-fill pr-0"></i>
+                                        </a>
+                                    </div>
                                </td>
                            </tr>
                         @endforeach   

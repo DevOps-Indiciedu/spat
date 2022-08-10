@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="iq-card-body">
-                    <table id="datatable" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-hover table-bordered" >
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
@@ -47,19 +47,18 @@
                                <td>{{ DMY($data->project_start_date) }}</td>
                                <td>{{ DMY($data->project_end_date) }}</td>
                                <td>
-                                @if(auth()->user()->usermanagement->role_id == 2)
-
-                                    <a href="{{ route('view_selected_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
-                                        View
-                                    </a>
-                                @elseif(auth()->user()->usermanagement->role_id == 3)
-                                    <a href="{{ route('select_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark SOA">
-                                        Mark SOA
-                                    </a>
-                                    <a href="{{ route('view_selected_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Observation">
-                                        Add Observations
-                                    </a>
-                                @endif
+                                    @if(auth()->user()->usermanagement->role_id == 2)
+                                        <a href="{{ route('select_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark SOA">
+                                            Mark SOA
+                                        </a>
+                                        <a href="{{ route('view_selected_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
+                                            View
+                                        </a>
+                                    @elseif(auth()->user()->usermanagement->role_id == 3)
+                                        <a href="{{ route('view_selected_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Observation">
+                                            Add Observations
+                                        </a>
+                                    @endif
                                 </td>
                            </tr>
                         @endforeach   

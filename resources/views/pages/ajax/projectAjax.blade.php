@@ -28,7 +28,7 @@
                         <span class="text-danger" id="auditeeErr"></span>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="assessor_id">Auditor Company</label>
+                        <label for="assessor_id">Audit Organisation</label>
                         {!! assessors() !!}
                         <span class="text-danger" id="auditorErr"></span>
                     </div>

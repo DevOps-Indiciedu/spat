@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'SPAT') }}</title>
+    <link rel="icon" href="https://secureism.com/wp-content/uploads/2021/04/SecureismlogoFavi.png" sizes="32x32" />
+
     @auth
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'bootstrap.min.css') }}">
@@ -17,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'style.css') }}">
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'responsive.css') }}">
+    <link href="{{ asset(MyApp::ASSET_STYLE.'summernote/summernote-lite.min.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('resources/js/app.js') }}" defer></script>
 
@@ -38,8 +41,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'jquery.min.js') }}"></script>
     <!-- DataTables CSS  -->
-    <!-- <link rel="stylesheet" href="https://dev.indiciedu.com.pk/assets/datatables/datatables.min.css"> -->
    <link rel="stylesheet" href="{{ asset(MyApp::ASSET_DATATABLE.'datatables.min.css') }}">
+    <!-- <link rel="stylesheet" href="https://dev.indiciedu.com.pk/assets/datatables/datatables.min.css"> -->
    <!-- DataTables JS  -->
    <script src="https://dev.indiciedu.com.pk/assets/optimization/bottom/jquery.dataTables.min.js"></script>
    <!-- <link rel="stylesheet" href="{{ asset(MyApp::ASSET_DATATABLE.'datatables.min.js') }}"> -->
@@ -262,17 +265,17 @@
                                     <div class="bg-primary p-3">
                                        <h5 class="mb-0 text-white">All Messages<small class="badge  badge-light float-right pt-1">0</small></h5>
                                     </div>
-                                    <!-- <a href="#" class="iq-sub-card" >
+                                    <a href="#" class="iq-sub-card" >
                                        <div class="media align-items-center">
-                                          <div class="">
+                                          <!-- <div class="">
                                              <img class="avatar-40 rounded" src="{{ asset(MyApp::ASSET_IMG.'user/01.jpg') }}" alt="">
-                                          </div>
+                                          </div> -->
                                           <div class="media-body ml-3">
-                                             <h6 class="mb-0 ">Nik Emma Watson</h6>
-                                             <small class="float-left font-size-12">13 Jun</small>
+                                             <h6 class="mb-0 ">Under Construction</h6>
+                                             <!-- <small class="float-left font-size-12">13 Jun</small> -->
                                           </div>
                                        </div>
-                                    </a> -->
+                                    </a>
                                     
                                  </div>
                               </div>
@@ -289,15 +292,15 @@
                                     <div class="bg-danger p-3">
                                        <h5 class="mb-0 text-white">All Notifications<small class="badge  badge-light float-right pt-1">0</small></h5>
                                     </div>
-                                    <!-- <a href="#" class="iq-sub-card" >
+                                    <a href="#" class="iq-sub-card" >
                                        <div class="media align-items-center">
                                           <div class="media-body ml-3">
-                                             <h6 class="mb-0 ">New Order Recieved</h6>
-                                             <small class="float-right font-size-12">23 hrs ago</small>
-                                             <p class="mb-0">Lorem is simply</p>
+                                             <h6 class="mb-0 ">Under Construction</h6>
+                                             <!-- <small class="float-right font-size-12">23 hrs ago</small> -->
+                                             <!-- <p class="mb-0">Lorem is simply</p> -->
                                           </div>
                                        </div>
-                                    </a> -->
+                                    </a>
                                  </div>
                               </div>
                            </div>
@@ -316,7 +319,13 @@
                   </div>
                   <ul class="navbar-list">
                      <li>
-                        <a href="#" class="search-toggle iq-waves-effect bg-primary text-white"><img src="{{ asset(MyApp::ASSET_IMG.'user/1.jpg') }}" class="img-fluid rounded" alt="user"></a>
+                        <a href="#" class="search-toggle iq-waves-effect bg-primary text-white">
+                           @if(@auth()->user()->usermanagement->profile_image != "")
+                              <img src="{{ asset(MyApp::PROFILE.auth()->user()->usermanagement->profile_image) }}" class="img-fluid rounded" alt="user">
+                           @else
+                              <img src="{{ asset(MyApp::DEFAULT_IMG) }}" class="img-fluid rounded" alt="user">
+                           @endif
+                        </a>
                         <div class="iq-sub-dropdown iq-user-dropdown">
                            <div class="iq-card shadow-none m-0">
                               <div class="iq-card-body p-0 ">
@@ -476,7 +485,7 @@
       @endauth
     </div>
 
-    
+    @include('pages.ajax.commonAjax')
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'popper.min.js') }}"></script>
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'bootstrap.min.js') }}"></script>
     <!-- Appear JavaScript -->
@@ -504,6 +513,8 @@
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'chart-custom.js') }}"></script>
     <!-- Custom JavaScript -->
     <script src="{{ asset(MyApp::ASSET_SCRIPT.'custom.js') }}"></script>
+    <script src="{{ asset(MyApp::ASSET_SCRIPT.'summernote/summernote-lite.min.js') }}"></script>
+
     <script>
       $('.modal').modal({
          backdrop: 'static',

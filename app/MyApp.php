@@ -11,5 +11,7 @@
        const PERMISSION_IMG = 'public/assets/images/permission-denied.png';
        const SITE_LOGO_WHITE = 'public/assets/images/Secureism-logo-white.png';
        const LOADER = 'public/assets/images/loaderSVG.svg';
+       const DEFAULT_IMG = 'public/assets/images/user/11.png';
+       
     }
 ?>

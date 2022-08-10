@@ -232,5 +232,41 @@
             $("#dep_data").html("<select class='form-control'><option value=''>Select Location</option></select>");
         }
     });
-     
+
+    $(".content-page").on('submit','#userProfileUpdate',function(e){
+        e.preventDefault();
+        $.ajax({
+            url:"{{ route('user-profile-update') }}",
+            type : 'POST',
+            data:new FormData(this),
+            dataType: 'json',
+            contentType: false,  
+            cache: false,  
+            processData:false,
+            success:function(data) {
+                Swal.fire({
+                    position: 'top-mid',
+                    icon: 'success',
+                    title: 'Profile Updated Successfully',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+                setTimeout(function() { 
+                    location.reload();
+                }, 2000);
+            },error:function(err)
+            {
+                $("#pemailErr").text(err.responseJSON.errors.email);
+                $("#pnameErr").text(err.responseJSON.errors.name);
+                $("#passErr").text(err.responseJSON.errors.new_password);
+            }
+        });
+    });
+
+     // Triggers 
+     jQuery("#company_id").trigger('change');
+    setTimeout(function() { 
+        $("#location_id").val(data[0].location_id);
+    }, 500);
+ 
 </script>

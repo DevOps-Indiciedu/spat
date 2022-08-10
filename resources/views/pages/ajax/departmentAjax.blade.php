@@ -154,5 +154,11 @@
             $("#loc_data").html("<select class='form-control'><option value=''>Select Location</option></select>");
         }
     });
+
+    // Triggers 
+    jQuery("#company_id").trigger('change');
+    setTimeout(function() { 
+        $("#location_id").val(data[0].location_id);
+    }, 500);
      
 </script>

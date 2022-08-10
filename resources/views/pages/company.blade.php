@@ -16,7 +16,7 @@
                     </button> -->
                 </div>
                 <div class="iq-card-body">
-                    <table id="datatable" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-bordered table-hover">
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
@@ -26,6 +26,10 @@
                                <th class="text-dark">{{ __('Email') }}</th>
                                <th class="text-dark">{{ __('Role') }}</th>
                                <th class="text-dark">{{ __('Reg Date') }}</th>
+                               @if(userRightGranted('2fa'))
+                               <th class="text-dark">{{ __('2FA Access') }}</th>
+                               <th class="text-dark">{{ __('Disable User 2FA') }}</th>
+                               @endif
                                <th class="text-dark">{{ __('Status') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
                            </tr>
@@ -35,26 +39,79 @@
                         @foreach ($company as $data)
                            <tr id="row-{{ $data->id }}" class="text-center">
                                <td>{{ $i++ }}</td>
-                               <td>{{ @$data->company_name }}</td>
-                               <td>{{ $data->name }}</td>
+                               <td>
+                                    @if($data->role_id == '2')
+                                        {{ $data->company_name }}
+                                    @elseif($data->role_id == '3')
+                                        {{ $data->ass_company }}
+                                    @endif
+                                </td>
+                               
+                                <td>{{ $data->name }}</td>
                                <td>{{ $data->phone }}</td>
                                <td>{{ $data->email }}</td>
                                <td>{!!  get_role($data->role_id)->role !!}</td>
                                <td>{{ DMY($data->created_at) }}</td>
+                               @if(userRightGranted('2fa'))
+                               <td>
+                                        @if($data->two_factor_enabled == 1)
+                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                            <div class="custom-switch-inner">
+                                                <!-- <p class="mb-0"> Danger </p> -->
+                                                <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="0" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}" checked="">
+                                                <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                            <div class="custom-switch-inner">
+                                                <!-- <p class="mb-0"> Danger </p> -->
+                                                <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="1" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}">
+                                                <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                    @if($data->two_factor_disabled_access == 1)
+                                    <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                        <div class="custom-switch-inner">
+                                            <!-- <p class="mb-0"> Danger </p> -->
+                                            <input type="checkbox" class="custom-control-input bg-success D2FA" data-factor="0" data-userID="{{ $data->user_id }}" id="customSwitch--{{ $data->user_id }}" checked="">
+                                            <label class="custom-control-label" for="customSwitch--{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                            <div class="custom-switch-inner">
+                                                <!-- <p class="mb-0"> Danger </p> -->
+                                            <input type="checkbox" class="custom-control-input bg-success D2FA" data-factor="1" data-userID="{{ $data->user_id }}" id="customSwitch--{{ $data->user_id }}">
+                                            <label class="custom-control-label" for="customSwitch--{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </td>
+                                @endif
                                <td>{{ status($data->status) }}</td>
                                <td>
-                                    @if($data->status == '1')
-                                    <button type="button" data-umid="{{ $data->id }}" data-id="{{ $data->user_id }}" data-block="{{ $data->status }}" class="btn btn-warning mb-3 block_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Block Account">
-                                        <i class="ri-lock-fill"></i>
-                                    </button>
-                                    @else
-                                    <button type="button" data-umid="{{ $data->id }}" data-id="{{ $data->user_id }}" data-block="{{ $data->status }}" class="btn btn-warning mb-3 block_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Unblock Account">
-                                        <i class="ri-lock-unlock-fill"></i>
-                                    </button>
-                                    @endif
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Company">
-                                        <i class="ri-delete-bin-2-fill pr-0"></i>
-                                    </button>
+                                   <div class="flex align-items-center list-user-action">
+                                        @if($data->status == '1')
+                                        <a href="#" data-umid="{{ $data->id }}" data-id="{{ $data->user_id }}" data-block="{{ $data->status }}" class="block_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Block Account">
+                                            <i class="ri-lock-fill"></i>
+                                        </a>
+                                        @else
+                                        <a href="#" data-umid="{{ $data->id }}" data-id="{{ $data->user_id }}" data-block="{{ $data->status }}" class="block_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Unblock Account">
+                                            <i class="ri-lock-unlock-fill"></i>
+                                        </a>
+                                        @endif
+                                        <a href="#" data-id="{{ $data->id }}" class="delete_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Company">
+                                            <i class="ri-delete-bin-2-fill pr-0"></i>
+                                        </a>
+                                    </div>
                                </td>
                            </tr>
                         @endforeach   

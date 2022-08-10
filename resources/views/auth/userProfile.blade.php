@@ -2,52 +2,91 @@
 
 @section('content')
 <!-- Page Content  -->
-<div id="content-page" class="content-page">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col-lg-12">
+<div id="content-page" class="content-page mt-4 pt-5">
+    <div class="container-fluid mt-4 pt-5">
+    <form action="" id="userProfileUpdate" method="POST" enctype="multipart/form-data">
+        @csrf 
+        <div class="row" style="justify-content: center;align-items: center;">
+            <div class="col-sm-4 col-lg-3 mt-4 pt-3">
                 <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
                         <div class="iq-header-title">
                             <h4 class="card-title">{{ __('My Profile') }}</h4>
                         </div>
                     </div>
-                    <div class="iq-card-body">
-                        <form action="{{ route('user-profile-information.update') }}" method="POST" enctype="multipart/form-data">
-                            @csrf 
-                            @method('PUT')
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" class="form-control" value="{{ auth()->user()->email }}">
+                    <div class="iq-card-body text-center">
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-12">
+                                <div class="profile-img-edit">
+                                @if(auth()->user()->usermanagement->profile_image != "")
+                                    <img src="{{ asset(MyApp::PROFILE.auth()->user()->usermanagement->profile_image) }}" class="profile-pic" alt="{{ auth()->user()->usermanagement->profile_image }}" style="border-radius: 50% !important;width: 100%;height: 100%;">
+                                @else
+                                <img class="profile-pic" src="{{ asset(MyApp::DEFAULT_IMG) }}" alt="profile-pic" style="border-radius: 50% !important;width: 100%;height: 100%;">
+                                @endif
+                                    <div class="p-image">
+                                        <i class="ri-pencil-line upload-button"></i>
+                                        <input class="file-upload" type="file" name="image" accept="image/*">
+                                        <input type="hidden" name="hiddenProfile" value="{{ auth()->user()->usermanagement->profile_image }}">
+                                    </div>
+                                </div>
+                                @if(auth()->user()->two_factor_secret && auth()->user()->usermanagement->two_factor_enabled == 1)
+                                <div class="twit-feed">
+                                    <p>Two Factor Authentication (Enabled) <span><i class="ri-check-fill"></i> </span></p>
+                                </div>
+                                @else
+                                <div class="twit-feed">
+                                    <p>Two Factor Authentication (Disabled) 
+                                        <!-- <span><i class="ri-check-fill"></i> </span> -->
+                                    </p>
+                                </div>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" class="form-control" value="{{ auth()->user()->name }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="old_password">Old Password</label>
-                                <input type="password" id="old_password" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="new_password">New Password</label>
-                                <input type="password" id="new_password" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="profile">Profile Image</label><br>
-                                <input type="file" name="" id="profile">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Update Profile</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-sm-8 col-lg-6 mt-4 pt-3">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">{{ __('My Profile') }}</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body row">
+                            <div class="form-group col-lg-6">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" value="{{ auth()->user()->email }}" readonly>
+                                <span id="pemailErr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{ auth()->user()->name }}">
+                                <span id="pnameErr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="old_password">Old Password</label>
+                                <input type="password" id="old_password" name="old_password" class="form-control" value="" autocomplete="off">
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="new_password">New Password</label>
+                                <br>
+                                <small>Password Format: Lengtgh Min 8 character , 1 Upper Letter , 1 Lower Letter , 1 Symbol , 1 Digit</small>
+                                <input type="password" id="new_password" name="new_password" class="form-control">
+                                <span id="passErr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <button type="submit" class="btn btn-primary float-right">Update Profile</button>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
 
-<!-- @include('pages.ajax.companyAjax') -->
+@include('pages.ajax.userAjax')
 
 @endsection

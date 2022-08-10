@@ -65,12 +65,12 @@ class UserRoleController extends Controller
     public function role_rights($role_id)
     {
         if(Auth::user()->system_admin == 1):
+            $query = DB::select("select distinct id,title,parent_module_id from module where status = '1' order by id asc");
             $where = "";
         else:
             $where = "WHERE user_role_rights.role_id =".Auth::user()->usermanagement->role_id;    
+            $query = DB::select("SELECT DISTINCT(module.id) FROM `user_role_rights` LEFT JOIN action ON action.id = user_role_rights.action_id LEFT JOIN module ON module.id = action.module_id ".$where);
         endif;
-        // $query = DB::select("select distinct id,title,parent_module_id from module where status = '1' order by id asc");
-        $query = DB::select("SELECT DISTINCT(module.id) FROM `user_role_rights` LEFT JOIN action ON action.id = user_role_rights.action_id LEFT JOIN module ON module.id = action.module_id ".$where);
         $package_rights = array();
         foreach ($query as $mod) 
         {

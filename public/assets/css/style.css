@@ -936,7 +936,7 @@ Privacy Policy Page
 /*---------------------------------------------------------------------
 User List Page
 -----------------------------------------------------------------------*/
-.list-user-action a { font-size: 16px; height: 25px; width: 25px; text-align: center; line-height: 25px; margin: 0 3px; background: #e5f2ff; color: #be1e2d; display: inline-block; border-radius: 5px; }
+.list-user-action a { font-size: 18px; height: 30px; width: 30px; text-align: center; line-height: 30px; margin: 0 3px; background: #e5f2ff; color: #0084ff; display: inline-block; border-radius: 5px; }
 #user-list-table.table td { vertical-align: middle; }
 .user-list-files a { background: #e5f2ff; color: #be1e2d; padding: 10px 15px; margin: 0 0 0 10px; border-radius: 5px; line-height: normal; }
 .table-responsive #exampleInputSearch { width: auto; }
@@ -1112,7 +1112,7 @@ footer{
   font-weight: 700;
 }
 .iq-card-header{
-  background: #000;
+  background: #343a40;
 }
 .iq-card-header h4{
   color: white;
@@ -1245,8 +1245,243 @@ padding-left: 15px;
 }
 .breadcrumb li a:hover { background: #888888;  ; }
 .breadcrumb li a:hover:after { border-left-color: #888888  !important; }
+table#datatable{
+  border-collapse: collapse;
+}
+#datatable thead {
+  background: #dee2e6;
+}
+table.dataTable thead th, table.dataTable thead td{
+  border-bottom: 1px solid #cfc6c6;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+  color: #fff !important;
+  border: none !important;
+  background: linear-gradient(to bottom, #be1e2d 0%, #be1e2d 100%) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active
+{
+  background: #dee2e6 !important;
+}
+table.dataTable thead th, table.dataTable thead td{
+  border-bottom: none !important;
+}
+.userImage{
+  
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border: 1px solid red;
+  padding: 2px;
+  position: relative;
+  left: -10px;
+
+}
+
+.twit-feed p span i {
+  background: #0084ff !important;
+  color: #fff;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  font-size: 10px;
+}
+
+
+
+.breadcrumb {
+  padding: 0px;
+  background: #D4D4D4;
+  list-style: none; 
+  overflow: hidden;
+  margin-top: 20px;
+  width: 100vw;
+  justify-content: space-between;
+}
+.breadcrumb>li+li:before {
+  padding: 0;
+}
+.breadcrumb li { 
+  float: left; 
+}
+.breadcrumb li.active a {
+  background: brown;                   / fallback color /
+  background: #000 ; 
+  color: white;
+}
+.breadcrumb li.completed a {
+  background: brown;                   / fallback color /
+  background: hsl(354deg 73% 43%);
+  color: white;
+}
+.breadcrumb li.active a:after {
+ border-left: 30px solid #000 ;
+}
+.breadcrumb li.completed a:after {
+ border-left: 30px solid hsl(354deg 73% 43%);
+} 
+
+.breadcrumb li a {
+  color: #000;
+  text-decoration: none; 
+  padding: 10px 0 10px 45px;
+  position: relative; 
+  display: block;
+  float: left;
+}
+.breadcrumb li a:after { 
+  content: " "; 
+  display: block; 
+  width: 0; 
+  height: 0;
+  border-top: 50px solid transparent;           / Go big on the size, and let overflow hide /
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid hsla(0, 0%, 83%, 1);
+  position: absolute;
+  top: 50%;
+  margin-top: -50px; 
+  left: 100%;
+  z-index: 2; 
+}	
+.breadcrumb li a:before { 
+  content: " "; 
+  display: block; 
+  width: 0; 
+  height: 0;
+  border-top: 50px solid transparent;           / Go big on the size, and let overflow hide /
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px; 
+  margin-left: 1px;
+  left: 100%;
+  z-index: 1; 
+}	
+.breadcrumb li:first-child a {
+padding-left: 15px;
+}
+.breadcrumb li:last-child a {
+  padding-right: 15px;
+}
+.breadcrumb li a:hover { background: #888888;  ; }
+.breadcrumb li a:hover:after { border-left-color: #888888  !important; }
 
 
 
 
+.btn-secondary {
+  background-color: #9d9d9d;
+  border-color: #9d9d9d;
+  color:black;
+}
 
+/ datatables css 8-4-2022 /
+
+.pagination .page-item.active .page-link {
+  background-color: #be1e2d;
+  border-color: #000 ;
+  color: #fff;
+}
+.pagination .page-link{
+  color: #be1e2d;
+}
+#example th{
+  text-align: center;
+}
+#example td{
+  / padding: 5px; /
+  vertical-align: middle;
+}
+#example .btn-success{
+  background-color: #387d3d;
+  font-size: 12px;
+}
+#example .btn-info{
+  background-color: #212529;
+  font-size: 12px;
+}
+#example .btn-info:hover{
+  background-color: #00008b8a;
+}
+#example tr{
+  font-size: 12px;
+}
+#example .card-header{
+  background-color: #00000033;
+  padding: 5px 5px 5px 15px;
+  align-items: center;
+}
+#example .card-body{
+  padding:5px 5px 5px 15px;
+  align-items: center;
+}
+#example .card-body p{
+  padding:0px;
+  margin: 0px;
+}
+#example .upload,.download{
+  padding: 0;
+}
+#example .upload{
+  color: orange;
+}
+#example .download{
+  color: blue;
+}
+
+#evidencemodal .modal-header{
+  background-color: black;
+  padding: 10px;
+}
+#evidencemodal .modal-header .modal-title,.close{
+  color: white;
+  font-size: 14px;
+  font-family: 'Poppins';
+  font-weight: 500;
+}
+#evidencemodal .modal-content{
+  background-clip: unset;
+  border: none;
+}
+
+#evidencemodal .modal-footer{
+  padding: 5px 10px 5px 10px;
+}
+#evidencemodal .modal-footer .btn{
+  padding: 2px 5px 2px 5px;
+  margin: 0px;
+}
+#evidencemodal label{
+  display: block;
+}
+
+
+#efile th{
+  text-align: center;
+  padding: 5px;
+}
+#efile td{
+  text-align: center;
+  padding: 5px;
+}
+#efile tr{
+  font-size: 12px;
+}
+#efile button{
+  padding: 0;
+}
+#efile .cog{
+  padding: 0;
+}
+#efile_filter{
+  margin-left: 30%;
+}
+
+.custom-file-input:lang(en)~.custom-file-label::after {
+  content: "Upload File";
+}
+#example td{
+  vertical-align: middle;
+}

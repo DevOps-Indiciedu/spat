@@ -16,7 +16,7 @@
                     </button>
                 </div>
                 <div class="iq-card-body">
-                    <table id="datatable" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-bordered table-hover" >
                        <thead>
                            <tr>
                                <th class="text-dark">{{ __('#') }}</th>
@@ -45,16 +45,26 @@
                                <td>{{ DMY($data->project_end_date) }}</td>
                                <td>{!! auditeeType($data->audit_type) !!}</td>
                                <td>
-                                   <a href="{{ url('project_logs/'.Crypt::encrypt($data->id)) }}" class="btn btn-info mb-3">
-                                        <i class="fa fa-history" style="margin: 4px 1px 0px 0px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Project Logs"></i>
-                                    </a>
-                                    <button type="button" data-id="{{ $data->id }}" data-toggle="modal" data-target="#exampleModalCenteredScrollable" class="btn btn-warning mb-3 edit_project">
-                                        <i class="ri-edit-box-fill pr-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Project"></i>
-                                        <!-- <i class="ri-edit-box-fill pr-0"></i> -->
-                                    </button>
-                                   <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_project" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Project">
-                                        <i class="ri-delete-bin-2-fill pr-0"></i>
-                                    </button>
+                                    <div class="flex align-items-center list-user-action">
+                                        <a href="{{ url('project_logs/'.Crypt::encrypt($data->id)) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Project Logs">
+                                            <i class="fa fa-history"></i>
+                                        </a>
+                                        <!-- <a href="{{ url('project_logs/'.Crypt::encrypt($data->id)) }}" class="btn btn-info mb-3">
+                                            <i class="fa fa-history" style="margin: 4px 1px 0px 0px;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Project Logs"></i>
+                                        </a> -->
+                                        <a data-id="{{ $data->id }}" href="#" data-toggle="modal" data-target="#exampleModalCenteredScrollable" class="edit_project">
+                                            <i data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" class="ri-edit-box-fill pr-0"></i>
+                                        </a>
+                                        <!-- <button type="button" data-id="{{ $data->id }}" data-toggle="modal" data-target="#exampleModalCenteredScrollable" class="btn btn-warning mb-3 edit_project">
+                                            <i class="ri-edit-box-fill pr-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Project"></i>
+                                        </button> -->
+                                        <!-- <button type="button" data-id="{{ $data->id }}" class="btn btn-danger mb-3 delete_project" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Project">
+                                            <i class="ri-delete-bin-2-fill pr-0"></i>
+                                        </button> -->
+                                        <a href="#" type="button" data-id="{{ $data->id }}" class="delete_project" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                            <i class="ri-delete-bin-2-fill pr-0"></i>
+                                        </a>
+                                    </div>
                                </td>
                            </tr>
                         @endforeach   

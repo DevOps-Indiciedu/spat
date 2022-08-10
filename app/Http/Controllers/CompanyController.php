@@ -61,6 +61,15 @@ class CompanyController extends Controller
                 Str::random(10)
             ]);
 
+            // Create Default Location Admin Role 
+            $locationAdmin = DB::select('call InsertRole("Location Admin",'. $user[0]->LAST_ID.')');
+            // Clone Role Rights
+            $role = DB::table('user_role_rights')->where('role_id', 2)->get();
+            foreach($role as $role_actions):
+                DB::insert('insert into user_role_rights (role_id,action_id,created_at,updated_at) values(?,?,?,?)',[$locationAdmin[0]->LAST_ID,$role_actions->action_id,date('Y-m-d h:i:s'),date('Y-m-d h:i:s')]);
+            endforeach;	
+            // Cloning End 
+
             // Mail Send User Passwordd Setup 
             if($user):
                 $userEmail = User::findOrFail($user[0]->LAST_ID); 
@@ -212,6 +221,15 @@ class CompanyController extends Controller
                 Hash::make('secureism123'),
                 Str::random(10)
             ]);
+
+            // Create Default Location Admin Role 
+            $locationAdmin = DB::select('call InsertRole("Location Admin",'. $user[0]->LAST_ID.')');
+            // Clone Role Rights
+            $role = DB::table('user_role_rights')->where('role_id', 3)->get();
+            foreach($role as $role_actions):
+                DB::insert('insert into user_role_rights (role_id,action_id,created_at,updated_at) values(?,?,?,?)',[$locationAdmin[0]->LAST_ID,$role_actions->action_id,date('Y-m-d h:i:s'),date('Y-m-d h:i:s')]);
+            endforeach;	
+            // Cloning End 
 
             // Mail Send User Passwordd Setup 
             if($user):

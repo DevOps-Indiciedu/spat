@@ -27,6 +27,7 @@ class ReqListController extends Controller
     }
      public function select_req_list()
     {
+        
         $getRows =DB::table('req_lists')->where(array('id'=>1))->get()->toArray();
         //print_r($listall);
         //return view('pages.requirements_view',['category' => $listall]);
@@ -43,23 +44,35 @@ class ReqListController extends Controller
     }
     public function submit_req_register_list(Request $request)
     {
+        DB::select("DELETE FROM evaluations_list WHERE el_id <> 0");
+
         $request->validate([
             'req_list'    =>  'required',
             
         ]);
 
-        if(is_array($request->req_list))
+        if(is_array($request->req_list) && is_array($request->notreq_list))
         {
-            foreach($request->req_list as $list)
+            $getlevel3=DB::table('req_lists')->where('id','<','80')->where('req_no','!=','guidence')->get()->toArray();
+           
+            foreach($getlevel3 as $list)
             {
-                 $data = DB::insert('insert into evaluations_list (ass_id,req_id,description) values (?,?,?)',
-                [
-                    1,
-                    $list,
-                    ""
-                  
-                ]);
+                if(in_array($list->id,$request->req_list))
+                {
+                     $data = DB::insert('insert into evaluations_list (ass_id,req_id,description) values (?,?,?)',
+                    [1,$list->id,""]);
+                }
+                else if(in_array($list->id,$request->notreq_list))
+                {
+               
+                     $data = DB::insert('insert into evaluations_list (ass_id,req_id,description) values (?,?,?)',
+                    [1,$list->id,"Not Applicable"]);
+                
+
+                }
+
             }
+            
         }
 
 
@@ -82,6 +95,7 @@ class ReqListController extends Controller
         if($db_return)
         {
             $return_data="";
+            $table_return_data="";
             $attachments=$request->file('attachment');
             if(is_array($attachments)):
                 foreach($attachments as $file):
@@ -95,11 +109,28 @@ class ReqListController extends Controller
                         $name
                       
                     ]);
-                    $return_data.='<a href="'.asset(MyApp::ASSET_IMG.$name).'">'.$name."</a><br>";
+                    $table_return_data.='<tr>
+                                               <td><a href="'.asset(MyApp::ASSET_IMG.$name).'">'.$name.'</a></td>
+                                               <td>Name</td>
+                                               <td>'.date('d-m-Y H:i a').'</td>
+                                               <td> <button class="btn upload"><i class="fa fa-cog"></i></button></td>
+                                           </tr>';
+                    $return_data.='  <div class="card-header d-flex justify-content-between">
+                                        '.$name.'
+                                    <a href="#" class="btn btn-success" style="padding:0px 5px 0px 5px;">Approved</a>
+                                    </div>
+                                    <div class="card-body d-flex justify-content-between">
+                                            <p class="card-text"><b>Uploaded By: </b> Name  <span>'.date('d-m-Y').'</span>  <span>'.date('H:i a').'</span></p>
+                                            <div>
+                                             <button class="btn upload"><i class="fa fa-upload"></i></button>
+                                             <button class="btn download"><i class="fa fa-download"></i></button>
+                                            </div>
+                                          </div>
+                                  ';
                 endforeach;
             endif;
-            $return_data.="<br>".$request->description;
-            echo json_encode(array('data'=>$return_data));
+            
+            echo json_encode(array('data'=>$return_data,'table_data'=>$table_return_data));
         }    
         else
         {
