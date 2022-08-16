@@ -385,6 +385,8 @@
 			'2'	=>	'Medium',
 			'3'	=>	'Low',
 		);
+
+		return $status[$id];
 	}
 
 	function deleteFile($folder = "",$image = "")
@@ -521,6 +523,34 @@
     {
 		$projects = DB::table('projects')->where('id', $id)->first();	
 		return $projects;
+    }
+
+	function getCompanyFolderName()
+	{
+		$userID = $userID = Auth::user()->id;;
+		if($userID):
+			$locID = get_user($userID)->location_id;
+			$companyID = get_user($userID)->company_id;
+			if($locID == 0):
+				// Company Admin
+				$FolderName = getFolderName($companyID);
+			else:
+				// Location Admin 	
+				$CompanyFolderName = getFolderName($companyID);
+				$getLocation = get_location($locID);
+				$location_name =  str_replace(' ', '_', $getLocation->name);
+            	$location_folder_name =  strtolower($location_name);
+				$FolderName = $CompanyFolderName.'/'.$location_folder_name;
+			endif;
+
+			return 'companies/'.$FolderName;
+		endif;	
+	}
+
+	function get_reqNo($id = 0)
+    {
+		$req = DB::table('req_lists')->where('id', $id)->value('req_no');	
+		return $req;
     }
 
 	

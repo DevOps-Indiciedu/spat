@@ -1,25 +1,77 @@
 <!-- Modal  -->
-<div id="exampleModalCenteredScrollable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+<div id="CompanyEditModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="CompanyEditModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Company') }}</h5>
+            <h5 class="modal-title" id="CompanyEditModal">{{ __('Edit Company') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
+                <span aria-hidden="true">×</span>
             </button>
         </div>
-        <form method="POST">
+        <form method="POST" id="companyForm">
             @csrf
             <div class="modal-body">
-            <div class="form-group">
-                <label for="company">{{ __('Company') }}</label>
-                <input type="text" class="form-control" id="company" name="company">
-                <span class="text-danger" id="companyErr"></span>
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="company_name">Company Name <span class="text-danger">*</span></label> 
+                            <input type="text" class="form-control" id="companyname" readonly name="company_name" placeholder="" />
+                            <span class="text-danger" id="companyNameErr"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <label for="company_contact_name">Company Contact Name <span class="text-danger">*</span></label> 
+                            <input type="text" class="form-control" id="company_contact_name" name="company_contact_name" placeholder="" />
+                            <span class="text-danger" id="companyContactNameErr"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <label for="company_phone">Company Phone No <span class="text-danger">*</span></label> 
+                            <input type="number" class="form-control" id="company_phone" name="company_phone" placeholder="" />
+                            <span class="text-danger" id="companyPhoneErr"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <label for="company_email">Company E-mail Address <span class="text-danger">*</span></label> 
+                            <input type="email" class="form-control" id="company_email" name="email" placeholder="" />
+                            <span class="text-danger" id="companyEmailErr"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="company_website">Company Website</label>
+                            <input type="url" class="form-control" id="company_website" name="company_website" value="" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <label for="company_standard">Company Standard <span class="text-danger">*</span></label> 
+                            {!! company_standards() !!}
+                            <span class="text-danger" id="companyStandardsErr"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <label for="company_max_users">Company Maximum Users</label> 
+                            <input type="number" class="form-control" id="company_max_users" name="company_max_users" value="0" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="company_address">Company Physical Address</label>
+                            <textarea class="form-control" id="company_address" name="company_address" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
+                <button type="submit" class="btn btn-primary formBtn">{{ __('Update') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
+                <input type="hidden" id="hiddenUserId" name="hiddenUserId">
+                
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
@@ -53,10 +105,6 @@
 <!-- Company AJAX -->
 <script type="text/javascript">
 
-    // jQuery(document).ready(function(){
-    //     // $("#form_laoder").hide();
-        
-    // });
     jQuery(".delete_company").on('click',function(){
         // if (confirm("Are you sure")) {
 
@@ -106,8 +154,16 @@
             type : 'GET',
             dataType: 'json',
             success:function(data) {
-                $("#company").val(data[0].company);
+                $("#companyname").val(data[0].company_name);
+                $("#company_contact_name").val(data[0].company_contact_name);
+                $("#company_phone").val(data[0].company_phone);
+                $("#company_email").val(data[0].company_email);
+                $("#company_website").val(data[0].company_website);
+                $("#company_standard_id").val(data[0].company_standard);
+                $("#company_max_users").val(data[0].company_max_users);
+                $("#company_address").val(data[0].company_address);
                 $("#hiddenId").val(data[0].id);
+                $("#hiddenUserId").val(data[0].user_id);
 
                 $(".formBtn").text("Update Company");
                 $(".modal-title").text("Update Company");
@@ -115,8 +171,11 @@
         });
     });
 
-    
-    $(".content-page").on('submit','#companyForm',function(e){
+    @if(Route::currentRouteName() == "company")
+        $(".modal").on('submit','#companyForm',function(e){
+    @else
+        $(".content-page").on('submit','#companyForm',function(e){
+    @endif
         e.preventDefault();
         $.ajax({
             url:"{{ route('add_company') }}",

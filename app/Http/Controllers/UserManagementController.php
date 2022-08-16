@@ -38,17 +38,17 @@ class UserManagementController extends Controller
             $email = "required";
         endif;    
         
-        // $request->validate([
-        //     'name'	            =>	'required',
-        //     'email'             =>   $email,
-        //     'phone'	            =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
-        //     'designation_id'	=>	'required',
-        //     'company_id'	    =>	'required',
-        //     'location_id'	    =>	'required',
-        //     'department_id'	    =>	'required',
-        //     'role_id'	        =>	'required',
-        //     'status'	        =>	'required',
-        // ]);
+        $request->validate([
+            'name'	            =>	'required',
+            'email'             =>   $email,
+            'phone'	            =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+            'designation_id'	=>	'required',
+            'company_id'	    =>	'required',
+            'location_id'	    =>	'required',
+            'department_id'	    =>	'required',
+            'role_id'	        =>	'required',
+            'status'	        =>	'required',
+        ]);
             if ($request->hiddenId == "") {
                 DB::beginTransaction();
                 try {  
@@ -72,15 +72,15 @@ class UserManagementController extends Controller
                 
                     $files = [];
                     $x = 50;
-                    // if($request->hasfile('image')):
-                    //     $file = $request->file('image');
-                    //     $name = time().rand(1,100).'.'.$file->extension();
-                    //     $img = \Image::make($file);
-                    //     $img->save(public_path('profile_images/'.$name),$x);
-                    //     $profile_image = $name;
-                    // else:
-                    //     $profile_image = $request->hiddenProfile;
-                    // endif;
+                    if($request->hasfile('image')):
+                        $file = $request->file('image');
+                        $name = time().rand(1,100).'.'.$file->extension();
+                        $img = \Image::make($file);
+                        $img->save(public_path('profile_images/'.$name),$x);
+                        $profile_image = $name;
+                    else:
+                        $profile_image = $request->hiddenProfile;
+                    endif;
                     $data = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?)',
                         [
                             $user[0]->LAST_ID,

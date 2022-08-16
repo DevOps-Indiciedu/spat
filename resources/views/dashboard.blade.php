@@ -8,6 +8,19 @@
             <div class="card-title" style="background-color: #000;color:white;text-align:center;font-size:20px;padding:7px;font-weight:400">
                Analytics Dashboard
             </div>
+            <!-- <button id="btn-nft-enable" onclick="initFirebaseMessagingRegistration()" class="btn btn-danger btn-xs btn-flat">Allow for Notification</button>
+            <form action="{{ route('send.notification') }}" method="POST">
+               @csrf
+               <div class="form-group">
+                     <label>Title</label>
+                     <input type="text" class="form-control" name="title">
+               </div>
+               <div class="form-group">
+                     <label>Body</label>
+                     <textarea class="form-control" name="body"></textarea>
+                  </div>
+               <button type="submit" class="btn btn-primary">Send Notification</button>
+            </form> -->
          </div>
       </div>
    </div>
@@ -121,3 +134,67 @@
    </div>
 </div>
 @endsection
+
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase.js"></script>
+
+<script>
+   //  var firebaseConfig = {
+   //      apiKey: "XXXXXXXXXXX",
+   //      authDomain: "XXXXXXXX",
+   //      projectId: "XXXXXXXX",
+   //      storageBucket: "XXXXXXXXXX",
+   //      messagingSenderId: "XXXXXXXXX",
+   //      appId: "XXXXXXXXXXXXX",
+   //      measurementId: "G-XXXXX"
+   //  };
+    var firebaseConfig = {
+      apiKey: "AIzaSyCmlrQ3BWM9Ui08i-bX-o8fRCcV4ZX3ECE",
+      authDomain: "push-notification-b6296.firebaseapp.com",
+      projectId: "push-notification-b6296",
+      storageBucket: "push-notification-b6296.appspot.com",
+      messagingSenderId: "1009480296023",
+      appId: "1:1009480296023:web:a0c87b5e21458d45f46512",
+      measurementId: "G-5X9FCBDYDZ"
+   };
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    function initFirebaseMessagingRegistration() {
+            messaging
+            .requestPermission()
+            .then(function () {
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                console.log(token);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ route("save-token") }}',
+                    type: 'POST',
+                    data: {
+                        token: token
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        alert('Token saved successfully.');
+                    },
+                    error: function (err) {
+                        console.log('User Chat Token Error'+ err);
+                    },
+                });
+            }).catch(function (err) {
+                console.log('User Chat Token Error'+ err);
+            });
+     }
+    messaging.onMessage(function(payload) {
+        const noteTitle = payload.notification.title;
+        const noteOptions = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(noteTitle, noteOptions);
+    });
+</script>

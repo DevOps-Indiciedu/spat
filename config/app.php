@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'localhost:8080/spat/'),
 
     'asset_url' => env('ASSET_URL'),
 

@@ -27,8 +27,8 @@
                                <th class="text-dark">{{ __('Role') }}</th>
                                <th class="text-dark">{{ __('Reg Date') }}</th>
                                @if(userRightGranted('2fa'))
-                               <th class="text-dark">{{ __('2FA Access') }}</th>
-                               <th class="text-dark">{{ __('Disable User 2FA') }}</th>
+                               <th class="text-dark">{{ __('Admin 2FA Access') }}</th>
+                               <th class="text-dark">{{ __('Users 2FA Access') }}</th>
                                @endif
                                <th class="text-dark">{{ __('Status') }}</th>
                                <th class="text-dark">{{ __('Action') }}</th>
@@ -54,27 +54,6 @@
                                <td>{{ DMY($data->created_at) }}</td>
                                @if(userRightGranted('2fa'))
                                <td>
-                                        @if($data->two_factor_enabled == 1)
-                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
-                                            <div class="custom-switch-inner">
-                                                <!-- <p class="mb-0"> Danger </p> -->
-                                                <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="0" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}" checked="">
-                                                <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
-                                            <div class="custom-switch-inner">
-                                                <!-- <p class="mb-0"> Danger </p> -->
-                                                <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="1" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}">
-                                                <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @endif
-                                    </td>
-                                    <td>
                                     @if($data->two_factor_disabled_access == 1)
                                     <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
                                         <div class="custom-switch-inner">
@@ -95,10 +74,36 @@
                                         </div>
                                         @endif
                                     </td>
+                               <td>
+                                        @if($data->two_factor_enabled == 1)
+                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                            <div class="custom-switch-inner">
+                                                <!-- <p class="mb-0"> Danger </p> -->
+                                                <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="0" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}" checked="">
+                                                <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="custom-control custom-switch custom-switch-text custom-switch-color custom-control-inline">
+                                            <div class="custom-switch-inner">
+                                                <!-- <p class="mb-0"> Danger </p> -->
+                                                <input type="checkbox" class="custom-control-input bg-success 2FA" data-factor="1" data-userID="{{ $data->user_id }}" id="customSwitch-{{ $data->user_id }}">
+                                                <label class="custom-control-label" for="customSwitch-{{ $data->user_id }}" data-on-label="Yes" data-off-label="No">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </td>
+                                    
                                 @endif
                                <td>{{ status($data->status) }}</td>
                                <td>
                                    <div class="flex align-items-center list-user-action">
+                                        <a href="#" data-id="{{ $data->company_id }}" class="edit_company" @if($data->role_id == 2) data-target="#CompanyEditModal" @elseif($data->role_id == 3) data-target="#AssessorEditModal" @endif data-toggle="modal" >
+                                            <i class="ri-edit-box-fill pr-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"></i>
+                                        </a>
+                                        
                                         @if($data->status == '1')
                                         <a href="#" data-umid="{{ $data->id }}" data-id="{{ $data->user_id }}" data-block="{{ $data->status }}" class="block_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Block Account">
                                             <i class="ri-lock-fill"></i>
@@ -108,7 +113,7 @@
                                             <i class="ri-lock-unlock-fill"></i>
                                         </a>
                                         @endif
-                                        <a href="#" data-id="{{ $data->id }}" class="delete_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Company">
+                                        <a href="#" data-id="{{ $data->id }}" class="delete_company" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
                                             <i class="ri-delete-bin-2-fill pr-0"></i>
                                         </a>
                                     </div>

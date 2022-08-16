@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\UserManagement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\WelcomeMail;
@@ -34,12 +35,16 @@ class CompanyController extends Controller
     {
         if($request->hiddenId == ""):
             $email = "required|email|unique:users";
+            $company = "required|unique:companies";
         else:    
             $email = "required";
+            $company = "required";
         endif;
 
+        
+
     	$request->validate([
-    		'company_name'	        =>	'required|unique:companies',
+    		'company_name'	        =>	$company,
     		'company_contact_name'	=>	'required',
     		'company_phone'	        =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
     		'email'	                =>	 $email,
@@ -119,25 +124,28 @@ class CompanyController extends Controller
             $data = $e->getMessage();
         }     
         else: 
-            $data = DB::select('call UpdateCompany('.$request->hiddenId.', ?, ?)',
-            [
-                $request->company_name,
-                $request->company_contact_name,
-                $request->company_phone,
-                $request->company_email,
-                $request->company_website,
-                $request->company_address,
-                $request->company_standard,
-                $request->company_max_users,
-            ]);
-            // $data = Company::updateOrCreate(
-            //     [
-            //         'id'	=>	$request->hiddenId,
-            //     ],
-            //     [
-            //         'company'	=>	$request->company,
-            //     ]
-            // );
+            DB::beginTransaction();
+            try {
+                $data = DB::select('call UpdateCompany('.$request->hiddenId.',?,?,?,?,?,?,?,?)',
+                [
+                    $request->company_name,
+                    $request->company_contact_name,
+                    $request->company_phone,
+                    $request->email,
+                    $request->company_website,
+                    $request->company_address,
+                    $request->company_standard_id,
+                    $request->company_max_users,
+                ]);
+                // User Table Update
+                User::where("id",$request->hiddenUserId)->update(["name" => $request->company_contact_name,"email" => $request->email]);
+                // UserManagment Table Update
+                UserManagement::where("user_id",$request->hiddenUserId)->update(["name" => $request->company_contact_name,"email" => $request->email,"phone" => $request->company_phone,"address" => $request->company_address]);
+                DB::commit();
+            } catch (\Exception $e) {
+                $data = $e->getMessage();
+            }
+
         endif;    
 
     	return response()->json($data);
@@ -207,7 +215,6 @@ class CompanyController extends Controller
     		'assessor_name'	        =>	'required',
     		'assessor_phone'	    =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
     		'email'	                =>	 $email,
-    		'assessor_creds'	    =>	'required',
     	]);
         
 

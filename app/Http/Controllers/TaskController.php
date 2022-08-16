@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Illuminate\Support\Facades\Crypt;
+
 class TaskController extends Controller
 {
     public function index()
@@ -33,9 +35,10 @@ class TaskController extends Controller
     	]);
 
         if($request->hiddenId == ""):
-            $data = DB::select('call InsertTask(?,?,?,?,?,?,?,?,?,?,?)',
+            $data = DB::select('call InsertTask(?,?,?,?,?,?,?,?,?,?,?,?)',
             [
                 $request->project_id,
+                Crypt::decrypt($request->reqId),
                 $request->title,
                 $request->description,
                 $request->priority,
@@ -48,9 +51,10 @@ class TaskController extends Controller
                 Auth::user()->id,
             ]);
         else: 
-            $data = DB::select('call UpdateTask('.$request->hiddenId.',?,?,?,?,?,?,?,?,?,?)',
+            $data = DB::select('call UpdateTask('.$request->hiddenId.',?,?,?,?,?,?,?,?,?,?,?)',
             [
                 $request->project_id,
+                Crypt::decrypt($request->reqId),
                 $request->title,
                 $request->description,
                 $request->priority,
@@ -98,5 +102,29 @@ class TaskController extends Controller
     {
         $data = DB::SELECT('call EditTask('.$task_id.')');
         return $data;
+    }
+
+    public function view_task_details($id,$reqID)
+    {
+        $data = DB::table('tasks')->where(array('project_id' => Crypt::decrypt($id), 'req_id' => Crypt::decrypt($reqID)))->get()->toArray();
+        $output = '';
+        $i = 1;
+        foreach($data as $task):
+            $output .= '
+                <tr>
+                    <td class="text-center">'.$i++.'</td>
+                    <td class="text-center">'.get_user($task->assign_to)->username.'</td>
+                    <td>'.$task->task_title.'</td>
+                    <td class="text-center">'.DMY($task->created_at).'</td>
+                    <td class="text-center">'.get_taskStatus($task->status)->title.'</td>
+                    <td class="text-center">
+                        <a href="#" data-id="'.$task->id.'" class="btn btn-warning edit_task" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
+                            Edit Task
+                        </a>
+                    </td>
+                </tr>
+            ';
+        endforeach;
+        echo $output;
     }
 }

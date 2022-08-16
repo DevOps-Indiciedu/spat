@@ -58,7 +58,7 @@
                                     </div> -->
                                  </div> 
                                  <div class="row">
-                                 <div class="col-md-6">
+                                    <div class="col-md-6">
                                        <div class="form-group">
                                           <label for="company_name">Company Name <span class="text-danger">*</span></label> 
                                           <input type="text" class="form-control" id="company_name" name="company_name" placeholder="" />

@@ -1194,7 +1194,7 @@ h1,h2,h3,h4,h5,h6{
   color: white;
 }
 .breadcrumb li.active a:after {
- border-left: 30px solid #000 ;
+ border-left: 30px solid #a52a2a ;
 }
 .breadcrumb li.completed a:after {
  border-left: 30px solid hsl(354deg 73% 43%);
@@ -1316,7 +1316,7 @@ table.dataTable thead th, table.dataTable thead td{
   color: white;
 }
 .breadcrumb li.active a:after {
- border-left: 30px solid #000 ;
+ border-left: 30px solid #a52a2a ;
 }
 .breadcrumb li.completed a:after {
  border-left: 30px solid hsl(354deg 73% 43%);
@@ -1450,8 +1450,10 @@ padding-left: 15px;
   padding: 5px 10px 5px 10px;
 }
 #evidencemodal .modal-footer .btn{
-  padding: 2px 5px 2px 5px;
+  /* padding: 2px 5px 2px 5px; */
   margin: 0px;
+  color: white;
+
 }
 #evidencemodal label{
   display: block;
@@ -1484,4 +1486,8 @@ padding-left: 15px;
 }
 #example td{
   vertical-align: middle;
+}
+
+.swal2-container {
+  z-index: 999999999 !important;
 }

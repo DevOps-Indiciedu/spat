@@ -51,9 +51,9 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     // Check Auth Middleware 
     Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware'=>'user-permission:dashboard'],function(){
-            Route::get('/home', function () {
-                return view('dashboard');
-            });
+            Route::get('/home',[App\Http\Controllers\HomeController::class,'index'])->name('home');
+            Route::post('save-token',[App\Http\Controllers\HomeController::class,'saveToken'])->name('save-token');
+            Route::post('/send-notification', [App\Http\Controllers\HomeController::class, 'sendNotification'])->name('send.notification');
         });
     
     //////////////////
@@ -153,6 +153,8 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
             Route::post('/add_task', 'insertOrupdate')->name('add_task');
             Route::post('/delete_task', 'destroy')->name('delete_task');
             Route::get('/edit_task/{id}', 'edit')->name('edit_task');
+            Route::get('/view_task_details/{id}/{rid}', 'view_task_details')->name('view_task_details');
+            
         });
     });
 
@@ -160,10 +162,16 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     Route::controller(App\Http\Controllers\ReqListController::class)->group(function () {
         Route::get('/view_requirements', 'index')->name('view_requirements');
         Route::get('/standards', 'standards')->name('standards');
-        Route::get('/select_req_list', 'select_req_list')->name('select_req_list');
+        Route::get('/select_req_list/{id}', 'select_req_list')->name('select_req_list');
         Route::post('/submit_req_register_list', 'submit_req_register_list')->name('submit_req_register_list');
-        Route::get('/view_selected_req_list', 'view_selected_req_list')->name('view_selected_req_list');
+        Route::get('/view_selected_req_list/{id}', 'view_selected_req_list')->name('view_selected_req_list');
+        Route::get('/action_tracker/{id}', 'action_tracker')->name('action_tracker');
         Route::post('/submit_requirement_result', 'submit_requirement_result')->name('submit_requirement_result');
+        Route::post('/get_prev_uploaded_files', 'get_prev_uploaded_files')->name('get_prev_uploaded_files');
+        Route::post('/delete_observation_image', 'delete_observation_image')->name('delete_observation_image');
+        Route::get('/observation_action_edit/{id}', 'observation_action_edit')->name('observation_action_edit');
+        Route::post('/approve_document', 'approve_document')->name('approve_document');
+        Route::get('/selected_observation/{id}', 'selected_observation')->name('selected_observation');
     });
 
     // Projects

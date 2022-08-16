@@ -48,15 +48,26 @@
                                <td>{{ DMY($data->project_end_date) }}</td>
                                <td>
                                     @if(auth()->user()->usermanagement->role_id == 2)
-                                        <a href="{{ route('select_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark SOA">
+                                        @php 
+                                            $checkExist = DB::table("evaluations_list")->where('ass_id',$data->id)->count();
+                                            if($checkExist > 0):
+                                                $url = url('selected_observation/'.Crypt::encrypt($data->id));    
+                                            else:
+                                                $url = url('select_req_list/'.Crypt::encrypt($data->id));
+                                            endif;
+                                        @endphp
+                                        <a href="{{ $url }}" style="    line-height: 1;" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark SOA">
                                             Mark SOA
                                         </a>
-                                        <a href="{{ route('view_selected_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
-                                            View
+                                        <a href="{{ url('view_selected_req_list/'.Crypt::encrypt($data->id)) }}" style="    line-height: 1;" class="btn btn-warning mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
+                                            Evidence Tracker
+                                        </a>
+                                        <a href="{{ url('action_tracker/'.Crypt::encrypt($data->id)) }}" style="    line-height: 1;" class="btn btn-dark mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Action Tracker">
+                                            Action Tracker
                                         </a>
                                     @elseif(auth()->user()->usermanagement->role_id == 3)
-                                        <a href="{{ route('view_selected_req_list') }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Observation">
-                                            Add Observations
+                                        <a href="{{ url('view_selected_req_list/'.Crypt::encrypt($data->id)) }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
+                                        Evidence Tracker
                                         </a>
                                     @endif
                                 </td>

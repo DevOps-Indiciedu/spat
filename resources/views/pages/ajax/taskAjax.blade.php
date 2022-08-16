@@ -1,5 +1,5 @@
 <!-- Modal  -->
-<div id="exampleModalCenteredScrollable" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
+<div id="exampleModalCenteredScrollable" class="modal fade" tabindex="-1" role="dialog" style="z-index: 9999999;" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -62,12 +62,51 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
                 <input type="hidden" id="hiddenId" name="hiddenId">
+                <input type="hidden" id="reqId" name="reqId">
                 <button type="button" class="btn btn-secondary" onclick="FormClear('taskForm')" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
         </form>
         </div>
     </div>
 </div>
+
+<!-- Modal  -->
+<div id="taskDetails" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="taskDetails" aria-hidden="true" >
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="taskDetails">{{ __('Task Details') }}</h5>
+            <button type="button" class="close" onclick="FormClear('taskForm')" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <form id="taskForm" method="POST">
+            @csrf
+            <div class="modal-body row">
+                <table class="table table-bordered">
+                    <thead class="bg-danger">
+                        <th>#</th>
+                        <th>Assign To</th>
+                        <th>Task Title</th>
+                        <th>Assign Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody id="TaskDetailsData">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button> -->
+                <!-- <input type="hidden" id="hiddenId" name="hiddenId"> -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 
 <!-- Location AJAX -->
 <script type="text/javascript">
@@ -116,13 +155,17 @@
         return (n < 10 ? '0' : '') + n;
     }
 
-    jQuery(".edit_task").on('click',function(){
+    $(".modal").on('click','.edit_task',function(){
+    // jQuery(".edit_task").on('click',function(){
         var id = $(this).attr('data-id');
         $.ajax({
-            url:"edit_task/"+id,
+            url:"{{ url('edit_task') }}/"+id,
             type : 'GET',
             dataType: 'json',
             success:function(data) {
+                // $('#project_id option:not(:selected)').attr('disabled', true);
+                $('#project_id').attr("style", "pointer-events: none;");
+
                 $("#hiddenId").val(data[0].id);
                 $("#project_id").val(data[0].project_id);
                 $("#title").val(data[0].task_title);
@@ -180,5 +223,31 @@
             }
         });
     });
+
+    $(".addTask").on("click",function(){
+        var pid = $(this).attr('data-project-id');
+        var rid = $(this).attr('data-req-id');
+        $("#project_id").val(pid);
+        $("#reqId").val(rid);
+        // $("#project_id").attr('readonly');
+        $('#project_id option:not(:selected)').attr('disabled', true);
+        $('#project_id').attr("style", "pointer-events: none;");
+    });
+
+    jQuery(".viewTaskDetails").on('click',function(){
+        var id = $(this).attr('data-project-id');
+        var rid = $(this).attr('data-req-id');
+        $.ajax({
+            url:"{{ url('view_task_details') }}/"+id+"/"+rid,
+            type : 'GET',
+            dataType: 'html',
+            success:function(data) {
+                // Loader Hide 
+                $("#form_loader").hide();
+                $("#TaskDetailsData").html(data);
+            }
+        });
+    });
+    
      
 </script>
