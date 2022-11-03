@@ -40,6 +40,7 @@ Route::get('2fa-challenge', function () {
 })->name('2fa-challenge');
 
 Route::post('create-password',[App\Http\Controllers\UserManagementController::class,'create_password'])->name('create-password');
+Route::post('password-validation',[App\Http\Controllers\UserManagementController::class,'passwordValidation'])->name('password-validation');
 
 Route::get('/permission-denied', function () {
     return view('permission-denied');
@@ -80,15 +81,16 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
     
 
     // Location Managment 
-    Route::group(['middleware'=>'user-permission:location_managment'],function(){
+    // Route::group(['middleware'=>'user-permission:location_managment'],function(){
         Route::controller(App\Http\Controllers\LocationController::class)->group(function () {
-            Route::get('/location', 'index')->name('location');
-            Route::post('/add_location', 'insertOrupdate')->name('add_location');
-            Route::post('/delete_location', 'destroy')->name('delete_location');
-            Route::get('/edit_location/{id}', 'edit')->name('edit_location');
-            Route::get('/get_locations_by_companyID/{id}', 'get_locations_by_companyID')->name('get_locations_by_companyID');
+            Route::get('/location', 'index')->name('location')->middleware(['middleware'=>'user-permission:location_managment']);
+            Route::post('/add_location', 'insertOrupdate')->name('add_location')->middleware(['middleware'=>'user-permission:location_managment']);
+            Route::post('/delete_location', 'destroy')->name('delete_location')->middleware(['middleware'=>'user-permission:location_managment']);
+            Route::get('/edit_location/{id}', 'edit')->name('edit_location')->middleware(['middleware'=>'user-permission:location_managment']);
+            Route::get('/get_locations_by_companyID/{id}/{uid}', 'get_locations_by_companyID')->name('get_locations_by_companyID');
+            Route::get('/get_locations_by_assessorID/{id}/{uid}', 'get_locations_by_assessorID')->name('get_locations_by_assessorID');
         });
-    });
+    // });
 
     // Department Managment 
     Route::group(['middleware'=>'user-permission:department_management'],function(){
@@ -154,7 +156,6 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
             Route::post('/delete_task', 'destroy')->name('delete_task');
             Route::get('/edit_task/{id}', 'edit')->name('edit_task');
             Route::get('/view_task_details/{id}/{rid}', 'view_task_details')->name('view_task_details');
-            
         });
     });
 
@@ -165,13 +166,23 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
         Route::get('/select_req_list/{id}', 'select_req_list')->name('select_req_list');
         Route::post('/submit_req_register_list', 'submit_req_register_list')->name('submit_req_register_list');
         Route::get('/view_selected_req_list/{id}', 'view_selected_req_list')->name('view_selected_req_list');
+        Route::get('/audit_observation/{id}', 'audit_observation')->name('audit_observation');
         Route::get('/action_tracker/{id}', 'action_tracker')->name('action_tracker');
         Route::post('/submit_requirement_result', 'submit_requirement_result')->name('submit_requirement_result');
+        Route::post('/submit_requirement_result_details', 'submit_requirement_result_details')->name('submit_requirement_result_details');
         Route::post('/get_prev_uploaded_files', 'get_prev_uploaded_files')->name('get_prev_uploaded_files');
         Route::post('/delete_observation_image', 'delete_observation_image')->name('delete_observation_image');
         Route::get('/observation_action_edit/{id}', 'observation_action_edit')->name('observation_action_edit');
         Route::post('/approve_document', 'approve_document')->name('approve_document');
+        Route::post('/approve_clouse', 'approve_clouse')->name('approve_clouse');
+        Route::post('/submit_doc_type', 'submit_doc_type')->name('submit_doc_type');
         Route::get('/selected_observation/{id}', 'selected_observation')->name('selected_observation');
+        Route::get('/auditor_observations/{id}/{rid}', 'auditor_observations')->name('auditor_observations');
+        Route::post('/search_document', 'search_document')->name('search_document');
+        Route::post('/submit_search_selected', 'submit_search_selected')->name('submit_search_selected');
+        Route::post('/audit_observation_submit', 'audit_observation_submit')->name('audit_observation_submit');
+        Route::get('/filter_record_evidence_tracker/{id}', 'filter_record_evidence_tracker')->name('filter_record_evidence_tracker');
+        
     });
 
     // Projects
@@ -184,8 +195,45 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
             Route::get('/project_list', 'project_list')->name('project_list')->middleware(['middleware'=>'user-permission:project_list']);
             Route::get('/get_users_by_auditor_company/{id}', 'get_users_by_auditor_company')->name('get_users_by_auditor_company');
             Route::get('/project_logs/{id}', 'project_logs')->name('project_logs');
+            Route::get('/project_planning/{id}', 'project_planning')->name('project_planning');
+            Route::post('/save_planning', 'save_planning')->name('save_planning');
+            Route::post('/add_project_planning_task', 'add_project_planning_task')->name('add_project_planning_task');
+            Route::get('/getTaskdata/{id}', 'getTaskdata')->name('getTaskdata');
+            Route::post('/task_delete', 'task_delete')->name('task_delete');
+            Route::post('/task_status_update', 'task_status_update')->name('task_status_update');
+            Route::get('/project_report/{id}', 'project_report')->name('project_report');
+            Route::get('/pciDSSReportPDF/{id}', 'pciDSSReportPDF')->name('pciDSSReportPDF');
+            Route::post('/saveCapturedChart', 'saveCapturedChart')->name('saveCapturedChart');
+            Route::get('/get_users_by_depId/{id}', 'get_users_by_depId')->name('get_users_by_depId');
+
         });
     // });
+
+        Route::controller(App\Http\Controllers\TemplateController::class)->group(function () {
+            // Route::get('/projects', 'index')->name('projects');
+            Route::post('/add_template', 'insertOrupdate')->name('add_template');
+            Route::post('/delete_template', 'destroy')->name('delete_template');
+            Route::get('/edit_template/{id}', 'edit')->name('edit_template');
+            // Route::get('/project_list', 'project_list')->name('project_list')->middleware(['middleware'=>'user-permission:project_list']);
+            // Route::get('/get_users_by_auditor_company/{id}', 'get_users_by_auditor_company')->name('get_users_by_auditor_company');
+            Route::get('/template/{id}', 'template')->name('template');
+        });
+
+
+        Route::controller(App\Http\Controllers\PackagesController::class)->group(function () {
+            Route::get('/packages', 'index')->name('packages');
+            Route::post('/add_package', 'insertOrupdate')->name('add_package');
+            Route::post('/delete_package', 'destroy')->name('delete_package');
+            Route::get('/edit_package/{id}', 'edit')->name('edit_package');
+            Route::get('/get_package_amount/{id}', 'get_package_amount')->name('get_package_amount');
+        });
+
+        Route::controller(App\Http\Controllers\PackageSubscriptionController::class)->group(function () {
+            Route::get('/package_subscription', 'index')->name('package_subscription');
+            Route::post('/add_package_subscription', 'insertOrupdate')->name('add_package_subscription');
+            Route::post('/delete_package_subscription', 'destroy')->name('delete_package_subscription');
+            Route::get('/edit_package_subscription/{id}', 'edit')->name('edit_package_subscription');
+        });
 
     });
 });

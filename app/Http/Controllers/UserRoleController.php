@@ -29,10 +29,11 @@ class UserRoleController extends Controller
     	]);
 
         if($request->hiddenId == ""):
-            $data = DB::select('call InsertRole(?,?)',
+            $data = DB::select('call InsertRole(?,?,?)',
             [
                 $request->role,
-                Auth::user()->id
+                Auth::user()->id,
+                0
             ]);
         else: 
             $data = DB::select('call UpdateRole('.$request->hiddenId.', ?)',

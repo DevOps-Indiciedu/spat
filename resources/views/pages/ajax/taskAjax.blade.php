@@ -1,9 +1,9 @@
 <!-- Modal  -->
-<div id="exampleModalCenteredScrollable" class="modal fade" tabindex="-1" role="dialog" style="z-index: 9999999;" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
+<div id="ObservationTaskModal" class="modal fade" tabindex="-1" role="dialog" style="z-index: 9999999;" aria-labelledby="ObservationTaskModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="border: 2px solid #be1e2d;box-shadow: 2px 2px 16px 4px #4040404d;">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">{{ __('Add Task') }}</h5>
+            <h5 class="modal-title" id="ObservationTaskModalTitle">{{ __('Add Task') }}</h5>
             <button type="button" class="close" onclick="FormClear('taskForm')" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
@@ -39,21 +39,29 @@
                     <input type="date" class="form-control" id="end_datetime" name="end_datetime">
                     <span class="text-danger" id="end_datetimeErr"></span>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-6">
+                    <label for="department_id">{{ __('Department') }}</label>
+                    {!! department_dropdown() !!}
+                    <span class="text-danger" id="departErr"></span>
+                </div>
+                <div class="form-group col-sm-6">
                     <label for="phone">{{ __('Assign To') }}</label>
-                    {!! users_dropdown() !!}
+                    <!-- {!! users_dropdown() !!} -->
+                    <div id="depUsers_data">
+                    <select class='form-control' name="user_id" id="user_id"><option value=''>Select User</option></select>
+                    </div>
                     <span class="text-danger" id="assignErr"></span>
                 </div>
-                <div class="form-group col-sm-4">
+                <!-- <div class="form-group col-sm-4">
                     <label for="phone">{{ __('Priority') }}</label>
                     {!! priority_dropdown() !!}
                     <span class="text-danger" id="priorityErr"></span>
-                </div>
-                <div class="form-group col-sm-4">
+                </div> -->
+                <!-- <div class="form-group col-sm-4">
                     <label for="phone">{{ __('Status') }}</label>
                     {!! taskStatus_dropdown() !!}
                     <span class="text-danger" id="statusErr"></span>
-                </div>
+                </div> -->
                 <div class="form-group col-sm-12">
                     <label for="phone">{{ __('Description') }}</label>
                     <textarea name="description" id="description" class="form-control"></textarea>
@@ -61,7 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary formBtn">{{ __('Save') }}</button>
-                <input type="hidden" id="hiddenId" name="hiddenId">
+                <input type="hidden" id="TaskhiddenId" name="hiddenId">
                 <input type="hidden" id="reqId" name="reqId">
                 <button type="button" class="btn btn-secondary" onclick="FormClear('taskForm')" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
@@ -73,14 +81,14 @@
 <!-- Modal  -->
 <div id="taskDetails" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="taskDetails" aria-hidden="true" >
     <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="border: 2px solid #be1e2d;box-shadow: 2px 2px 16px 4px #4040404d;">
         <div class="modal-header">
             <h5 class="modal-title" id="taskDetails">{{ __('Task Details') }}</h5>
             <button type="button" class="close" onclick="FormClear('taskForm')" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
             </button>
         </div>
-        <form id="taskForm" method="POST">
+        <!-- <form id="taskForm" method="POST"> -->
             @csrf
             <div class="modal-body row">
                 <table class="table table-bordered">
@@ -102,7 +110,7 @@
                 <!-- <input type="hidden" id="hiddenId" name="hiddenId"> -->
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
             </div>
-        </form>
+        <!-- </form> -->
         </div>
     </div>
 </div>
@@ -155,9 +163,10 @@
         return (n < 10 ? '0' : '') + n;
     }
 
-    $(".modal").on('click','.edit_task',function(){
+    $(".content-page").on('click','.edit_task',function(){
     // jQuery(".edit_task").on('click',function(){
         var id = $(this).attr('data-id');
+        var rid = $(this).attr('data-req-id');
         $.ajax({
             url:"{{ url('edit_task') }}/"+id,
             type : 'GET',
@@ -166,7 +175,8 @@
                 // $('#project_id option:not(:selected)').attr('disabled', true);
                 $('#project_id').attr("style", "pointer-events: none;");
 
-                $("#hiddenId").val(data[0].id);
+                $("#TaskhiddenId").val(data[0].id);
+                $("#reqId").val(rid);
                 $("#project_id").val(data[0].project_id);
                 $("#title").val(data[0].task_title);
 
@@ -178,18 +188,23 @@
 
                 $("#start_datetime").val(sdate_format);
                 $("#end_datetime").val(edate_format);
-                $("#user_id").val(data[0].assign_to);
+                $("#department_id").val(data[0].department_id);
                 $("#priority").val(data[0].priority);
                 $("#taskstatus_id").val(data[0].status);
                 $("#description").val(data[0].task_des);
 
+                jQuery("#department_id").trigger('change');
+                setTimeout(function() { 
+                    $("#user_id").val(data[0].assign_to);
+                }, 500);
+                
                 $(".formBtn").text("Update Task");
                 $(".modal-title").text("Update Task");
             }
         });
     });
 
-    $(".modal").on('submit','#taskForm',function(e){
+    $("#ObservationTaskModal").on('submit','#taskForm',function(e){
         e.preventDefault();
         $.ajax({
             url:"{{ route('add_task') }}",
@@ -209,7 +224,13 @@
                     timer: 2500
                 });
                 setTimeout(function() { 
-                    location.reload();
+                    if($("#TaskhiddenId").val() == "")
+                    {
+                        location.reload();
+                    }else{
+                        location.reload();
+                        // $('#ObservationTaskModal').modal('hide');
+                    }
                 }, 2000);
             },error:function(err)
             {
@@ -220,11 +241,14 @@
                 $("#assignErr").text(err.responseJSON.errors.user_id);
                 $("#priorityErr").text(err.responseJSON.errors.priority);
                 $("#statusErr").text(err.responseJSON.errors.taskstatus_id);
+                $("#departErr").text(err.responseJSON.errors.department_id); 
             }
         });
     });
 
     $(".addTask").on("click",function(){
+        $('#TaskhiddenId').val('');
+        // jQuery("#department_id").trigger('change');
         var pid = $(this).attr('data-project-id');
         var rid = $(this).attr('data-req-id');
         $("#project_id").val(pid);
@@ -248,6 +272,25 @@
             }
         });
     });
+
     
+    // Get Users 
+    $(".modal").on('change','#department_id',function(){
+        var dep_id = $(this).val();
+        // if(dep_id != ""){
+            $.ajax({
+                url:"{{ url('get_users_by_depId') }}/"+dep_id,
+                type : 'GET',
+                dataType: 'html',
+                success:function(data) {
+                    $("#depUsers_data").html(data);
+                }
+            });
+        // }else{
+        //     $("#depUsers_data").html("<select class='form-control'><option value=''>Select User</option></select>");
+        // }
+    });
+
+
      
 </script>

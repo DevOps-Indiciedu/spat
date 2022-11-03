@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use Auth;
 use File;
+use Illuminate\Support\Facades\Crypt;
 
 class LocationController extends Controller
 {
@@ -78,15 +79,24 @@ class LocationController extends Controller
         return $data;
     }
 
-    public function get_locations_by_companyID($company_id)
+    public function get_locations_by_companyID($company_id,$userID)
     {
-        // $data = DB::select(
-            //     'call get_locations_by_companyID(company_id)'
-            // );
-            // return response()->json($data);
         $output = '';
-        $data = DB::select('call get_locations_by_companyID('.$company_id.')');
+        $data = DB::select('call get_locations_by_companyID('.$company_id.','.Crypt::decrypt($userID).')');
         $output .= "<select class='form-control' name='location_id' id='location_id'>";
+        $output .= "<option value=''>Select Location</option>";
+        foreach($data as $location):
+            $output .= "<option value='".$location->id."'>".$location->name."</option>";
+        endforeach;    
+        $output .= "</select>";
+        echo $output;
+    }
+
+    public function get_locations_by_assessorID($company_id,$userID)
+    {
+        $output = '';
+        $data = DB::select('call get_locations_by_companyID('.$company_id.','.Crypt::decrypt($userID).')');
+        $output .= "<select class='form-control' name='assessor_location_id' id='assessor_location_id'>";
         $output .= "<option value=''>Select Location</option>";
         foreach($data as $location):
             $output .= "<option value='".$location->id."'>".$location->name."</option>";

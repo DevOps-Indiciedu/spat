@@ -34,7 +34,7 @@
             </div>
             @endif
             
-            <div class="row" style="margin-right: 0px;">
+            <!-- <div class="row" style="margin-right: 0px;">
                <div class="col-xl-3" style="padding-right:0px;">
                   <div class="iq-card iq-card-block iq-card-stretch">
                      <div class="iq-card-body p-2">
@@ -63,9 +63,65 @@
                            </div>
                         </div>
                      </div>
+            </div> -->
+         </div>
+         @if(Auth::user()->system_admin == 1)
+         @else
+         
+         @if(Auth::user()->usermanagement->role_id == 2)
+         <div class="col-lg-6">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Evidence Points Status</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div id="chart_points"></div>
+               </div>
             </div>
          </div>
 
+         <div class="col-lg-6">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Total Action Points Status</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                         <div id="tasks_points"></div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-6">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Departments Bases Action Point Status</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div id="dep_points"></div>
+               </div>
+            </div>
+         </div>
+         
+
+         <div class="col-lg-6">
+            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+               <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                     <h4 class="card-title">Requirement Wise Compliance Status</h4>
+                  </div>
+               </div>
+               <div class="iq-card-body">
+                  <div id="req_points"></div>
+               </div>
+            </div>
+         </div>
+         @else
          <div class="col-lg-12">
             <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                <div class="iq-card-header d-flex justify-content-between">
@@ -75,126 +131,82 @@
                </div>
                <div class="iq-card-body">
                   <table class="table mb-0 ">
-                        <thead style="background-color: #be1e2d;">
-                           <tr>
-                              <th class="dmiddle" scope="col">Milestone</th>
-                              <th class="dmiddle" scope="col">Goals</th>
-                              <th class="dmiddle" scope="col"> Percent Complete</th>
-                              <th class="dmiddle" scope="col">Estimated Date for Completion of Milestone</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           <tr>
-                              <td class="dmiddle">1</td>
-                              <td>Remove sensitive authentication data and limit data retention. This milestone targets a key area of risk for entities that have been compromised. Remember – if sensitive authentication data and other cardholder data are not stored, the effects of a compromise will be greatly reduced. If you don't need it, don't store it</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                           <tr>
-                              <td class="dmiddle">2</td>
-                              <td>Protect systems and networks, and be prepared to respond to a system breach.  This milestone targets controls for points of access to most compromises, and the processes for responding.</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                           <tr>
-                              <td class="dmiddle">3</td>
-                              <td>Secure payment card applications. This milestone targets controls for applications, application processes, and application servers. Weaknesses in these areas offer easy prey for compromising systems and obtaining access to cardholder data.</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                           <tr>
-                              <td class="dmiddle">4</td>
-                              <td>Monitor and control access to your systems.  Controls for this milestone allow you to detect the who, what, when, and how concerning who is accessing your network and cardholder data environment.</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                           <tr>
-                              <td class="dmiddle">5</td>
-                              <td>Protect stored cardholder data. For those organizations that have analyzed their business processes and determined that they must store Primary Account Numbers, Milestone Five targets key protection mechanisms for that stored data.</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                           <tr>
-                              <td class="dmiddle">6</td>
-                              <td>Finalize remaining compliance efforts, and ensure all controls are in place.  The intent of Milestone Six is to complete PCI DSS requirements, and to finalize all remaining related policies, procedures, and processes needed to protect the cardholder data environment.</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                           <tr>
-                              <td class="dmiddle" colspan="2">Overall</td>
-                              <td class="dmiddle">0.0%</td>
-                              <td></td>
-                           </tr>
-                        </tbody>
-                     </table>
+                     <thead style="background-color: #be1e2d;">
+                        <tr>
+                           <th class="dmiddle" scope="col">Milestone</th>
+                           <th class="dmiddle" scope="col">Goals</th>
+                           <th class="dmiddle" scope="col"> Percent Complete</th>
+                           <th class="dmiddle" scope="col">Estimated Date for Completion of Milestone</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td class="dmiddle">1</td>
+                           <td>Remove sensitive authentication data and limit data retention. This milestone targets a key area of risk for entities that have been compromised. Remember – if sensitive authentication data and other cardholder data are not stored, the effects of a compromise will be greatly reduced. If you don't need it, don't store it</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td class="dmiddle">2</td>
+                           <td>Protect systems and networks, and be prepared to respond to a system breach.  This milestone targets controls for points of access to most compromises, and the processes for responding.</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td class="dmiddle">3</td>
+                           <td>Secure payment card applications. This milestone targets controls for applications, application processes, and application servers. Weaknesses in these areas offer easy prey for compromising systems and obtaining access to cardholder data.</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td class="dmiddle">4</td>
+                           <td>Monitor and control access to your systems.  Controls for this milestone allow you to detect the who, what, when, and how concerning who is accessing your network and cardholder data environment.</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td class="dmiddle">5</td>
+                           <td>Protect stored cardholder data. For those organizations that have analyzed their business processes and determined that they must store Primary Account Numbers, Milestone Five targets key protection mechanisms for that stored data.</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td class="dmiddle">6</td>
+                           <td>Finalize remaining compliance efforts, and ensure all controls are in place.  The intent of Milestone Six is to complete PCI DSS requirements, and to finalize all remaining related policies, procedures, and processes needed to protect the cardholder data environment.</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td class="dmiddle" colspan="2">Overall</td>
+                           <td class="dmiddle">0.0%</td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                     <!-- <div class="row">
+                         <div class="col-md-12">
+                             Charts
+                         </div>
+                         <div class="col-md-6" id="chart_points">
+                             
+                         </div>
+                          <div class="col-md-6" id="tasks_points">
+                             
+                         </div>
+                          <div class="col-md-12" id="dep_points">
+                             
+                         </div>
+                          <div class="col-md-12" id="req_points">
+                             
+                         </div>
+                     </div> -->
                </div>
             </div>
          </div>
+         @endif
+         @endif
       </div>
    </div>
 </div>
 @endsection
 
-<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase.js"></script>
-
-<script>
-   //  var firebaseConfig = {
-   //      apiKey: "XXXXXXXXXXX",
-   //      authDomain: "XXXXXXXX",
-   //      projectId: "XXXXXXXX",
-   //      storageBucket: "XXXXXXXXXX",
-   //      messagingSenderId: "XXXXXXXXX",
-   //      appId: "XXXXXXXXXXXXX",
-   //      measurementId: "G-XXXXX"
-   //  };
-    var firebaseConfig = {
-      apiKey: "AIzaSyCmlrQ3BWM9Ui08i-bX-o8fRCcV4ZX3ECE",
-      authDomain: "push-notification-b6296.firebaseapp.com",
-      projectId: "push-notification-b6296",
-      storageBucket: "push-notification-b6296.appspot.com",
-      messagingSenderId: "1009480296023",
-      appId: "1:1009480296023:web:a0c87b5e21458d45f46512",
-      measurementId: "G-5X9FCBDYDZ"
-   };
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
-    function initFirebaseMessagingRegistration() {
-            messaging
-            .requestPermission()
-            .then(function () {
-                return messaging.getToken()
-            })
-            .then(function(token) {
-                console.log(token);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '{{ route("save-token") }}',
-                    type: 'POST',
-                    data: {
-                        token: token
-                    },
-                    dataType: 'JSON',
-                    success: function (response) {
-                        alert('Token saved successfully.');
-                    },
-                    error: function (err) {
-                        console.log('User Chat Token Error'+ err);
-                    },
-                });
-            }).catch(function (err) {
-                console.log('User Chat Token Error'+ err);
-            });
-     }
-    messaging.onMessage(function(payload) {
-        const noteTitle = payload.notification.title;
-        const noteOptions = {
-            body: payload.notification.body,
-            icon: payload.notification.icon,
-        };
-        new Notification(noteTitle, noteOptions);
-    });
-</script>

@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'SPAT') }}</title>
-    <link rel="icon" href="https://secureism.com/wp-content/uploads/2021/04/SecureismlogoFavi.png" sizes="32x32" />
+    <link rel="icon" href="https://secureism.com/wp-content/uploads/2021/04/SecureismlogoFavi.png" sizes="32x32"/>
 
     @auth
     <!-- Bootstrap CSS -->
@@ -46,9 +46,13 @@
    <!-- DataTables JS  -->
    <script src="https://dev.indiciedu.com.pk/assets/optimization/bottom/jquery.dataTables.min.js"></script>
    <!-- <link rel="stylesheet" href="{{ asset(MyApp::ASSET_DATATABLE.'datatables.min.js') }}"> -->
-    <!-- Sweet Alert  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+   <!-- CDN's -->
+   <!-- Sweet Alert  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
    @auth
@@ -65,6 +69,9 @@
          justify-content: center;
          align-items: center;
          z-index: 99999;
+      }
+      text.highcharts-credits {
+         display: none;
       }
    </style>
     <!-- loader Start -->
@@ -185,16 +192,17 @@
                            </li>
                            @endif
                            @if(userRightGranted('task_management'))
-                           <li>
+                           <!-- <li>
                                 <a href="{{ route('task') }}">
                                     <span>Task Management</span>
                                 </a>
-                           </li>
+                           </li> -->
                            @endif
                         </ul>
                      </li>
                      @endif
                      @if(userRightGranted('project_list'))
+                     
                      <li >
                            <a href="{{ route('project_list') }}" class="iq-waves-effect collapsed">
                            <i class="ri-record-circle-line"></i>
@@ -208,6 +216,26 @@
                         <span>Available Standards</span></a>
                      </li>
                      @endif
+                     @if(userRightGranted('company_onboarding'))
+                     <li>
+                        <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i><span>Packages</span></a>
+                        <ul id="menu-level" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                           @if(userRightGranted('add_client'))
+                           <li>
+                              <a href="{{ route('packages') }}">
+                              <span>Manage Package</span></a>
+                           </li>
+                           @endif
+                           @if(userRightGranted('view_clients'))
+                           <li>
+                                <a href="{{ route('package_subscription') }}">
+                                    <span>Package Subscriptions</span>
+                                </a>
+                           </li>
+                           @endif
+                        </ul>
+                     </li>
+                     @endif 
                      @if(userRightGranted('requirements'))
                      <li>
                         <a href="#" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
@@ -225,18 +253,7 @@
                         </ul>
                      </li>
                      @endif
-                     @if(userRightGranted('soa'))
-                     <li>
-                        <a href="{{ route('select_req_list') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
-                        <span>SOA</span></a>
-                     </li>
-                     @endif
-                     @if(userRightGranted('observations'))
-                     <li>
-                        <a href="{{ route('view_selected_req_list') }}" class="iq-waves-effect collapsed"><i class="ri-record-circle-line"></i>
-                        <span>Observations </span></a>
-                     </li>
-                     @endif
+                     
                   </ul>
                </nav>
                </div>
@@ -574,6 +591,410 @@
          $('#datatable').DataTable();
       } );
 
-      </script>
+   </script>
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase.js"></script>
+<script>
+   //  var firebaseConfig = {
+   //      apiKey: "XXXXXXXXXXX",
+   //      authDomain: "XXXXXXXX",
+   //      projectId: "XXXXXXXX",
+   //      storageBucket: "XXXXXXXXXX",
+   //      messagingSenderId: "XXXXXXXXX",
+   //      appId: "XXXXXXXXXXXXX",
+   //      measurementId: "G-XXXXX"
+   //  };
+    var firebaseConfig = {
+      apiKey: "AIzaSyCmlrQ3BWM9Ui08i-bX-o8fRCcV4ZX3ECE",
+      authDomain: "push-notification-b6296.firebaseapp.com",
+      projectId: "push-notification-b6296",
+      storageBucket: "push-notification-b6296.appspot.com",
+      messagingSenderId: "1009480296023",
+      appId: "1:1009480296023:web:a0c87b5e21458d45f46512",
+      measurementId: "G-5X9FCBDYDZ"
+   };
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    function initFirebaseMessagingRegistration() {
+            messaging
+            .requestPermission()
+            .then(function () {
+                return messaging.getToken()
+            })
+            .then(function(token) {
+                console.log(token);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{ route("save-token") }}',
+                    type: 'POST',
+                    data: {
+                        token: token
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        alert('Token saved successfully.');
+                    },
+                    error: function (err) {
+                        console.log('User Chat Token Error'+ err);
+                    },
+                });
+            }).catch(function (err) {
+                console.log('User Chat Token Error'+ err);
+            });
+     }
+    messaging.onMessage(function(payload) {
+        const noteTitle = payload.notification.title;
+        const noteOptions = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(noteTitle, noteOptions);
+    });
+    
+    
+    
+   // Hi Charts  
+   @auth
+   @php 
+   if(@auth()->user()->usermanagement->account_type==2 || @auth()->user()->usermanagement->account_type==4)
+   {
+      $project=DB::table('projects')->where('status','1')->where('auditee_id',auth()->user()->usermanagement->company_id)->orderBy('id','DESC')->get()->first();
+      if(!empty($project))
+      {
+         if(Route::currentRouteName() == "project_report"):
+            $m_projectid = Crypt::decrypt(Request::segment(2));
+         else:
+            $m_projectid = $project->id;
+         endif;
+         $chart_d2=array();
+    
+         $getdata=DB::table('observation_images')->join("evaluations_list","evaluations_list.el_id","=","observation_images.observation_id")->where('evaluations_list.ass_id',$m_projectid)->where('evaluations_list.elevel',2)->where('evaluations_list.description','!=','Not Applicable')->get()->toArray();
+         $zstatus=0;
+         $ostatus=0;
+         $cstatus=0;
+         $rstatus=0;
+         foreach($getdata as $d)
+         {  
+            if($d->document_status==0)
+            {
+               $zstatus++;
+            }
+            else if($d->document_status==1)
+            {
+               $cstatus++;
+            }
+            else if($d->document_status==2)
+            {
+               $rstatus++;
+            }
+         }
+         $chart_d2[]=array("name"=>'Pending ('.$zstatus.')','y'=>$zstatus,'color'=>'#ffc107');
+         $chart_d2[]=array("name"=>'Reject ('.$rstatus.')','y'=>$rstatus,'color'=>'#be1e2d');
+         $chart_d2[]=array("name"=>'Approved ('.$cstatus.')','y'=>$cstatus,'color'=>'#4caf50');
+   @endphp
+
+   @php  
+   $depart_chart=array();
+   $dep_title=array();
+   $getdata=DB::select('SELECT dep.department,ts.title,(select count(tasks.id) from tasks  left join departments on departments.id=tasks.department_id WHERE tasks.status=ts.id and  tasks.project_id='.$m_projectid.' and departments.id=dep.id) as tt,(select count(project_planning.id) from project_planning  left join departments on departments.id=project_planning.department_id WHERE project_planning.status=ts.id and  project_planning.project_id='.$m_projectid.' and departments.id=dep.id) as tpt  from task_statuses as ts,departments as dep WHERE dep.company_id = "'.auth()->user()->usermanagement->company_id.'" AND dep.belong_to = "'.auth()->user()->usermanagement->belong_to.'"');
+
+   foreach($getdata as $r)
+   {
+        if(in_array($r->department,$dep_title))
+        {
+            
+        }
+        else
+        {
+           $dep_title[]     =    $r->department;
+        }
+        
+         $status_array[$r->title][]=$r->tt+$r->tpt;
+   }
+  
+    foreach($status_array as $title=>$sl)
+    {
+        if($title=='Pending')
+        {
+            $depart_chart[]=array('name'=>$title,'data'=>$sl,'color'=>'#ffc107');
+        }
+        else if($title=='In Progress')
+        {
+            $depart_chart[]=array('name'=>$title,'data'=>$sl,'color'=>'rgb(39, 167, 203)');
+        }
+         else if($title=='Completed')
+        {
+            $depart_chart[]=array('name'=>$title,'data'=>$sl,'color'=>'#4caf50');
+        }
+    }
+    @endphp
+
+    window.onload=function(){
+    Highcharts.chart('dep_points', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Departments Bases Action Point Status '
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+         categories: <?= json_encode($dep_title) ?>,
+        labels: {
+                formatter: function () {
+                    return this.value
+                }
+            },
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Departments Bases Action Point Status'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0,
+            borderWidth: 0,
+             dataLabels: {
+                enabled: true
+            }
+            
+        },
+        series: {
+            cursor: 'pointer',
+            point: {
+                events: {
+                    click: function () {
+                  
+                      
+                    }
+                }
+            }
+        }
+    },
+    series: <?= json_encode($depart_chart) ?>
+});
+        
+             
+     
+@php     
+   $chart_d3=array();
+   $getdata=DB::table('task_statuses')->where('title','!=','Approved')->where('title','!=','Rejected')->get()->toArray();
+    
+   foreach($getdata as $d)
+   {
+      $cgetdata=DB::table('tasks')->where(array('status'=>$d->id,'project_id'=>$m_projectid))->count();
+      $countvalue=$cgetdata;
+      $cgetdata2=DB::table('project_planning')->where(array('status'=>"$d->id",'project_id'=>$m_projectid))->count();
+      $countvalue+=$cgetdata2;     
+      $chart_d3[]=array("name"=>$d->title."(".$countvalue.")",'y'=>$countvalue);
+   }   
+@endphp
+
+     Highcharts.chart('tasks_points', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Total Action Points Status'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: ''
+                }
+            },
+            plotOptions: {
+                pie: {
+                     colors: [
+                             '#ffc107', 
+                             '#27a7cb', 
+                             '#00C56B',
+                             '#ef5350',
+                             '#2b92ae'
+                           ],
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                   dataLabels: {
+                        enabled: true
+                    },
+                    showInLegend: false
+                }
+            },
+            series: [{
+                name: 'Tasks',
+                colorByPoint: true,
+                data: <?= json_encode($chart_d3) ?>
+            }]
+        });
+
+
+   // Departments Bases Action Point Status
+     Highcharts.chart('chart_points', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Evidence Points Status'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: ''
+                }
+            },
+            plotOptions: {
+                pie: {
+                     colors: [
+                             '#ffc107', 
+                             '#27a7cb', 
+                             '#00C56B',
+                             '#ef5350',
+                             '#2b92ae'
+                           ],
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                   dataLabels: {
+                        enabled: true
+                    },
+                    showInLegend: false
+                }
+            },
+            series: [{
+                name: 'Tasks',
+                colorByPoint: true,
+                data: <?= json_encode($chart_d2) ?>
+            }]
+        });
+   
+   // Requirement Wise Compliance Status
+
+ @php 
+    $reqlist=array();
+    $reqtitles=array();
+    $reqresult=array();
+    $reqkesy=array('Compliance','Not Compliance','Not Applicable');
+    for($j=1;$j<=12;$j++)
+    {
+      $reqtitles[]='Req'.$j;
+      if($j==1)
+      {
+        $com=DB::select('SELECT COUNT(IF(audit_observations.clouse_status = 1 || audit_observations.clouse_status = 2,audit_observations.clouse_status,NULL)) AS Compliance, COUNT(IF(audit_observations.clouse_status = 4 || audit_observations.clouse_status = 5,audit_observations.clouse_status,NULL)) AS NotCompliance, COUNT(evaluations_list.el_id) - COUNT(audit_observations.evaluation_id) AS NullNotCompliance, COUNT(IF(evaluations_list.description = "Not Applicable",evaluations_list.description,NULL)) AS NotApplicable FROM `evaluations_list` LEFT JOIN projects ON projects.id = evaluations_list.ass_id LEFT JOIN audit_observations ON audit_observations.evaluation_id = evaluations_list.el_id WHERE projects.id = '.$m_projectid.' AND evaluations_list.elevel=2');
+        $com=$com[0];
+        $reqlist['Compliance'][]=$com->Compliance;
+        $reqlist['Not Compliance'][]=$com->NotCompliance;
+        $reqlist['Not Applicable'][]=$com->NotApplicable;
+      }
+      else
+      {
+        $reqlist['Compliance'][]=0;
+        $reqlist['Not Compliance'][]=0;
+        $reqlist['Not Applicable'][]=0;
+      }
+    }
+    
+     
+        
+    $reqresult[]=array('name'=>'Compliant','data'=>$reqlist['Compliance'],'color'=>'#4caf50');
+    $reqresult[]=array('name'=>'Not Compliant','data'=>$reqlist['Not Compliance'],'color'=>'#be1e2d');
+    $reqresult[]=array('name'=>'Not Applicable','data'=>$reqlist['Not Applicable'],'color'=>'#6c757d');
+    
+    @endphp
+  
+    Highcharts.chart('req_points', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Requirement Wise Compliance Status '
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+         categories: <?= json_encode($reqtitles) ?>,
+        labels: {
+                formatter: function () {
+                    return this.value
+                }
+            },
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Requirement Wise Compliance Status'
+        }
+    },
+    tooltip: {
+        headerFormat: '<b style="font-size:12px">{point.key}</b>',
+        pointFormat: '<br><b style="color:{series.color};padding:0">{series.name}: </b>' +
+            '<b style="padding:0"><b>{point.y}</b>',
+        footerFormat: '',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0,
+            borderWidth: 0,
+             dataLabels: {
+                enabled: true
+            }
+            
+        },
+        series: {
+            cursor: 'pointer',
+            point: {
+                events: {
+                    click: function () {
+                  
+                      
+                    }
+                }
+            }
+        }
+    },
+    series: <?= json_encode($reqresult) ?>
+});
+
+ }
+
+
+@php }else{ @endphp
+   $(document).ready(function(){
+      $("#chart_points").html('<div class="text-center"><img src="{{ asset(MyApp::GRAPH_IMG) }}" alt="" width="30%"><h2 style="font-size:22px;margin-top:10px;">Graph Data Empty</h2></div>');
+      $("#tasks_points").html('<div class="text-center"><img src="{{ asset(MyApp::GRAPH_IMG) }}" alt="" width="30%"><h2 style="font-size:22px;margin-top:10px;">Graph Data Empty</h2></div>');
+      $("#dep_points").html('<div class="text-center"><img src="{{ asset(MyApp::GRAPH_IMG) }}" alt="" width="30%"><h2 style="font-size:22px;margin-top:10px;">Graph Data Empty</h2></div>');
+      $("#req_points").html('<div class="text-center"><img src="{{ asset(MyApp::GRAPH_IMG) }}" alt="" width="30%"><h2 style="font-size:22px;margin-top:10px;">Graph Data Empty</h2></div>');
+   });
+@php } } @endphp
+@endauth
+</script>
 </body>
 </html>

@@ -26,7 +26,12 @@ class UserManagementController extends Controller
         else:
             $userID = Auth::user()->id;    
         endif;
-    	$user['user'] = DB::select('call GetAllUsers('.$userID.')');
+        if(Auth::user()->usermanagement->account_type == 2 || Auth::user()->usermanagement->account_type == 3):
+        	$user['user'] = DB::select('SELECT * FROM user_management INNER JOIN users ON users.id=user_management.user_id WHERE user_management.company_id = "'.Auth::user()->usermanagement->company_id.'" AND user_management.belong_to = "'.Auth::user()->usermanagement->belong_to.'" AND user_management.user_id <> "'.Auth::user()->usermanagement->user_id.'"');
+        else:
+        	// $user['user'] = DB::select('call GetAllUsers('.$userID.')');
+            $user['user'] = DB::select('SELECT * FROM user_management INNER JOIN users ON users.id=user_management.user_id WHERE user_management.company_id = "'.Auth::user()->usermanagement->company_id.'" AND user_management.location_id = "'.Auth::user()->usermanagement->location_id.'" AND user_management.user_id <> "'.Auth::user()->usermanagement->user_id.'"');
+        endif;
         return view('pages.user_management',$user);
     }
 
@@ -52,12 +57,14 @@ class UserManagementController extends Controller
             if ($request->hiddenId == "") {
                 DB::beginTransaction();
                 try {  
-                $user = DB::select('call InsertUsers(?,?,?,?)',
+                
+                $user = DB::select('call InsertUsers(?,?,?,?,?)',
                 [
                     $request->name,
                     $request->email,
-                    Hash::make('secureism123'),
-                    Str::random(10)
+                    Hash::make('!@#$%^&*()'),
+                    Str::random(10),
+                    EmailExpireTime(),
                 ]);
     
                 // Mail Send User Passwordd Setup 
@@ -81,7 +88,31 @@ class UserManagementController extends Controller
                     else:
                         $profile_image = $request->hiddenProfile;
                     endif;
-                    $data = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                    $roleData = get_role($request->role_id);
+                    if($roleData->type == 1):
+                        $accountType = 4;
+                    elseif($roleData->type == 2):
+                        $accountType = 5;
+                    elseif($roleData->type == 3):
+                        $accountType = 6;
+                    else:
+                        $accountType = 7;
+                    endif;
+
+                    // if(auth()->user()->usermanagement->role_id != 2 && auth()->user()->usermanagement->role_id != 3):
+                    //     if(Auth::user()->usermanagement->belong_to == 1):
+                    //         $belongTo = 1;
+                    //     endif;
+
+                    //     if(Auth::user()->usermanagement->belong_to == 2):
+                    //         $belongTo = 2;
+                    //     endif;
+                    // elseif(auth()->user()->usermanagement->role_id == 2):
+                    //     $belongTo = 1;
+                    // elseif(auth()->user()->usermanagement->role_id == 3):
+                    //     $belongTo = 2;
+                    // endif;
+                    $data = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                         [
                             $user[0]->LAST_ID,
                             $request->name,
@@ -94,7 +125,9 @@ class UserManagementController extends Controller
                             $request->department_id,
                             $request->role_id,
                             $request->status,
-                            "",
+                            $profile_image,
+                            $accountType,
+                            Auth::user()->usermanagement->belong_to,
                             Auth::user()->id,
                         ]);
                     DB::commit();
@@ -172,35 +205,53 @@ class UserManagementController extends Controller
 
     public function create_password(Request $request)
     {
+        if(checkLinkExpire($request->id) < date('Y-m-d H:i:s')):
+            return Redirect::back();
+        else:
+            $request->validate([
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)
+                        ->mixedCase()
+                        ->letters()
+                        ->numbers()
+                        ->symbols()
+                        // ->uncompromised(),
+                ],
+                'email'     =>  'required|email',
+            ]);
+            // Password Format (Zeeshan123@)
+            $token = Crypt::decrypt($request->token);
+            $user = DB::table('users')->where('id',$request->id)->where('email',$request->email)->where('remember_token',$token)->first();
+            // dd($user);
+            if($user->email_verified_at == NULL):
+                // DB::enableQueryLog();
+                $data = DB::table('users')->where('id',$request->id)->update([
+                    'password'			=>	Hash::make($request->password),
+                    'email_verified_at'	=>	date("Y-m-d h:i:s"),
+                ]);
+                // dd(DB::getQueryLog());
+                return redirect()->route('login')->with('success','Password created successfully');
+            else:
+                return redirect()->route('login')->with('error','Token has been expired');
+            endif;    
+        endif;    
+    }
+
+    public function passwordValidation(Request $request)
+    {
         $request->validate([
             'password' => [
                 'required',
-                'confirmed',
                 Password::min(8)
                     ->mixedCase()
                     ->letters()
                     ->numbers()
                     ->symbols()
-                    ->uncompromised(),
+                    // ->uncompromised(),
             ],
-            'email'     =>  'required|email',
-            // 'password'  => 'required|string|min:8|confirmed|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
         ]);
-        // Password Format (Zeeshan123@)
-        $token = Crypt::decrypt($request->token);
-        $user = DB::table('users')->where('id',$request->id)->where('email',$request->email)->where('remember_token',$token)->first();
-        // dd($user);
-        if($user->email_verified_at == NULL):
-            // DB::enableQueryLog();
-            $data = DB::table('users')->where('id',$request->id)->update([
-	    		'password'			=>	Hash::make($request->password),
-	    		'email_verified_at'	=>	date("Y-m-d h:i:s"),
-	    	]);
-            // dd(DB::getQueryLog());
-            return redirect()->route('login')->with('success','Password created successfully');
-        else:
-            return redirect()->route('login')->with('error','Token has been expired');
-        endif;    
     }
 
     public function profile_update(Request $request)

@@ -141,9 +141,10 @@
     // Get Company Locations 
     jQuery("#company_id").on('change',function(){
         var id = $(this).val();
+        var uid = $('option:selected', this).attr('data-u-id');
         if(id != ""){
             $.ajax({
-                url:"get_locations_by_companyID/"+id,
+                url:"get_locations_by_companyID/"+id+"/"+uid,
                 type : 'GET',
                 dataType: 'html',
                 success:function(data) {

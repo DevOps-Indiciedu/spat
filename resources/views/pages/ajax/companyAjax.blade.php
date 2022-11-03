@@ -40,7 +40,7 @@
                             <span class="text-danger" id="companyEmailErr"></span>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="company_website">Company Website</label>
                             <input type="url" class="form-control" id="company_website" name="company_website" value="" placeholder="">
@@ -48,15 +48,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group"> 
-                            <label for="company_standard">Company Standard <span class="text-danger">*</span></label> 
-                            {!! company_standards() !!}
-                            <span class="text-danger" id="companyStandardsErr"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group"> 
-                            <label for="company_max_users">Company Maximum Users</label> 
-                            <input type="number" class="form-control" id="company_max_users" name="company_max_users" value="0" placeholder="" />
+                            <label for="company_type">Company Type <span class="text-danger">*</span></label> 
+                            {!! company_types() !!}
+                            <span class="text-danger" id="companyTypeErr"></span>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -159,8 +153,7 @@
                 $("#company_phone").val(data[0].company_phone);
                 $("#company_email").val(data[0].company_email);
                 $("#company_website").val(data[0].company_website);
-                $("#company_standard_id").val(data[0].company_standard);
-                $("#company_max_users").val(data[0].company_max_users);
+                $("#company_type").val(data[0].company_type);
                 $("#company_address").val(data[0].company_address);
                 $("#hiddenId").val(data[0].id);
                 $("#hiddenUserId").val(data[0].user_id);
@@ -203,7 +196,7 @@
                 $("#companyContactNameErr").text(err.responseJSON.errors.company_contact_name);
                 $("#companyPhoneErr").text(err.responseJSON.errors.company_phone);
                 $("#companyEmailErr").text(err.responseJSON.errors.email);
-                $("#companyStandardsErr").text(err.responseJSON.errors.company_standard_id);
+                $("#companyTypeErr").text(err.responseJSON.errors.company_type);
                 
             }
         });

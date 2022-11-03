@@ -30,39 +30,40 @@ class TaskController extends Controller
     		'start_datetime'=>	'required',
     		'end_datetime'  =>	'required',
     		'user_id'       =>	'required',
-    		'priority'       =>	'required',
-    		'taskstatus_id'  =>	'required',
+    		'department_id' =>	'required',
     	]);
 
         if($request->hiddenId == ""):
-            $data = DB::select('call InsertTask(?,?,?,?,?,?,?,?,?,?,?,?)',
+            $data = DB::select('call InsertTask(?,?,?,?,?,?,?,?,?,?,?,?,?)',
             [
                 $request->project_id,
+                $request->department_id,
                 Crypt::decrypt($request->reqId),
                 $request->title,
                 $request->description,
-                $request->priority,
+                '1',
                 $request->user_id,
                 $request->start_datetime,
                 $request->end_datetime,
                 $request->end_datetime,
-                $request->taskstatus_id,
+                1,
                 0,
                 Auth::user()->id,
             ]);
         else: 
-            $data = DB::select('call UpdateTask('.$request->hiddenId.',?,?,?,?,?,?,?,?,?,?,?)',
+            $data = DB::select('call UpdateTask('.$request->hiddenId.',?,?,?,?,?,?,?,?,?,?,?,?)',
             [
                 $request->project_id,
+                $request->department_id,
                 Crypt::decrypt($request->reqId),
                 $request->title,
                 $request->description,
-                $request->priority,
+                '1',
                 $request->user_id,
                 $request->start_datetime,
                 $request->end_datetime,
                 $request->end_datetime,
-                $request->taskstatus_id,
+                1,
                 0,
             ]);
         endif;
@@ -101,6 +102,7 @@ class TaskController extends Controller
     public function edit($task_id)
     {
         $data = DB::SELECT('call EditTask('.$task_id.')');
+        // $data['depID'] = get_user($data[0]->assign_to)->department_id;
         return $data;
     }
 
@@ -118,7 +120,7 @@ class TaskController extends Controller
                     <td class="text-center">'.DMY($task->created_at).'</td>
                     <td class="text-center">'.get_taskStatus($task->status)->title.'</td>
                     <td class="text-center">
-                        <a href="#" data-id="'.$task->id.'" class="btn btn-warning edit_task" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
+                        <a href="#" data-id="'.$task->id.'" data-req-id="'.$reqID.'" class="btn btn-warning btn-sm edit_task" data-toggle="modal" data-target="#ObservationTaskModal">
                             Edit Task
                         </a>
                     </td>
@@ -127,4 +129,6 @@ class TaskController extends Controller
         endforeach;
         echo $output;
     }
+
+    
 }

@@ -83,9 +83,9 @@
     </div>
     <div class="container bootstrap snippets bootdey">
       <div class="btn-group btn-toggle" style="border: 1px solid black;border-radius:5px;"> 
-        <button class="btn {{  $btn1class }}   applevel{{ $level1->id }}" style="font-size: 10px;" id="app_btn{{ $level1->id }}" onclick="appView({{ $level1->id }})" type="button">Applicable</button>
+        <button class="btn btn-success applevel{{ $level1->id }}" style="font-size: 10px;" id="app_btn{{ $level1->id }}"  type="button">Applicable</button>
         <input type="checkbox" {{ $app_checkbox }} name='level[]' onclick="checkBoxChecked('.level{{ $level1->id }}');notcheckBoxChecked('.notlevel{{ $level1->id }}')" class="level{{ $level1->id }} " style="display: none" id="checkbox{{ $level1->id }}" value="{{ $level1->id }}">
-        <button type="button"  class="btn {{  $btn2class }}   notapplevel{{ $level1->id }} " style="font-size: 10px;" id="not_app_btn{{ $level1->id }}" onclick="notappView({{ $level1->id }})">Not Applicable</button>
+        <button type="button"  class="btn {{  $btn2class }}   notapplevel{{ $level1->id }} " style="font-size: 10px;" id="not_app_btn{{ $level1->id }}">Not Applicable</button>
         <input type="checkbox"   onclick="checkBoxChecked('.notlevel{{ $level1->id }}');notcheckBoxChecked('.level{{ $level1->id }}')" {{ $notapp_checkbox }} name='notlevel[]' class="notlevel{{ $level1->id }} " id="notcheckbox{{ $level1->id }}" value="{{ $level1->id }}" style="display: none">
       </div>
     </div>
@@ -95,6 +95,7 @@
   <div class="" id="card{{ $level1->id }}" style="margin:1%;display: {{ $carddisplay }};">
    @php  $getlevel2=DB::table('req_lists')->where(array("parent_id"=>$level1->id))->get()->toArray() @endphp
    @foreach($getlevel2 as $level2)
+   @if(empty($level2->req_no[4]) || !is_numeric($level2->req_no[4]))
    @php 
    $h_sub=DB::table('evaluations_list')->where(array("req_id"=>$level2->id,"ass_id" => Crypt::decrypt(Request::segment(2))))->get()->first(); 
    $btn1class='btn-secondary';
@@ -104,7 +105,7 @@
    $notapp_checkbox="checked";
    @endphp
    @if(!empty($h_sub) && $h_sub->description!='Not Applicable')
-   @php $btn1class='btn-danger';$btn2class='btn-secondary';$carddisplay="block";$app_checkbox="checked";$notapp_checkbox=""; @endphp
+   @php $btn1class='btn-success';$btn2class='btn-secondary';$carddisplay="block";$app_checkbox="checked";$notapp_checkbox=""; @endphp
    @endif
    @if(!empty($h_sub) && $h_sub->description=='Not Applicable')
    @php $btn1class='btn-secondary';$btn2class='btn-danger'; $carddisplay="none";$app_checkbox="";$notapp_checkbox="checked";@endphp
@@ -115,48 +116,15 @@
    </div>
    <div class="container bootstrap snippets bootdey">
      <div class="btn-group btn-toggle" style="border: 1px solid #f5f5f5;border-radius:5px;"> 
-     <button type="button" class="btn {{  $btn1class }}  applevel{{ $level1->id }} applevel{{ $level2->id }}" style="font-size: 10px;"  onclick="appView({{ $level2->id }})" id="app_btn{{ $level2->id }}" >Applicable</button>
+     <button type="button" class="btn {{  $btn1class }} applevel{{ $level1->id }} applevel{{ $level2->id }}" style="font-size: 10px;" >Applicable</button>
        <input type="checkbox" name='level[{{ $level1->id }}][]' id="checkbox{{ $level2->id }}" style="display: none" onclick="checkBoxChecked('.level{{ $level2->id }}');notcheckBoxChecked('.notlevel{{ $level2->id }}')" class="level{{ $level1->id }} level{{ $level2->id }} " {{ $app_checkbox }}  value="{{ $level2->id }}">
-       <button type="button" class="btn {{  $btn2class }}   notapplevel{{ $level1->id }} notapplevel{{ $level2->id }}" style="font-size: 10px;"  id="not_app_btn{{ $level2->id }}" onclick="notappView({{ $level2->id }})">Not Applicable</button>
+       <button type="button" class="btn {{  $btn2class }}   notapplevel{{ $level1->id }} notapplevel{{ $level2->id }}" style="font-size: 10px;">Not Applicable</button>
        <input type="checkbox" id="notcheckbox{{ $level2->id }}" onclick="checkBoxChecked('.notlevel{{ $level2->id }}');notcheckBoxChecked('.level{{ $level2->id }}')"  class="notlevel{{ $level1->id }} notlevel{{ $level2->id }} " value="{{ $level2->id }}" name='notlevel[]' {{ $notapp_checkbox }} style="display: none" >
      </div>
    </div>
  </div>
 
- <div class="card-body p-0">
-  <div class="" id="card{{ $level2->id }}" style="margin:1%;display: {{ $carddisplay }};">
-   @php  $getlevel3=DB::table('req_lists')->where(array("parent_id"=>$level2->id))->where('req_no','!=','guidence')->get()->toArray() @endphp
-   @foreach($getlevel3 as $level3)
-   @php 
-   $h_sub = DB::table('evaluations_list')->where(array("req_id"=>$level3->id,"ass_id" => Crypt::decrypt(Request::segment(2))))->get()->first(); 
-   $btn1class='btn-secondary';
-   $btn2class='btn-danger';
- 
-   $app_checkbox="";
-   $notapp_checkbox="checked";
-   @endphp
-   @if(!empty($h_sub) && $h_sub->description!='Not Applicable')
-   @php $btn1class='btn-danger';$btn2class='btn-secondary';$app_checkbox="checked";$notapp_checkbox=""; @endphp
-   @endif
-   @if(!empty($h_sub) && $h_sub->description=='Not Applicable')
-   @php $btn1class='btn-secondary';$btn2class='btn-danger'; $app_checkbox="";$notapp_checkbox="checked";@endphp
-   @endif
-   <div class="iq-card-header d-flex justify-content-between" style="background-color: #f5f5f5;">
-    <div class="iq-header-title col-10 p-0">
-     <div class="card-title" style="font-size: 14px;color: black;"><b>{{ $level3->req_no }}</b> {{ $level3->description }}</div>
-   </div>
-   <div class="container bootstrap snippets bootdey">
-     <div class="btn-group btn-toggle" style="border: 1px solid #f5f5f5;border-radius:5px;"> 
-       <button type="button" class="btn {{  $btn1class }} applevel{{ $level1->id }} applevel{{ $level2->id }} applevel{{ $level3->id }}" style="font-size: 10px;" onclick="appView({{ $level3->id }})" "  id="app_btn{{ $level3->id }}" >Applicable</button>
-       <input type="checkbox" {{ $app_checkbox }} name='level[{{ $level1->id }}][{{ $level2->id }}][]' id="checkbox{{ $level3->id }}" onclick="checkBoxChecked('.level{{ $level3->id }}');notcheckBoxChecked('.notlevel{{ $level3->id }}')" style="display: none" class="level{{ $level3->id }} level{{ $level2->id }} level{{ $level1->id }}"  value="{{ $level3->id }}">
-       <button type="button" class="btn {{  $btn2class }} active notapplevel{{ $level1->id }} notapplevel{{ $level2->id }} notapplevel{{ $level3->id }}" style="font-size: 10px;" onclick="notappView({{ $level3->id }})" id="not_app_btn{{ $level3->id }}" >Not Applicable</button>
-       <input type="checkbox" {{ $notapp_checkbox }} id="notcheckbox{{ $level3->id }}" onclick="checkBoxChecked('.notlevel{{ $level3->id }}');notcheckBoxChecked('.level{{ $level3->id }}')" name='notlevel[]' class="notlevel{{ $level1->id }} notlevel{{ $level2->id }} notlevel{{ $level3->id }}" style="display: none" value="{{ $level3->id }}" >
-     </div>
-   </div>
- </div>
- @endforeach 
-</div>
-</div>
+@endif
 @endforeach 
 </div>
 @endforeach 
@@ -234,8 +202,8 @@ function submit_req_list()
 function appView(id)
 {
   
-  $('.applevel'+id).addClass(' btn-danger');
-  $('.notapplevel'+id).removeClass(' btn-danger');
+  $('.applevel'+id).addClass(' btn-success');
+  $('.applevel'+id).addClass(' btn-success');
   $('.applevel'+id).removeClass(' btn-secondary');
   $('.notapplevel'+id).addClass(' btn-secondary');
   $('#checkbox'+id).click();
@@ -244,8 +212,8 @@ function appView(id)
 function notappView(id)
 {
   
-  $('.applevel'+id).removeClass(' btn-danger');
-  $('.notapplevel'+id).addClass(' btn-danger');
+  $('.applevel'+id).addClass(' btn-success');
+  $('.applevel'+id).addClass(' btn-success');
   $('.applevel'+id).addClass(' btn-secondary');
   $('.notapplevel'+id).removeClass(' btn-secondary');
   $('#notcheckbox'+id).click();

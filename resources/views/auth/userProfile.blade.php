@@ -71,6 +71,7 @@
                                 <label for="new_password">New Password</label>
                                 <br>
                                 <small>Password Format: Lengtgh Min 8 character , 1 Upper Letter , 1 Lower Letter , 1 Symbol , 1 Digit</small>
+                                <span class="password-validate text-danger" style="font-weight:500;font-size: 13px;display: flex;flex-direction: column-reverse; position: relative;" role="alert"></span>
                                 <input type="password" id="new_password" name="new_password" class="form-control">
                                 <span id="passErr" class="text-danger"></span>
                             </div>
@@ -88,5 +89,46 @@
 
 
 @include('pages.ajax.userAjax')
+<script>
+    $("#form_loader").css("display","none !important");
+    $("#new_password").on("keyup",function(){
+        var pass = $(this).val();
+        if(pass != ""){
+            $.ajax({
+                url:"{{ route('password-validation') }}",
+                type : 'POST',
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    'password' : pass
+                },
+                success:function(data) {
+                    if(data == "")
+                    {
+                        $(".password-validate").removeClass('text-danger');
+                        $(".password-validate").addClass('text-success');
+                        $(".password-validate").text('Password Accepted');
+                        $(".password-validate").css({"top": "36px", "left": "80%"});
+                    }
+                },error:function(err)
+                {
+                    $(".password-validate").removeClass('text-success');
+                    $(".password-validate").addClass('text-danger');
+                    // $(".password-validate").text('Password Accepted');
+                    $(".password-validate").css({"top": "", "left": ""});
 
+                    $(".password-validate").html("<li>"+err.responseJSON.errors.password[0]+"</li><li>"+err.responseJSON.errors.password[1]+"</li><li>"+err.responseJSON.errors.password[2]+"</li><li>"+err.responseJSON.errors.password[3]+"</li>");
+
+                    // $(".password-validate > li:contains(undefined)").contents().filter(function () {
+                    //     return $(this).parent("li");
+                    // }).remove();
+                    $(".password-validate > li:contains(undefined)").filter(function () {
+                        return $(this).parent("li");
+                    }).remove();
+                }
+            });
+        }else{
+            // $("#loc_data").html("<select class='form-control'><option value=''>Select Location</option></select>");
+        }
+    });
+</script>
 @endsection

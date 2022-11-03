@@ -201,9 +201,10 @@
     // Get Company => Locations 
     jQuery("#company_id").on('change',function(){
         var id = $(this).val();
+        var uid = $('option:selected', this).attr('data-u-id');
         if(id != ""){
             $.ajax({
-                url:"get_locations_by_companyID/"+id,
+                url:"get_locations_by_companyID/"+id+"/"+uid,
                 type : 'GET',
                 dataType: 'html',
                 success:function(data) {
@@ -263,10 +264,12 @@
         });
     });
 
-     // Triggers 
-     jQuery("#company_id").trigger('change');
-    setTimeout(function() { 
-        $("#location_id").val(data[0].location_id);
-    }, 500);
+    $(".content-page").on('click','.addUserModal',function(e){
+        // Triggers 
+        jQuery("#company_id").trigger('change');
+        setTimeout(function() { 
+            $("#location_id").val(data[0].location_id);
+        }, 500);
+    });
  
 </script>

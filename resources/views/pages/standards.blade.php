@@ -38,6 +38,9 @@
                                         <a href="{{ route('view_requirements') }}" class="btn btn-dark">
                                             View Details
                                         </a>
+                                        <a href="{{ url('template'.'/'.Crypt::encrypt($data->id)) }}" class="btn btn-danger">
+                                            Add Task
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach 

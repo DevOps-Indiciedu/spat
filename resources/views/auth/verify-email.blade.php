@@ -1,7 +1,31 @@
+<title>Password Setup | {{ config('app.name', 'SPAT') }}</title>
+<link rel="icon" href="https://secureism.com/wp-content/uploads/2021/04/SecureismlogoFavi.png" sizes="32x32" />
 <!-- Bootsyrap -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <!-- Login CSS -->
-    <link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'login.css') }}">
+<!-- Login CSS -->
+<link rel="stylesheet" href="{{ asset(MyApp::ASSET_STYLE.'login.css') }}">
+
+@if(checkLinkExpire(Request::segment(3)) < date('Y-m-d H:i:s'))
+<style>
+    h1{
+        font-size: 40px;
+        margin-top: 15px;
+        font-weight: 600;
+    }
+    
+</style>
+<div id="content-page" class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 text-center mt-4">
+            <br><br>
+            <img src="{{ asset(MyApp::EXPIRE_IMG) }}" alt="" width="300" style="margin-top:150px;">
+            <h1 class="text-danger">Link Expired</h1>
+            </div>
+        </div>
+    </div>
+</div>
+@else
 
 <style>
     .backImg{
@@ -33,6 +57,8 @@
                     @endif
                     <form action="{{ route('create-password') }}" method="POST">
                         @csrf
+                        <span class="password-validate text-danger" style="font-weight:500;font-size: 13px;display: flex;flex-direction: column-reverse; position: relative;" role="alert"></span>
+
                         <input type="hidden" name="token" value="{{ Request::segment(2) }}">
                         <input type="hidden" name="id" value="{{ Request::segment(3) }}">
                         <input id="email" placeholder="Email" type="hidden" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ get_user(Request::segment(3))->email }}" required autocomplete="email" readonly>
@@ -42,14 +68,14 @@
                             </span>
                         @enderror
                         <br>
-                        <input id="password" placeholder="New Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                        <input id="password" placeholder="New Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="off">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                         <br>
-                        <input id="password-confirm" placeholder="Confirm Password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <input id="password-confirm" placeholder="Confirm Password" type="password" class="form-control" name="password_confirmation" required autocomplete="off">
                         <br>
                         <button _ngcontent-att-c159="" class="button btn btn-outline-dark text-center mb-2 lbtn">{{ __('Create Password') }}</button>
                     </form>
@@ -140,3 +166,46 @@
         </div>
     </div>
 </section>
+<script src="{{ asset(MyApp::ASSET_SCRIPT.'jquery.min.js') }}"></script>
+<script>
+    $("#password").on("keyup",function(){
+        var pass = $(this).val();
+        if(pass != ""){
+            $.ajax({
+                url:"{{ route('password-validation') }}",
+                type : 'POST',
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    'password' : pass
+                },
+                success:function(data) {
+                    if(data == "")
+                    {
+                        $(".password-validate").removeClass('text-danger');
+                        $(".password-validate").addClass('text-success');
+                        $(".password-validate").text('Password Accepted');
+                        $(".password-validate").css({"top": "58px", "left": "69%"});
+                    }
+                },error:function(err)
+                {
+                    $(".password-validate").removeClass('text-success');
+                    $(".password-validate").addClass('text-danger');
+                    // $(".password-validate").text('Password Accepted');
+                    $(".password-validate").css({"top": "", "left": ""});
+
+                    $(".password-validate").html("<li>"+err.responseJSON.errors.password[0]+"</li><li>"+err.responseJSON.errors.password[1]+"</li><li>"+err.responseJSON.errors.password[2]+"</li><li>"+err.responseJSON.errors.password[3]+"</li>");
+
+                    // $(".password-validate > li:contains(undefined)").contents().filter(function () {
+                    //     return $(this).parent("li");
+                    // }).remove();
+                    $(".password-validate > li:contains(undefined)").filter(function () {
+                        return $(this).parent("li");
+                    }).remove();
+                }
+            });
+        }else{
+            // $("#loc_data").html("<select class='form-control'><option value=''>Select Location</option></select>");
+        }
+    });
+</script>
+@endif

@@ -751,7 +751,7 @@ Simple From Wizard
 .steps { font-size: 20px; color: #777D74; font-weight: normal; text-align: right }
 #top-tab-list { margin: 0 -10px 60px; overflow: hidden; color: #777D74; }
 #top-tab-list .active { color: #be1e2d; }
-#top-tab-list li { list-style-type: none; font-size: 18px; width: 25%; float: left; text-align: left; position: relative; font-weight: 400 }
+#top-tab-list li { list-style-type: none; font-size: 18px; width: 33%; float: left; text-align: left; position: relative; font-weight: 400 }
 #top-tab-list li i { display: inline-block; text-align: center; height: 50px; width: 50px; line-height: 50px; font-size: 20px; border-radius: 50%; margin: 0 15px 0 0; color: #ffffff; background: #be1e2d; }
 #top-tab-list li.active a { color: #fff; background: #be1e2d; }
 #top-tab-list li.active.done a { background: #00ca00; }
@@ -1275,7 +1275,7 @@ table.dataTable thead th, table.dataTable thead td{
   border: 1px solid red;
   padding: 2px;
   position: relative;
-  left: -10px;
+  left: 0px;
 
 }
 

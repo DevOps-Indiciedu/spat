@@ -11,7 +11,7 @@
                     <div class="iq-header-title">
                         <h4 class="card-title">{{ __('User Management') }}</h4>
                     </div>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
+                    <button type="button" class="btn btn-danger addUserModal" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
                         {{ __('Add User') }}
                     </button>
                 </div>
@@ -40,14 +40,19 @@
                             @foreach ($user as $data)
                             <tr id="row-{{ $data->id }}" class="text-center">
                                 <td>{{ $i++ }}</td>
-                                <td>
-                                    @if($data->profile_image)
+                                @if($data->profile_image)
+                                    <td class="text-left">
                                         <a href="{{ asset(MyApp::PROFILE.$data->profile_image) }}" target="_blank">
                                             <img src="{{ asset(MyApp::PROFILE.$data->profile_image) }}" alt="{{ $data->profile_image }}" class="userImage">
                                         </a>
-                                    @endif
-                                    {{ $data->name }}
-                                </td>
+                                        &nbsp;&nbsp;
+                                        {{ $data->name }}
+                                    </td>
+                                @else
+                                    <td>
+                                        {{ $data->name }}
+                                    </td>
+                                @endif
                                 <td>{{ $data->email }}</td>
                                 <td>{{ $data->phone }}</td>
                                 <td>{{ get_designation($data->designation_id)->title }}</td>

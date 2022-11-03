@@ -11,7 +11,7 @@
                     <div class="iq-header-title">
                         <h4 class="card-title">{{ __('Task Managment') }}</h4>
                     </div>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenteredScrollable">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#TaskAddEdit">
                         {{ __('Add Task') }}
                     </button>
                 </div>

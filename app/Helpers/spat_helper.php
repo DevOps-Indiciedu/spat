@@ -2,6 +2,7 @@
 
     use Illuminate\Support\Facades\DB;
 	use Illuminate\Support\Facades\File;
+	use Illuminate\Support\Facades\Crypt;
 
 	function company_standards($select = 0)
     {
@@ -47,7 +48,7 @@
 				if ($select == $row->id) :
 					$selected = "selected";
 				endif;	
-				$output .= "<option value='".$row->id."' ".$selected.">".$row->company_name."</option>";
+				$output .= "<option value='".$row->id."' data-u-id='".Crypt::encrypt($row->user_id)."' ".$selected.">".$row->company_name."</option>";
 			endforeach;	
 
 		$output .= "</select>";
@@ -65,6 +66,27 @@
 		return $company;
     }
 
+	function company_types($select = 0)
+    {
+        $output = '';
+		$output .= "<select class='form-control' name='company_type' id='company_type'>";
+		$output .= "<option value=''>Select Type</option>";	
+		        $spselected = "";
+		        $mrselected = "";
+				if ($select == 'Service Provider') :
+					$spselected = "selected";
+				endif;
+				if ($select == 'Merchant') :
+					$mrselected = "selected";
+				endif;
+				$output .= "<option value='1' ".$spselected.">Service Provider</option>";
+		        $output .= "<option value='2' ".$mrselected.">Merchant</option>";
+
+		$output .= "</select>";
+
+		return $output;
+    }
+
 	function assessors($select = 0)
     {
 		if(Auth::user()->system_admin == 1 || auth()->user()->usermanagement->role_id == 1):
@@ -80,7 +102,7 @@
 				if ($select == $row->id) :
 					$selected = "selected";
 				endif;	
-				$output .= "<option value='".$row->id."' ".$selected.">".$row->assessor_lead_name."</option>";
+				$output .= "<option value='".$row->id."' data-u-id='".Crypt::encrypt($row->user_id)."' ".$selected.">".$row->company_name."</option>";
 			endforeach;	
 
 		$output .= "</select>";
@@ -98,14 +120,20 @@
 
 	function location_dropdown($select = 0,$where = "")
     {
+		if(Auth::user()->system_admin == 1 || auth()->user()->usermanagement->role_id == 1):
+			$company = DB::table('locations')->get();
+		else:
+			if($where != ""):
+				$company = DB::table('locations')->where($where)->where("added_by",auth()->user()->id)->get();	
+			else:			
+				$company = DB::table('locations')->where("added_by",auth()->user()->id)->get();	
+			endif;
+		endif;	
+
         $output = '';
 		$output .= "<select class='form-control' name='location_id' id='location_id'>";
 		$output .= "<option value=''>Select Location</option>";	
-			if($where != ""):
-				$company = DB::table('locations')->where($where)->get();	
-			else:			
-				$company = DB::table('locations')->get();	
-			endif;
+			
 				foreach ($company as $row) :
 				$selected = '';
 				if ($select == $row->id) :
@@ -128,16 +156,20 @@
 
 	function department_dropdown($select = 0,$where = "")
     {
-		
+		if(Auth::user()->system_admin == 1 || auth()->user()->usermanagement->role_id == 1):
+			$company = DB::table('departments')->get();
+		else:
+			if($where != ""):
+				$company = DB::table('departments')->where($where)->where("added_by",auth()->user()->id)->get();	
+			else:			
+				$company = DB::table('departments')->where("added_by",auth()->user()->id)->get();	
+			endif;
+		endif;	
+
         $output = '';
 		$output .= "<select class='form-control' name='department_id' id='department_id'>";
 		$output .= "<option value=''>Select Department</option>";	
-			if($where != ""):
-				$company = DB::table('departments')->where($where)->get();	
-			else:			
-				$company = DB::table('departments')->get();	
-			endif;
-				foreach ($company as $row) :
+			foreach ($company as $row) :
 				$selected = '';
 				if ($select == $row->id) :
 					$selected = "selected";
@@ -160,28 +192,26 @@
 	function user_role_dropdown($select = 0,$where = "")
     {
 		if(Auth::user()->system_admin == 1):
-			$company = DB::table('user_roles')->get();	
+			$company = DB::table('user_roles')->get();
 		else:
-			$company = DB::table('user_roles')->where('added_by',auth()->user()->id)->get();	
-		endif;
+			if($where != ""):
+				$company = DB::table('user_roles')->where($where)->where("added_by",auth()->user()->id)->get();	
+			else:			
+				$company = DB::table('user_roles')->where("added_by",auth()->user()->id)->get();	
+			endif;
+		endif;	
+
         $output = '';
 		$output .= "<select class='form-control' name='role_id' id='role_id'>";
 		$output .= "<option value=''>Select Role</option>";	
-			// if($where != ""):
-			// 	$company = DB::table('user_roles')->where($where)->get();	
-			// else:			
-			// 	$company = DB::table('user_roles')->get();	
-			// endif;
-				foreach ($company as $row) :
+			foreach ($company as $row) :
 				$selected = '';
 				if ($select == $row->id) :
 					$selected = "selected";
 				endif;	
 				$output .= "<option value='".$row->id."' ".$selected.">".$row->role."</option>";
 			endforeach;	
-
 		$output .= "</select>";
-
 		return $output;
     }
 
@@ -195,19 +225,19 @@
 	function designation_dropdown($select = 0,$where = "")
     {
 		if(Auth::user()->system_admin == 1):
-			$company = DB::table('designations')->get();	
+			$company = DB::table('designations')->get();
 		else:
-			$company = DB::table('designations')->where('added_by',auth()->user()->id)->get();	
+			if($where != ""):
+				$company = DB::table('designations')->where($where)->where("added_by",auth()->user()->id)->get();	
+			else:			
+				$company = DB::table('designations')->where("added_by",auth()->user()->id)->get();	
+			endif;
 		endif;
+
         $output = '';
 		$output .= "<select class='form-control' name='designation_id' id='designation_id'>";
 		$output .= "<option value=''>Select Designation</option>";	
-			// if($where != ""):
-			// 	$company = DB::table('designations')->where($where)->get();	
-			// else:			
-			// 	$company = DB::table('designations')->get();	
-			// endif;
-				foreach ($company as $row) :
+			foreach ($company as $row) :
 				$selected = '';
 				if ($select == $row->id) :
 					$selected = "selected";
@@ -216,7 +246,6 @@
 			endforeach;	
 
 		$output .= "</select>";
-
 		return $output;
     }
 
@@ -238,7 +267,7 @@
 		// $output .= "<option value=''>Select Status</option>";	
 			for($i = 0; $i < count($status); $i++) :
 				$selected = '';
-				if ($select == $i) :
+				if($select == $i) :
 					$selected = "selected";
 				endif;	
 				$output .= "<option value='".$i."' ".$selected.">".$status[$i]."</option>";
@@ -552,6 +581,228 @@
 		$req = DB::table('req_lists')->where('id', $id)->value('req_no');	
 		return $req;
     }
+
+	function EmailExpireTime()
+	{
+		return date('Y-m-d H:i:s',strtotime('+60 minutes',strtotime(date('Y-m-d H:i:s'))));
+	}
+
+	function checkLinkExpire($userID)
+	{
+		$user = DB::table('users')->where("id",$userID)->value('reset_link_expire');
+		return $user;
+	}
+
+	function getRoleType($roleID)
+	{
+		$type = DB::table('user_roles')->where("id",$roleID)->value('type');
+		return $type;
+	}
+
+	function yesno_dropdown($select = "")
+    {
+		$type = array(
+			'0'	=>	'No',
+			'1'	=>	'Yes',
+		);
+        $output = '';
+		$output .= "<select class='form-control' name='yesno_id' id='yesno_id'>";
+		$output .= "<option value=''>Select Project Plan Template</option>";	
+			for($i = 0; $i < count($type); $i++) :
+				$selected = '';
+				if ($select == $i) :
+					$selected = "selected";
+				endif;	
+				$output .= "<option value='".$i."' ".$selected.">".$type[$i]."</option>";
+			endfor;	
+
+		$output .= "</select>";
+
+		return $output;
+    }
+
+	function yesno($id = 0)
+	{
+		$type = array(
+			'1'	=>	'Yes',
+			'0'	=>	'No',
+		);
+
+		return $type[$id];
+	}
+
+	function packages_dropdown($select = 0)
+    {
+		$company = DB::table('packages')->get();	
+	
+        $output = '';
+		$output .= "<select class='form-control' name='package_id' id='package_id'>";
+	 	$output .= "<option value=''>Select Package</option>";	
+			foreach ($company as $row) :
+				$selected = '';
+				if ($select == $row->package_id) :
+					$selected = "selected";
+				endif;	
+				$output .= "<option value='".$row->package_id."' ".$selected.">".$row->title."</option>";
+			endforeach;	
+
+		$output .= "</select>";
+
+		return $output;
+    }
+
+	function get_package($id = 0)
+    {
+		$package = DB::table('packages')->where('package_id', $id)->first();	
+		return $package;
+    }
+
+	function package_types_dropdown($select = 0)
+    {
+        $output = '';
+		$output .= "<select class='form-control' name='package_type' id='package_type'>";
+		$output .= "<option value=''>Select Type</option>";	
+		        $monthly = "";
+		        $quaterly = "";
+		        $yearly =   "";
+				if ($select == 'Monthly') :
+					$monthly = "selected";
+				endif;
+				if ($select == 'Quaterly') :
+					$quaterly = "selected";
+				endif;
+				if ($select == 'Yearly') :
+					$yearly = "selected";
+				endif;
+				$output .= "<option value='Monthly' ".$monthly.">Monthly</option>";
+		        $output .= "<option value='Quaterly' ".$quaterly.">Quaterly</option>";
+		        $output .= "<option value='Yearly' ".$yearly.">Yearly</option>";
+
+		$output .= "</select>";
+
+		return $output;
+    }
+
+	function detectFileExtension($filename)
+	{
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+		switch ($ext) {
+				case "jpg":
+					$extOutput = "Image";
+				break;
+				case "png":
+					$extOutput = "Image";
+				break;
+				case "jpeg":
+					$extOutput = "Image";
+				break;
+				case "docx":
+					$extOutput = "Word File";
+				break;
+				case "pdf":
+					$extOutput = "PDF File";
+				break;
+				case "xlsx":
+					$extOutput = "Excel File";
+				break;
+				case "txt":
+					$extOutput = "Text File";
+				break;
+			default:
+			$extOutput = $ext;
+		}
+		return $extOutput;
+	}
+
+	function checkTaskExistToTeq($projectID,$reqID,$type)
+	{
+		$task = DB::table("tasks")->where('project_id',$projectID)->where('req_id',$reqID);
+		if($type == 1):
+			if($task->count()>0):
+				return true;
+			else:
+				return false;	
+			endif;
+		elseif($type == 2):
+			return $task->first();
+		endif;
+	}
+
+	function getAdminInfo($userID,$type)
+	{
+		$companyID = get_user($userID)->company_id;
+		$admin = DB::table("user_management")->where('company_id',$companyID)->where('role_id',$type)->first();
+		return $admin;
+	}
+
+	function getAccountType($type)
+	{
+		switch ($type) {
+			case "1":
+				$extOutput = "Super Admin";
+			break;
+			case "2":
+				$extOutput = "Auditee";
+			break;
+			case "3":
+				$extOutput = "Auditor";
+			break;
+			case "4":
+				$extOutput = "Location Admin";
+			break;
+			case "5":
+				$extOutput = "Lead Assessor";
+			break;
+			case "6":
+				$extOutput = "QA Assessor";
+			break;
+			case "7":
+				$extOutput = "Employee";
+			break;
+		default:
+		$extOutput = $ext;
+	}
+	return $extOutput;
+
+	}
+
+	function get_Doc_type_Options($select = 0)
+    {	
+		$company = DB::table('doc_types')->get();	
+        $output = '';
+		$output .= "<select class='form-control select2' name='doc_type' id='doc_type'>";
+		$output .= "<option value=''>Select Document Type</option>";	
+			foreach ($company as $row) :
+				$selected = '';
+				if ($select == $row->dt_title) :
+					$selected = "selected";
+				endif;	
+				$output .= "<option value='".$row->dt_title."'  ".$selected.">".$row->dt_title."</option>";
+			endforeach;	
+
+		$output .= "</select>";
+
+		return $output;
+    }
+
+	function getAuditObservationStatus($evaluationID)
+	{
+		$data = DB::table("audit_observations")->where('evaluation_id',$evaluationID)->first();
+		return $data;
+	}
+
+	function auditObservationStatus($id)
+	{
+		$status = array(
+			'1'	=>	"In Place",
+			'2'	=>	"In Place w/ CCW",
+			'3'	=>	"Not Applicable",
+			'4'	=>	"Not Tested",
+			'5'	=>	"Not in Place",
+		);
+
+		return $status[$id];
+	}
 
 	
 ?>

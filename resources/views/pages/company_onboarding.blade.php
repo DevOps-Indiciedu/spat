@@ -26,11 +26,11 @@
                               <i class="ri-user-fill"></i><span>Timeframe of assessment</span>
                            </a>
                         </li>
-                        <li id="payment">
+                        <!-- <li id="payment">
                            <a href="javascript:void();">
                               <i class="ri-camera-fill"></i><span>PCI DSS version</span>
                            </a>
-                        </li>
+                        </li> -->
                         <li id="payment">
                            <a href="javascript:void();">
                               <i class="ri-check-fill"></i><span>Additional services by QSA</span>
@@ -86,7 +86,7 @@
                                           <span class="text-danger" id="companyEmailErr"></span>
                                        </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                        <div class="form-group">
                                           <label for="company_website">Company Website</label>
                                           <input type="url" class="form-control" id="company_website" name="company_website" value="" placeholder="">
@@ -94,20 +94,14 @@
                                     </div>
                                     <div class="col-md-6">
                                        <div class="form-group"> 
-                                          <label for="company_standard">Company Standard <span class="text-danger">*</span></label> 
-                                          {!! company_standards() !!}
-                                          <span class="text-danger" id="companyStandardsErr"></span>
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                       <div class="form-group"> 
-                                          <label for="company_max_users">Company Maximum Users</label> 
-                                          <input type="number" class="form-control" id="company_max_users" name="company_max_users" value="0" placeholder="" />
+                                          <label for="company_type">Company Type <span class="text-danger">*</span></label> 
+                                          {!! company_types() !!}
+                                          <span class="text-danger" id="companyTypeErr"></span>
                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                        <div class="form-group">
-                                          <label for="company_address">Company Physical Address</label>
+                                          <label for="company_address">Company Address</label>
                                           <textarea class="form-control" id="company_address" name="company_address" rows="2"></textarea>
                                        </div>
                                     </div>
@@ -147,82 +141,35 @@
                                  </div>
                                  <div class="col-md-12">
                                     <div class="form-group">
-                                       <label for="company_address">Company Physical Address</label>
+                                       <label for="company_address">Company Address</label>
                                        <textarea class="form-control" name="company_address" id="company_address" rows="2"></textarea>
                                     </div>
                                  </div>
-                              </div>
-                           </div> 
-                           <div class="form-card text-left">
-                              <div class="row" style="border-bottom: 1px solid #f2edff;background: #000;">
-                                 <div class="col-12">
-                                    <h3 class="mb-2 mt-2">Assessor Information</h3>
-                                 </div>
-                                 <!-- <div class="col-5">
-                                    <h2 class="steps">Step 1 - 4</h2>
-                                 </div> -->
-                              </div> 
-                              <div class="row">
+                           
                               <div class="col-md-6">
                                     <div class="form-group">
-                                       <label for="assessor_name">Lead Assessor Name <span class="text-danger">*</span></label> 
+                                       <label for="assessor_name">Assessor Admin Name <span class="text-danger">*</span></label> 
                                        <input type="text" class="form-control" id="assessor_name" name="assessor_name" placeholder="" />
                                        <span class="text-danger" id="assessorNameErr"></span>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group"> 
-                                       <label for="assessor_creds">Assessor PCI Credentials</label> 
-                                       <input type="text" class="form-control" id="assessor_creds" name="assessor_creds" placeholder="" />
-                                       <span class="text-danger" id="assessorCredErr"></span>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group"> 
-                                       <label for="assessor_phone">Assessor Phone No <span class="text-danger">*</span></label> 
+                                       <label for="assessor_phone">Assessor Admin Phone No <span class="text-danger">*</span></label> 
                                        <input type="number" class="form-control" id="assessor_phone" name="assessor_phone" placeholder="" />
                                        <span class="text-danger" id="assessorPhoneErr"></span>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group"> 
-                                       <label for="assessor_email">Assessor E-mail Address <span class="text-danger">*</span></label> 
+                                       <label for="assessor_email">Assessor Admin E-mail Address <span class="text-danger">*</span></label> 
                                        <input type="email" class="form-control" id="assessor_email" name="email" placeholder="" />
                                        <span class="text-danger" id="assessorEmailErr"></span>
                                     </div>
                                  </div>
                                  </div>
                               </div> 
-                              <div class="form-card text-left">
-                                 <div class="row" style="border-bottom: 1px solid #f2edff;background: #000;">
-                                    <div class="col-12">
-                                       <h3 class="mb-2 mt-2">Assessor QA Information</h3>
-                                    </div>
-                                    <!-- <div class="col-5">
-                                       <h2 class="steps">Step 1 - 4</h2>
-                                    </div> -->
-                                 </div> 
-                                 <div class="row">
-                                 <div class="col-md-6">
-                                       <div class="form-group">
-                                          <label for="qa_review_name">QA Reviewer Name</label> 
-                                          <input type="text" class="form-control" id="qa_review_name" name="qa_review_name" placeholder="" />
-                                       </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                       <div class="form-group"> 
-                                          <label for="qa_review_phone">QA Reviewer Phone No</label> 
-                                          <input type="number" class="form-control" id="qa_review_phone" name="qa_review_phone" placeholder="" />
-                                       </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                       <div class="form-group"> 
-                                          <label for="qa_review_email">QA Reviewer E-mail Address</label> 
-                                          <input type="email" class="form-control" id="qa_review_email" name="qa_review_email" placeholder="" />
-                                       </div>
-                                    </div>
-                                    </div>
-                                 </div> 
+
                         <button type="button" name="next" class="btn btn-primary next action-button float-right" value="Next" >Next</button>
                         @endif
                      </fieldset>
@@ -281,15 +228,12 @@
                      </fieldset>
                      @endif
                      @if(Request::get('type') == "assessor")
-                     <fieldset>
+                     <!-- <fieldset>
                         <div class="form-card text-left">
                               <div class="row" style="border-bottom: 1px solid #f2edff;background: #000;">
                                  <div class="col-12">
                                     <h3 class="mb-2 mt-2">PCI DSS version</h3>
                                  </div>
-                                 <!-- <div class="col-5">
-                                    <h2 class="steps">Step 3 - 4</h2>
-                                 </div> -->
                               </div>
                            <div class="col-md-12">
                               <div class="form-group">
@@ -300,7 +244,7 @@
                         </div>
                         <button type="button" name="next" class="btn btn-primary next action-button float-right" value="Next" >Next</button> 
                         <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-right mr-3" value="Previous" >Previous</button>
-                     </fieldset>
+                     </fieldset> -->
                      @endif 
                      @if(Request::get('type') == "assessor")
                      <fieldset>

@@ -46,8 +46,13 @@
                                @endif
                                <td>{{ DMY($data->project_start_date) }}</td>
                                <td>{{ DMY($data->project_end_date) }}</td>
-                               <td>
-                                    @if(auth()->user()->usermanagement->role_id == 2)
+                               <td class="text-left">
+                                    @if(auth()->user()->usermanagement->belong_to == 1)
+                                    @if(Auth::user()->usermanagement->account_type == 7)
+                                        <a href="{{ url('view_selected_req_list/'.Crypt::encrypt($data->id)) }}" style="line-height: 1;" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
+                                            Evidence Tracker
+                                        </a>
+                                    @else
                                         @php 
                                             $checkExist = DB::table("evaluations_list")->where('ass_id',$data->id)->count();
                                             if($checkExist > 0):
@@ -55,20 +60,42 @@
                                             else:
                                                 $url = url('select_req_list/'.Crypt::encrypt($data->id));
                                             endif;
+                                            $checkRecord = DB::table("project_planning")->where("project_id",$data->id);
                                         @endphp
-                                        <a href="{{ $url }}" style="    line-height: 1;" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark SOA">
+                                        @if($checkRecord->count() > 0)
+                                            @if($data->standard_template == 1)
+                                                <a href="{{ url('project_planning/'.Crypt::encrypt($data->id)) }}" style="    line-height: 1;" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Project Planning">
+                                                    Project Planning
+                                                </a>
+                                            @endif
+                                        <a href="{{ $url }}" style="    line-height: 1;" class="btn btn-dark mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark SOA">
                                             Mark SOA
                                         </a>
                                         <a href="{{ url('view_selected_req_list/'.Crypt::encrypt($data->id)) }}" style="    line-height: 1;" class="btn btn-warning mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
                                             Evidence Tracker
                                         </a>
+                                        {{--
                                         <a href="{{ url('action_tracker/'.Crypt::encrypt($data->id)) }}" style="    line-height: 1;" class="btn btn-dark mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Action Tracker">
                                             Action Tracker
                                         </a>
-                                    @elseif(auth()->user()->usermanagement->role_id == 3)
-                                        <a href="{{ url('view_selected_req_list/'.Crypt::encrypt($data->id)) }}" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
+                                        --}}
+                                        @else
+                                            @if($data->standard_template == 1)
+                                                <a href="{{ url('project_planning/'.Crypt::encrypt($data->id)) }}" style="    line-height: 1;" class="btn btn-danger mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Project Planning">
+                                                    Project Planning
+                                                </a>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    @elseif(auth()->user()->usermanagement->belong_to == 2)
+                                        <a href="{{ url('view_selected_req_list/'.Crypt::encrypt($data->id)) }}" class="btn btn-danger btn-sm mb-3" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
                                         Evidence Tracker
                                         </a>
+                                    @endif
+                                    @if(@$checkExist > 0)
+                                    <a href="{{ url('project_report/'.Crypt::encrypt($data->id)) }}" class="btn btn-danger btn-sm mb-3" style="background: #2196f3;color: white;border-color: #2196f3 !important;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Evidence Tracker">
+                                        Report
+                                    </a>
                                     @endif
                                 </td>
                            </tr>

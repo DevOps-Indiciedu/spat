@@ -16,7 +16,12 @@ class DepartmentController extends Controller
         else:
             $userID = Auth::user()->id;    
         endif;
-    	$department['department'] = DB::select('call GetAllDepartments('.$userID.')');
+        if(Auth::user()->usermanagement->account_type == 2 || Auth::user()->usermanagement->account_type == 3):
+            $department['department'] = DB::select('SELECT * FROM departments WHERE company_id = "'.Auth::user()->usermanagement->company_id.'" and belong_to = "'.Auth::user()->usermanagement->belong_to.'"');
+        else:
+            $department['department'] = DB::select('SELECT * FROM departments WHERE location_id = "'.Auth::user()->usermanagement->location_id.'" and belong_to = "'.Auth::user()->usermanagement->belong_to.'"');
+        	// $department['department'] = DB::select('call GetAllDepartments('.$userID.')');
+        endif;
         return view('pages.department',$department);
     }
 
@@ -29,11 +34,12 @@ class DepartmentController extends Controller
     	]);
 
         if($request->hiddenId == ""):
-            $data = DB::select('call InsertDepartment(?,?,?,?)',
+            $data = DB::select('call InsertDepartment(?,?,?,?,?)',
             [
                 $request->company_id,
                 $request->location_id,
                 $request->department,
+                Auth::user()->usermanagement->belong_to,
                 Auth::user()->id,
             ]);
         else: 
@@ -72,7 +78,11 @@ class DepartmentController extends Controller
             // );
             // return response()->json($data);
         $output = '';
-        $data = DB::select('call get_departments_by_companyID('.$company_id.','.$location_id.')');
+        if(Auth::user()->usermanagement->account_type == 2 || Auth::user()->usermanagement->account_type == 3):
+            $data = DB::select('call get_departments_by_companyID('.$company_id.','.$location_id.')');
+        elseif(Auth::user()->usermanagement->account_type == 4):
+            $data = DB::table("departments")->where("added_by",Auth::user()->id)->where("location_id",$location_id)->get();
+        endif;
         $output .= "<select class='form-control' name='department_id' id='department_id'>";
         $output .= "<option value=''>Select Department</option>";
         foreach($data as $department):

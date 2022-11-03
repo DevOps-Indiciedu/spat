@@ -12,6 +12,7 @@
        const SITE_LOGO_WHITE = 'public/assets/images/Secureism-logo-white.png';
        const LOADER = 'public/assets/images/loaderSVG.svg';
        const DEFAULT_IMG = 'public/assets/images/user/11.png';
-       
+       const EXPIRE_IMG = 'public/assets/images/out-of-time.png';       
+       const GRAPH_IMG = 'public/assets/images/bar-chart.png';       
     }
 ?>

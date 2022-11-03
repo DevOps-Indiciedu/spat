@@ -46,9 +46,9 @@ class CompanyController extends Controller
     	$request->validate([
     		'company_name'	        =>	$company,
     		'company_contact_name'	=>	'required',
-    		'company_phone'	        =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+    		'company_phone'	        =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/',
     		'email'	                =>	 $email,
-    		'company_standard_id'	=>	'required',
+    		'company_type'	=>	'required',
     	]);
         
 
@@ -58,16 +58,17 @@ class CompanyController extends Controller
             $company_name =  str_replace(' ', '_', $request->company_name);
             $company_folder_name =  strtolower($company_name);
 
-            $user = DB::select('call InsertUsers(?,?,?,?)',
-            [
-                $request->company_contact_name,
-                $request->email,
-                Hash::make('secureism123'),
-                Str::random(10)
-            ]);
+            $user = DB::select('call InsertUsers(?,?,?,?,?)',
+                [
+                    $request->company_contact_name,
+                    $request->email,
+                    Hash::make('!@#$%^&*()'),
+                    Str::random(10),
+                    EmailExpireTime(),
+                ]);
 
             // Create Default Location Admin Role 
-            $locationAdmin = DB::select('call InsertRole("Location Admin",'. $user[0]->LAST_ID.')');
+            $locationAdmin = DB::select('call InsertRole("Location Admin",'. $user[0]->LAST_ID.',1)');
             // Clone Role Rights
             $role = DB::table('user_role_rights')->where('role_id', 2)->get();
             foreach($role as $role_actions):
@@ -84,7 +85,7 @@ class CompanyController extends Controller
                 ];
                 Mail::to($userEmail->email)->send(new WelcomeMail($body));
             endif;            
-            $data = DB::select('call InsertCompany(?,?,?,?,?,?,?,?,?,?)',
+            $data = DB::select('call InsertCompany(?,?,?,?,?,?,?,?,?)',
             [
                 $user[0]->LAST_ID,
                 $request->company_name,
@@ -93,12 +94,11 @@ class CompanyController extends Controller
                 $request->email,
                 $request->company_website,
                 $request->company_address,
-                $request->company_standard_id,
-                $request->company_max_users,
+                $request->company_type,
                 $company_folder_name,
             ]);
             
-            $user_manage = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            $user_manage = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
             [
                 $user[0]->LAST_ID,
                 $request->company_contact_name,
@@ -112,6 +112,8 @@ class CompanyController extends Controller
                 2,
                 '1',
                 '',
+                2,
+                1,
                 Auth::user()->id,
             ]);
             
@@ -126,7 +128,7 @@ class CompanyController extends Controller
         else: 
             DB::beginTransaction();
             try {
-                $data = DB::select('call UpdateCompany('.$request->hiddenId.',?,?,?,?,?,?,?,?)',
+                $data = DB::select('call UpdateCompany('.$request->hiddenId.',?,?,?,?,?,?,?)',
                 [
                     $request->company_name,
                     $request->company_contact_name,
@@ -134,8 +136,7 @@ class CompanyController extends Controller
                     $request->email,
                     $request->company_website,
                     $request->company_address,
-                    $request->company_standard_id,
-                    $request->company_max_users,
+                    $request->company_type,
                 ]);
                 // User Table Update
                 User::where("id",$request->hiddenUserId)->update(["name" => $request->company_contact_name,"email" => $request->email]);
@@ -213,7 +214,7 @@ class CompanyController extends Controller
     	$request->validate([
     		'company_name'	        =>	'required',
     		'assessor_name'	        =>	'required',
-    		'assessor_phone'	    =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+    		'assessor_phone'	    =>	'required|regex:/^([0-9\s\-\+\(\)]*)$/',
     		'email'	                =>	 $email,
     	]);
         
@@ -221,16 +222,18 @@ class CompanyController extends Controller
         if($request->hiddenId == ""):
         DB::beginTransaction();
         try {
-            $user = DB::select('call InsertUsers(?,?,?,?)',
-            [
-                $request->assessor_name,
-                $request->email,
-                Hash::make('secureism123'),
-                Str::random(10)
-            ]);
+                $user = DB::select('call InsertUsers(?,?,?,?,?)',
+                [
+                    $request->assessor_name,
+                    $request->email,
+                    Hash::make('!@#$%^&*()'),
+                    Str::random(10),
+                    EmailExpireTime(),
+                ]);
 
             // Create Default Location Admin Role 
-            $locationAdmin = DB::select('call InsertRole("Location Admin",'. $user[0]->LAST_ID.')');
+            $locationAdmin = DB::select('call InsertRole("Location Lead Assessor",'. $user[0]->LAST_ID.',2)');
+            $locationAdmin = DB::select('call InsertRole("Location QA Assessor",'. $user[0]->LAST_ID.',3)');
             // Clone Role Rights
             $role = DB::table('user_role_rights')->where('role_id', 3)->get();
             foreach($role as $role_actions):
@@ -255,23 +258,44 @@ class CompanyController extends Controller
                 $request->company_website,
                 $request->company_address,
                 $request->assessor_name,
-                $request->assessor_creds,
+                "",
+                // $request->assessor_creds,
                 $request->assessor_phone,
                 $request->email,
-                $request->qa_review_name,
-                $request->qa_review_phone,
-                $request->qa_review_email,
+                "",
+                "",
+                "",
+                // $request->qa_review_name,
+                // $request->qa_review_phone,
+                // $request->qa_review_email,
                 $request->date_of_report,
                 $request->time_assessment_start_date,
                 $request->time_assessment_complete_date,
                 $request->identity_start_date,
                 $request->identity_complete_date,
                 $request->identity_decription,
-                $request->pci_dss_version,
+                "",
+                // $request->pci_dss_version,
                 $request->disclose_qsac,
                 $request->efforts_qsac,
             ]);
-            $user_manage = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            // $user_manage = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            // [
+            //     $user[0]->LAST_ID,
+            //     $request->assessor_name,
+            //     $request->email,
+            //     $request->assessor_phone,
+            //     $request->company_address,
+            //     20,
+            //     $data[0]->LAST_ID,
+            //     0,
+            //     0,
+            //     3,
+            //     '1',
+            //     '',
+            //     0,
+            // ]);
+            $user_manage = DB::select('call InsertUserManagment(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
             [
                 $user[0]->LAST_ID,
                 $request->assessor_name,
@@ -285,7 +309,9 @@ class CompanyController extends Controller
                 3,
                 '1',
                 '',
-                0,
+                3,
+                2,
+                Auth::user()->id,
             ]);
             // dd($user_manage);
             DB::commit();

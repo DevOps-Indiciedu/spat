@@ -30,6 +30,6 @@ class WelcomeMail extends Mailable
     {
         $user = array('name'=>'Zeeshan');
         return $this->markdown('emails.welcomeEmail')
-        ->subject('Password Setup Notification')->with('data', $this->body);;
+        ->subject('Password Setup Notification')->with('data', $this->body);
     }
 }

@@ -33,8 +33,8 @@
                            <tr id="row-{{ $data->id }}" class="text-center">
                                <td>{{ $i++ }}</td>
                                <td>{{ $data->department }}</td>
-                               <td>{!!  get_company($data->company_id)->company_name !!}</td>
-                               <td>{!!  get_location($data->location_id)->name !!}</td>
+                               <td>{!!  @get_company($data->company_id)->company_name !!}</td>
+                               <td>{!!  @get_location($data->location_id)->name !!}</td>
                                <td>{{ DMY($data->created_at) }}</td>
                                <td>
                                 <div class="flex align-items-center list-user-action">
